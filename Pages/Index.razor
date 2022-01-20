@@ -1,0 +1,55 @@
+﻿@page "/"
+@inject NavigationManager MyNavigationManager
+
+<PageTitle>Azure Naming Tool - Home</PageTitle>
+
+<div class="card bg-primary text-white mb-3">
+    <div class="card-body"><h2>Azure Naming Tool</h2></div>
+</div>
+<div class="card-body">
+    <h3>Disclaimer</h3>
+    <p>
+        This Naming Tool was developed using a naming pattern based on <a href="https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging">
+            Microsoft's
+            best
+            practices
+        </a>, and uses a PowerShell script to define your organization’s preferred naming
+        configuration. Once the organizational components have been defined, CSV files are used to further
+        define the values for Azure naming components. These values are imported and hard coded into a
+        JavaScript object for reference documentation.
+    </p>
+    <p>API: <a href="@(MyNavigationManager.Uri)swagger/index.html" target="_blank">@(MyNavigationManager.Uri)swagger/index.html</a></p>
+    <p>
+        If you need to modify any of the values, you must modify only the CSV files, and then re-run the
+        PowerShell script. This will recreate the HTML file for reference.
+    </p>
+    <p>
+        Further documentation on the script can be found on <a href="https://github.com/microsoft/CloudAdoptionFramework/tree/master/ready/AzNamingTool">Microsoft's Cloud Adoption Framework GitHub repo</a>.
+    </p>
+
+    <h3>Configuration</h3>
+    <p>
+        The Configuration tab provides data collected from the PowerShell script. Some of this data is static,
+        while some of it was input based on your organization’s responses while running the configuration
+        script. These values are all surfaced in the Generator tool, and can be used to create a custom name for
+        an Azure resource.
+    </p>
+
+    <h3>References</h3>
+    <p>
+        The References tab provides examples for each type of Azure resource. The example values do not include
+        any excluded naming components. Optional components are always displayed and are identified below the
+        example . Since unique names are only required at specific scopes, the examples provided are only
+        generated for the scopes above the resource scope: resource group, resource group & region, region,
+        global, subscription, and tenant.
+    </p>
+
+    <h3>Generator</h3>
+    <p>
+        The Generator tab provides a drop down menu to select an Azure resource. Once a resource is selected,
+        naming component options are provided. Read-only components cannot be changed, like the value for a
+        resource type or organization. Optional components, if left blank, will be null and not shown in the
+        output. Required components do not allow a null value, and the first value in the array is set as the
+        default.
+    </p>
+</div>

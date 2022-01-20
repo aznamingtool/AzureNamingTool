@@ -1,0 +1,176 @@
+﻿@page "/reference"
+<PageTitle>Azure Naming Tool - Reference</PageTitle>
+
+@using AzNamingTool.Helpers
+@using AzNamingTool.Models
+@using AzNamingTool.Services
+
+<div class="card bg-primary text-white mb-3">
+    <div class="card-body"><h2>Reference</h2></div>
+</div>
+<div class="card-body">
+
+    <p>This component shows a sample generate name for each resource type.</p>
+
+    @if (servicesData.ResourceTypes == null)
+    {
+        <div class="spinner-border" role="status">
+            <span class="sr-only"></span>
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Resource</th>
+                    <th>Example</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var resourcetype in servicesData.ResourceTypes)
+                {
+                    <tr>
+                        <td className="type">@resourcetype.Resource</td>
+                        <td>
+                            <div>
+                                <p className="example">@GenerateName(resourcetype.ShortName)001</p>
+                                <p>
+                                    <strong>Components:</strong>
+                                </p>
+                                <ul>
+                                    @foreach (var resourceComponent in servicesData.ResourceComponents)
+                                    {
+                                        switch (resourceComponent.Name)
+                                        {
+                                            case "ResourceEnvironment":
+                                                <li>
+                                                    Environment: @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceInstance":
+                                                <li>
+                                                    Instance: 001
+                                                </li>
+                                                break;
+                                            case "ResourceLocation":
+                                                <li>
+                                                    Location: @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceOrg":
+                                                <li>
+                                                    Org: @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceProjAppSvc":
+                                                <li>
+                                                    ProjAppSvc: @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceType":
+                                                <li>
+                                                    Type: @resourcetype.Resource (@resourcetype.ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceUnitDept":
+                                                <li>
+                                                    Unit/Dept: @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
+                                                </li>
+                                                break;
+                                            case "ResourceVmRole":
+                                                <li>
+                                                    VM Role: @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
+                                                </li>
+                                                break;
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <p>
+                                <strong>Optional Components:</strong> @resourcetype.Optional
+                            </p>
+                            <p>
+                                <strong>Excluded Components:</strong> @resourcetype.Exclude
+                            </p>
+                            <p>
+                                <strong>Short Name:</strong> @resourcetype.ShortName
+                            </p>
+                            <p>
+                                <strong>Scope:</strong> @resourcetype.Scope
+                            </p>
+                            <p>
+                                <strong>Length:</strong> @resourcetype.LengthMin - @resourcetype.LengthMax characters
+                            </p>
+                            <p>
+                                <strong>Valid Characters:</strong> @resourcetype.ValidText
+                            </p>
+                            <p>
+                                <strong>Invalid Characters:</strong>@resourcetype.InvalidCharacters
+                            </p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@code {
+    private ServicesData servicesData = new();
+    private ResourceDelimiter? resourceDelimiter;
+
+    protected override async Task OnInitializedAsync()
+    {
+        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
+        resourceDelimiter = (ResourceDelimiter) servicesData.ResourceDelimiters[0];
+    }
+
+    protected string GenerateName(string shortName)
+    {
+        var name = "";
+        foreach (ResourceComponent resourcecomponent in servicesData.ResourceComponents)
+        {
+            if (name != "")
+            {
+                name += resourceDelimiter.Delimiter;
+            }
+            if (resourcecomponent.Name != "ResourceType" && resourcecomponent.Name != "ResourceInstance")
+            {
+                switch (resourcecomponent.Name)
+                {
+                    case "ResourceEnvironment":
+                        name += servicesData.ResourceEnvironments[0].ShortName;
+                        break;
+                    case "ResourceLocation":
+                        name += servicesData.ResourceLocations[0].ShortName;
+                        break;
+                    case "ResourceOrg":
+                        name += servicesData.ResourceOrgs[0].ShortName;
+                        break;
+                    case "ResourceProjAppSvc":
+                        name += servicesData.ResourceProjAppSvcs[0].ShortName;
+                        break;
+                    case "ResourceUniDept":
+                        name += servicesData.ResourceUnitDepts[0].ShortName;
+                        break;
+                    case "ResourceVmRole":
+                        name += servicesData.ResourceVmRoles[0].ShortName;
+                        break;
+                }
+            }
+            else
+            {
+                if (resourcecomponent.Name != "ResourceInstance")
+                {
+                    name += shortName;
+                }
+            }
+        }
+        return name;
+    }
+
+}
+

@@ -1,0 +1,133 @@
+﻿using AzNamingTool.Models;
+using AzNamingTool.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+using AzNamingTool.Services;
+using AzNamingTool.Attributes;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace AzNamingTool.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [ApiKey]
+    public class ResourceEnvironmentsController : ControllerBase
+    {
+        private ServiceResponse serviceResponse = new();
+        // GET: api/<ResourceEnvironmentsController>
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                serviceResponse = await ResourceEnvironmentService.GetItems();
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        // GET api/<ResourceEnvironmentsController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
+                serviceResponse = await ResourceEnvironmentService.GetItem(id);
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        // POST api/<ResourceEnvironmentsController>
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] ResourceEnvironment item)
+        {
+            try
+            {
+                serviceResponse = await ResourceEnvironmentService.PostItem(item);
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        // POST api/<ResourceEnvironmentsController>
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<IActionResult> PostConfig([FromBody] List<ResourceEnvironment> items)
+        {
+            try
+            {
+                serviceResponse = await ResourceEnvironmentService.PostConfig(items);
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        // DELETE api/<ResourceEnvironmentsController>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                serviceResponse = await ResourceEnvironmentService.DeleteItem(id);
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+    }
+}

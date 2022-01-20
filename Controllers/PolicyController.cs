@@ -1,0 +1,48 @@
+﻿using AzNamingTool.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Net;
+using AzNamingTool.Services;
+using AzNamingTool.Attributes;
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace AzNamingTool.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [ApiKey]
+    public class PolicyController : ControllerBase
+    {
+        private ServiceResponse serviceResponse = new();
+        // GET: api/<PolicyController>
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetPolicyDefinition()
+        {
+            try
+            {
+                serviceResponse = await PolicyService.GetPolicy();
+                MemoryStream stream = serviceResponse.ResponseObject;
+                if (serviceResponse.Success)
+                {
+                    return new FileStreamResult(stream, "application/json")
+                    {
+                        FileDownloadName = "namePolicyDefinition.json"
+                    };
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+    }
+}
