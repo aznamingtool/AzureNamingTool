@@ -1,0 +1,97 @@
+﻿@using AzNamingTool.Helpers
+@inject StateContainer state
+
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Admin Password Not Set!</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    You must set the password to continue. It must meet the following criteria:
+                    <br />It must contain:
+                    <ul>
+                        <li>a number</li>
+                        <li>one upper case letter</li>
+                        <li>8 characters</li>
+                    </ul>
+                </p>
+                <input id="newpassword" class="form-control mb-3" type="password" @onchange="@((ui) => { SetPassword((string)ui.Value);})" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" disabled="@disabled" class="btn btn-primary" @onclick=@ModalSave>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private bool disabled = true;
+
+    [Parameter]
+    public EventCallback<bool> OnClose { get; set; }
+
+    private string? password;
+
+    private Task ModalCancel()
+    {
+        return OnClose.InvokeAsync(false);
+    }
+
+    private async Task ModalSave()
+    {
+        if (password != "")
+        {
+            // Make sure password is complex enough
+            if (GeneralHelper.ValidatePassword(password))
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build()
+                    .Get<Config>();
+
+                config.AdminPassword = GeneralHelper.EncryptString(password, config.SALTKey);
+                Guid guid = Guid.NewGuid();
+                config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
+
+                GeneralHelper.UpdateSettings(config);
+
+                state.Password = true;
+
+                await InvokeAsync(() =>
+                {
+                    base.StateHasChanged();
+                });
+
+                await OnClose.InvokeAsync(true);
+            }
+            else
+            {
+                disabled = true;
+            }
+        }
+        else
+        {
+            disabled = true;
+        }
+    }
+
+    private void SetPassword(string value)
+    {
+        password = value;
+
+        // Validate the password complexity
+        if (GeneralHelper.ValidatePassword(password))
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+        }
+    }
+ }

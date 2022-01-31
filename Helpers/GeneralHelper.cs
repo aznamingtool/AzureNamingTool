@@ -120,6 +120,17 @@ namespace AzNamingTool.Helpers
             return match.Success;
         }
 
+        public static bool ValidatePassword(string text)
+        {
+            var hasNumber = new Regex(@"[0-9]+");
+            var hasUpperChar = new Regex(@"[A-Z]+");
+            var hasMinimum8Chars = new Regex(@".{8,}");
+
+            var isValidated = hasNumber.IsMatch(text) && hasUpperChar.IsMatch(text) && hasMinimum8Chars.IsMatch(text);
+
+            return isValidated;
+        }
+
         public static string EncryptString(string text, string keyString)
         {
             byte[] iv = new byte[16];
@@ -187,22 +198,34 @@ namespace AzNamingTool.Helpers
                     config.SALTKey = salt.ToString();
                     // Encrypt the password and API Key
                     config.SALTKey = salt.ToString();
-                    config.AdminPassword = EncryptString(config.AdminPassword, salt.ToString());
+                    if (config.AdminPassword != "")
+                    {
+                        config.AdminPassword = EncryptString(config.AdminPassword, salt.ToString());
+                    }
+                    else
+                    {
+                        state.Password = false;
+                    }
                     config.APIKey = EncryptString(config.APIKey, salt.ToString());
 
-                    var jsonWriteOptions = new JsonSerializerOptions()
-                    {
-                        WriteIndented = true
-                    };
-                    jsonWriteOptions.Converters.Add(new JsonStringEnumConverter());
-
-                    var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
-
-                    var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-                    File.WriteAllText(appSettingsPath, newJson);
+                    UpdateSettings(config);
                 }
             }
-            state.Verified = true;
+            state.SetVerified(true);
+        }
+
+        public static void UpdateSettings(Config config)
+        {
+            var jsonWriteOptions = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
+            jsonWriteOptions.Converters.Add(new JsonStringEnumConverter());
+
+            var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
+
+            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            File.WriteAllText(appSettingsPath, newJson);
         }
     }
 }

@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Text.Json
 @using System.Text.Json.Serialization
+@using Shared
 @inject ILogger<Generate> Logger
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
@@ -19,46 +20,7 @@
 <div class="card-body">
     <div class="mb-3" style="float:left">This component displays the current Azure Naming Tool configuration.</div>
 
-    <div class="card" style="float:right; margin-top:-8px;">
-        <div class="card-header text-white bg-success">
-            <a class="link-light text-decoration-none" data-toggle="collapse" href="#admin" role="button" aria-expanded="false" aria-controls="admin">
-                Admin
-            </a>
-        </div>
-        <div class="collapse card card-body" id="admin">
-            @if (!admin)
-            {
-                <div class="mb-3">
-                    <div class="form-group mb-3">
-                        <label for="password">Password</label>
-                        <input class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />
-                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("login"))" title="Login">Login</button>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="mb-3">
-                    <div class="form-group mb-3">
-                        <label for="newpassword">New Password</label>
-                        <input id="newpassword" class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("password",(string)ui.Value);})" />
-                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))" title="Save">Save</button>
-                    </div>
-
-                    <div class="form-group mb-3">
-                        <label for="apiKey">API Key</label><br />
-                        <input id="currentapikey" class="form-control mb-3" type="text" @onchange="@((ui) => { SetFormValue("apikey",(string)ui.Value);})" value="@currentapikey" />
-                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeysave"))" title="Save">Save</button>
-                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeygenerate"))" title="Generate">Generate</button>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <button type="button" class="btn btn-secondary" @onclick="@(e => AdminFormAction("logout"))" title="Logout" data-toggle="collapse" href="#admin">Logout</button>
-                </div>
-            }
-        </div>
-    </div>
-    <div style="clear:both"></div>
+    <Admin OnAdminChange="AdminChanged"/>
 
     @if (!dataLoaded)
     {
@@ -68,15 +30,6 @@
     }
     else
     {
-        @if (message.Message != null)
-        {
-            <div class="card text-white @message.Type mb-3">
-                <div class="card-header"><strong>@message.Header</strong></div>
-                <div class="card-body">
-                    @message.Message
-                </div>
-            </div>
-        }
         <form>
             <div class="mb-3">
                 @if (servicesData != null)
@@ -868,138 +821,24 @@
     [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
     private ServicesData servicesData = new();
     private bool dataLoaded = false;
-    private bool admin = false;
+    private bool admin;
     private string? newItemName;
     private string? newItemShortName;
     private string? newItemConfig;
     private ResponseMessage message = new();
-    private string? currentpassword;
-    private string? newpassword;
-    private string? currentapikey;
 
     protected override async Task OnInitializedAsync()
     {
-        //var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        //var user = authState.User;
-        //admin = user.Identity.IsAuthenticated;
-
+        // Load the values form state
+        admin = state.Admin;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
-        currentapikey = _config.GetValue<string>("APIKey");
         dataLoaded = true;
     }
 
-    private async void AdminFormAction(string action)
+    private async Task AdminChanged()
     {
-        message = new ResponseMessage();
-
-        bool updateConfig = false;
-        var config = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
-            .Build()
-            .Get<Config>();
-
-        message.Header = "MESSAGE";
-        message.Type = "bg-secondary";
-
-        switch (action)
-        {
-            case "login":
-                // Check the password
-
-                if (currentpassword == GeneralHelper.DecryptString(config.AdminPassword, config.SALTKey))
-                {
-                    admin = true;
-                    // Load the current API Key
-                    currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
-                    // Reload the data
-                    servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
-
-                    // Check if default password is set
-                    if(currentpassword == "P@ssw0rd12")
-                    {
-                        message.Type = "bg-danger";
-                        message.Header = "ATTENTION";
-                        message.Message = "You have not configured the admin password/API Key. It is highly recommended you do so now!";
-                    }
-                }
-                else
-                {
-                    admin = false;
-                    message.Type = "bg-danger";
-                    message.Header = "ERROR";
-                    message.Message = "Login failed";
-                }
-                break;
-            case "logout":
-                admin = false;
-                // Reload the data
-                servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
-                break;
-            case "password":
-                bool confirmPassword = await JsRuntime.InvokeAsync<bool>("confirm", "This will change the admin password. Are you sure?");
-                if (confirmPassword)
-                {
-                    // Set the new admin password
-                    config.AdminPassword = GeneralHelper.EncryptString(newpassword, config.SALTKey);
-                    updateConfig = true;                    
-                    message.Type = "bg-success";
-                    message.Header = "SUCCESS";
-                    message.Message = "Password updated!";
-                }
-                break;
-            case "apikeysave":
-
-                bool confrimAPIKeySave = await JsRuntime.InvokeAsync<bool>("confirm", "This will update the current API Key. Are you sure?");
-                if (confrimAPIKeySave)
-                {
-                    config.APIKey = GeneralHelper.EncryptString(currentapikey, config.SALTKey);
-                    updateConfig = true;
-                    message.Type = "bg-success";
-                    message.Header = "SUCCESS";
-                    message.Message = "API Key updated!";
-                }
-                break;
-            case "apikeygenerate":
-
-                bool confrimAPIKeyGenerate = await JsRuntime.InvokeAsync<bool>("confirm", "This will generate a new API Key. Are you sure?");
-                if (confrimAPIKeyGenerate)
-                {
-                    // Set the new api key
-                    Guid guid = Guid.NewGuid();
-                    config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
-                    currentapikey = guid.ToString();
-                    updateConfig = true;
-                    message.Type = "bg-success";
-                    message.Header = "SUCCESS";
-                    message.Message = "API Key generated!";
-                }
-                break;
-        }
-
-        if (updateConfig)
-        {
-            var jsonWriteOptions = new JsonSerializerOptions()
-                {
-                    WriteIndented = true
-                };
-            jsonWriteOptions.Converters.Add(new JsonStringEnumConverter());
-
-            var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
-
-            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            File.WriteAllText(appSettingsPath, newJson);
-        }
-
-        await InvokeAsync(() =>
-        {
-            base.StateHasChanged();
-        });
-
-        if (message.Message != null)
-        {
-            await JsRuntime.InvokeVoidAsync("OnScrollEvent");
-        }
+        admin = state.Admin;
+        servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
     }
 
     private async Task FormAction(string type, long id, string action)
@@ -1519,6 +1358,8 @@
                     break;
             }
 
+             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+
             // Reset the new item variables
             newItemName = null;
             newItemShortName = null;
@@ -1549,16 +1390,6 @@
             case "configjson":
                 newItemConfig = value;
                 break;
-            case "login":
-                currentpassword = value;
-                break;
-            case "password":
-                newpassword = value;
-                break;
-            case "apikey":
-                currentapikey = value;
-                break;
-
         }
     }
 }

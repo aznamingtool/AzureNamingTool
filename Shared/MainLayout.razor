@@ -20,15 +20,31 @@
     </main>
 </div>
 
+<button type="button" class="btn btn-danger btn-sm" 
+        @onclick="() => OpenDeleteDialog()">Delete</button>
+
+@if (DeleteDialogOpen)
+{
+    <Modal OnClose="@OnDeleteDialogClose">
+    </Modal>
+}
+
 @code {
-    
-        private string? message;
+
+    public bool DeleteDialogOpen { get; set; }
+
+    private string? message;
 
     protected override void OnInitialized()
     {
         GeneralHelper.VerifySecurity(state);
+        // Check that the admin password is set
+        if(!state.Password)
+        {
+            OpenDeleteDialog();
+        }
     }
-    
+
     private void ChangePropertyValue()
     {
     }
@@ -36,5 +52,17 @@
     public void Dispose()
     {
         state.OnChange -= StateHasChanged;
+    }
+
+    private void OpenDeleteDialog()
+    {
+        DeleteDialogOpen = true;
+        StateHasChanged();
+    }
+
+    private async Task OnDeleteDialogClose(bool accepted)
+    {
+        DeleteDialogOpen = false;
+        StateHasChanged();
     }
 }
