@@ -1,4 +1,6 @@
 using AzNamingTool.Attributes;
+using AzNamingTool.Helpers;
+using AzNamingTool.Pages;
 using BlazorDownloadFile;
 using Microsoft.OpenApi.Models;
 
@@ -9,6 +11,8 @@ builder.Services.AddMvcCore().AddApiExplorer();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions(x => x.MaximumReceiveMessageSize = 102400000);
 builder.Services.AddBlazorDownloadFile();
+
+builder.Services.AddSingleton<StateContainer>();
 
 builder.Services.AddSwaggerGen(c =>
 {

@@ -1,5 +1,7 @@
 ﻿using AzNamingTool.Helpers;
 using AzNamingTool.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzNamingTool.Services
 {
@@ -45,6 +47,16 @@ namespace AzNamingTool.Services
                 var resourceVmRoles = await GeneralHelper.GetList<ResourceVmRole>();
                 configdata.ResourceVmRoles = resourceVmRoles.OrderBy(y => y.SortOrder).ToList();
 
+                // Get the security settings
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build()
+                    .Get<Config>();
+
+                configdata.SALTKey = config.SALTKey;
+                configdata.AdminPassword = config.AdminPassword;
+                configdata.APIKey = config.APIKey;
 
                 serviceResponse.ResponseObject = configdata;
                 serviceResponse.Success = true;
@@ -70,6 +82,28 @@ namespace AzNamingTool.Services
                 await GeneralHelper.WriteList<ResourceType>(configdata.ResourceTypes);
                 await GeneralHelper.WriteList<ResourceUnitDept>(configdata.ResourceUnitDepts);
                 await GeneralHelper.WriteList<ResourceVmRole>(configdata.ResourceVmRoles);
+
+                // Set the security settings
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.json")
+                    .Build()
+                    .Get<Config>();
+
+                config.SALTKey = configdata.SALTKey;
+                config.AdminPassword = configdata.AdminPassword;
+                config.APIKey = configdata.APIKey;
+
+                var jsonWriteOptions = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+                jsonWriteOptions.Converters.Add(new JsonStringEnumConverter());
+
+                var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
+
+                var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+                File.WriteAllText(appSettingsPath, newJson);
 
                 serviceResponse.Success = true;
             }

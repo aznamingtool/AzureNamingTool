@@ -13,5 +13,8 @@ namespace AzNamingTool.Models
         public List<ResourceType> ResourceTypes { get; set; }
         public List<ResourceUnitDept> ResourceUnitDepts { get; set; }
         public List<ResourceVmRole> ResourceVmRoles { get; set; }
+        public string SALTKey { get; set; }
+        public string AdminPassword { get; set; }
+        public string APIKey { get; set; }
     }
 }

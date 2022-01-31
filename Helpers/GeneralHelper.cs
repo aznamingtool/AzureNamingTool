@@ -1,7 +1,10 @@
 ﻿using AzNamingTool.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -115,6 +118,91 @@ namespace AzNamingTool.Helpers
             Regex regx = new Regex("^[a-zA-Z0-9]+$");
             Match match = regx.Match(value);
             return match.Success;
+        }
+
+        public static string EncryptString(string text, string keyString)
+        {
+            byte[] iv = new byte[16];
+            byte[] array;
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(keyString);
+                aes.IV = iv;
+                ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream))
+                        {
+                            streamWriter.Write(text);
+                        }
+                        array = memoryStream.ToArray();
+                    }
+                }
+            }
+            return Convert.ToBase64String(array);
+        }
+
+        public static string DecryptString(string cipherText, string keyString)
+        {
+            byte[] iv = new byte[16];
+            byte[] buffer = Convert.FromBase64String(cipherText);
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(keyString);
+                aes.IV = iv;
+                ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+                using (MemoryStream memoryStream = new MemoryStream(buffer))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader streamReader = new StreamReader((Stream)cryptoStream))
+                        {
+                            return streamReader.ReadToEnd();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void VerifySecurity(StateContainer state)
+        {
+            if (!state.Verified)
+            {
+                var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build()
+                .Get<Config>();
+
+                if (config.SALTKey == "")
+                {
+                    // Create a new SALT key 
+                    const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+                    Random random = new Random();
+                    var salt = new string(Enumerable.Repeat(chars, 16)
+                        .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                    config.SALTKey = salt.ToString();
+                    // Encrypt the password and API Key
+                    config.SALTKey = salt.ToString();
+                    config.AdminPassword = EncryptString(config.AdminPassword, salt.ToString());
+                    config.APIKey = EncryptString(config.APIKey, salt.ToString());
+
+                    var jsonWriteOptions = new JsonSerializerOptions()
+                    {
+                        WriteIndented = true
+                    };
+                    jsonWriteOptions.Converters.Add(new JsonStringEnumConverter());
+
+                    var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
+
+                    var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+                    File.WriteAllText(appSettingsPath, newJson);
+                }
+            }
+            state.Verified = true;
         }
     }
 }

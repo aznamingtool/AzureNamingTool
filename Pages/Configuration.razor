@@ -10,6 +10,7 @@
 @inject ILogger<Generate> Logger
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
+@inject StateContainer state
 
 <PageTitle>Azure Naming Tool - Configuration</PageTitle>
 <div class="card bg-primary text-white mb-3">
@@ -69,7 +70,7 @@
     {
         @if (message.Message != null)
         {
-            <div class="card @message.Type mb-3">
+            <div class="card text-white @message.Type mb-3">
                 <div class="card-header"><strong>@message.Header</strong></div>
                 <div class="card-body">
                     @message.Message
@@ -898,25 +899,35 @@
             .Build()
             .Get<Config>();
 
-        message.Header = config.AdminPassword;
+        message.Header = "MESSAGE";
+        message.Type = "bg-secondary";
 
         switch (action)
         {
             case "login":
                 // Check the password
 
-                if (currentpassword == config.AdminPassword)
+                if (currentpassword == GeneralHelper.DecryptString(config.AdminPassword, config.SALTKey))
                 {
                     admin = true;
                     // Load the current API Key
-                    currentapikey = config.APIKey;
+                    currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
                     // Reload the data
                     servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+
+                    // Check if default password is set
+                    if(currentpassword == "P@ssw0rd12")
+                    {
+                        message.Type = "bg-danger";
+                        message.Header = "ATTENTION";
+                        message.Message = "You have not configured the admin password/API Key. It is highly recommended you do so now!";
+                    }
                 }
                 else
                 {
                     admin = false;
                     message.Type = "bg-danger";
+                    message.Header = "ERROR";
                     message.Message = "Login failed";
                 }
                 break;
@@ -930,8 +941,10 @@
                 if (confirmPassword)
                 {
                     // Set the new admin password
-                    config.AdminPassword = newpassword;
-                    updateConfig = true;
+                    config.AdminPassword = GeneralHelper.EncryptString(newpassword, config.SALTKey);
+                    updateConfig = true;                    
+                    message.Type = "bg-success";
+                    message.Header = "SUCCESS";
                     message.Message = "Password updated!";
                 }
                 break;
@@ -940,8 +953,10 @@
                 bool confrimAPIKeySave = await JsRuntime.InvokeAsync<bool>("confirm", "This will update the current API Key. Are you sure?");
                 if (confrimAPIKeySave)
                 {
-                    config.APIKey = currentapikey;
+                    config.APIKey = GeneralHelper.EncryptString(currentapikey, config.SALTKey);
                     updateConfig = true;
+                    message.Type = "bg-success";
+                    message.Header = "SUCCESS";
                     message.Message = "API Key updated!";
                 }
                 break;
@@ -952,9 +967,11 @@
                 {
                     // Set the new api key
                     Guid guid = Guid.NewGuid();
-                    config.APIKey = guid.ToString();
-                    currentapikey = config.APIKey;
+                    config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
+                    currentapikey = guid.ToString();
                     updateConfig = true;
+                    message.Type = "bg-success";
+                    message.Header = "SUCCESS";
                     message.Message = "API Key generated!";
                 }
                 break;

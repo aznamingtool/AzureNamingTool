@@ -30,7 +30,7 @@ namespace AzNamingTool.Attributes
 
             //var apiKey = appSettings.GetValue<string>(APIKEYNAME);
 
-            if (!config.APIKey.Equals(extractedApiKey))
+            if (!GeneralHelper.DecryptString(config.APIKey, config.SALTKey).Equals(extractedApiKey))
             {
                 context.Result = new ContentResult()
                 {
