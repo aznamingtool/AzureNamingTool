@@ -12,6 +12,7 @@
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
 @inject StateContainer state
+@inject IToastService toastService
 
 <PageTitle>Azure Naming Tool - Configuration</PageTitle>
 <div class="card bg-primary text-white mb-3">
@@ -20,7 +21,7 @@
 <div class="card-body">
     <div class="mb-3" style="float:left">This component displays the current Azure Naming Tool configuration.</div>
 
-    <Admin OnAdminChange="AdminChanged"/>
+    <Admin OnAdminChange="AdminChanged" />
 
     @if (!dataLoaded)
     {
@@ -893,10 +894,12 @@
                                 serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Components config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Components config update failed!";
                                 }
                             }
@@ -931,10 +934,12 @@
                                 serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Delimiters config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Delimiters config update failed!";
                                 }
                             }
@@ -996,10 +1001,12 @@
                                 serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Environments config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Environments config update failed!";
                                 }
                             }
@@ -1022,10 +1029,12 @@
                                 serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Locations config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Locations config update failed!";
                                 }
                             }
@@ -1088,10 +1097,12 @@
                                 serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Orgs config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Orgs config update failed!";
                                 }
                             }
@@ -1153,10 +1164,12 @@
                                 serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource ProjAppSvcs config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource ProjAppSvcs config update failed!";
                                 }
                             }
@@ -1180,10 +1193,12 @@
                                 serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Types config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Types config update failed!";
                                 }
                             }
@@ -1245,10 +1260,12 @@
                                 serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource UnitDepts config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource UnitDepts config update failed!";
                                 }
                             }
@@ -1310,10 +1327,12 @@
                                 serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Resource Vm Roles config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Resource Vm Roles config update failed!";
                                 }
                             }
@@ -1336,10 +1355,12 @@
                                 serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
+                                    message.Type = "SUCCESS";
                                     message.Message = "Master config update succeeded!";
                                 }
                                 else
                                 {
+                                    message.Type = "ERROR";
                                     message.Message = "Master config update failed!";
                                 }
                             }
@@ -1358,7 +1379,7 @@
                     break;
             }
 
-             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
 
             // Reset the new item variables
             newItemName = null;
@@ -1367,13 +1388,28 @@
         }
         catch (Exception ex)
         {
+            message.Type = "ERROR";
             message.Message = "There was a problem with the request.";
         }
 
 
         if (message.Message != null)
         {
-            await JsRuntime.InvokeVoidAsync("OnScrollEvent");
+            switch (message.Type)
+            {
+                case "INFO":
+                    toastService.ShowInfo(message.Message, "INFORMATION");
+                    break;
+                case "SUCCESS":                
+                toastService.ShowSuccess(message.Message, "SUCCESS");
+                break;
+                case "WARNING":                
+                toastService.ShowWarning(message.Message, "WARNING");
+                break;
+                case "ERROR":                
+                toastService.ShowError(message.Message, "ERROR");
+                break;
+            }
         }
     }
 

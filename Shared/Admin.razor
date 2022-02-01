@@ -6,6 +6,7 @@
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
 @inject StateContainer state
+@inject IToastService toastService
 
 <div class="card" style="float:right; margin-top:-8px;">
     <div class="card-header text-white bg-success">
@@ -48,16 +49,6 @@
 </div>
 <div style="clear:both"></div>
 
-        @if (message.Message != null)
-        {
-            <div class="card text-white @message.Type mb-3">
-                <div class="card-header"><strong>@message.Header</strong></div>
-                <div class="card-body">
-                    @message.Message
-                </div>
-            </div>
-        }
-
 @code {
     private ServicesData servicesData = new();
     private string? currentpassword;
@@ -92,8 +83,8 @@
 
         bool updateConfig = false;
 
-        message.Header = "MESSAGE";
-        message.Type = "bg-secondary";
+        message.Header = "INFORMATION";
+        message.Type = "INFO";
 
         switch (action)
         {
@@ -102,14 +93,6 @@
 
                 if (currentpassword == GeneralHelper.DecryptString(config.AdminPassword, config.SALTKey))
                 {
-                    // Check if default password is set
-                    if (currentpassword == "P@ssw0rd12")
-                    {
-                        message.Type = "bg-danger";
-                        message.Header = "ATTENTION";
-                        message.Message = "You have not configured the admin password/API Key. It is highly recommended you do so now!";
-                    }
-
                     state.SetAdmin(true);
                     // Load the current API Key
                     currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
@@ -117,7 +100,7 @@
                 else
                 {
                     state.SetAdmin(false);
-                    message.Type = "bg-danger";
+                    message.Type = "ERROR";
                     message.Header = "ERROR";
                     message.Message = "Login failed";
                 }
@@ -132,7 +115,7 @@
                     // Set the new admin password
                     config.AdminPassword = GeneralHelper.EncryptString(newpassword, config.SALTKey);
                     updateConfig = true;
-                    message.Type = "bg-success";
+                    message.Type = "SUCCESS";
                     message.Header = "SUCCESS";
                     message.Message = "Password updated!";
                 }
@@ -144,7 +127,7 @@
                 {
                     config.APIKey = GeneralHelper.EncryptString(currentapikey, config.SALTKey);
                     updateConfig = true;
-                    message.Type = "bg-success";
+                    message.Type = "SUCCESS";
                     message.Header = "SUCCESS";
                     message.Message = "API Key updated!";
                 }
@@ -159,7 +142,7 @@
                     config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
                     currentapikey = guid.ToString();
                     updateConfig = true;
-                    message.Type = "bg-success";
+                    message.Type = "SUCCESS";
                     message.Header = "SUCCESS";
                     message.Message = "API Key generated!";
                 }
@@ -182,7 +165,21 @@
 
         if (message.Message != null)
         {
-            await JsRuntime.InvokeVoidAsync("OnScrollEvent");
+            switch (message.Type)
+            {
+                case "INFO":
+                    toastService.ShowInfo(message.Message, "INFORMATION");
+                    break;
+                case "SUCCESS":                
+                toastService.ShowSuccess(message.Message, "SUCCESS");
+                break;
+                case "WARNING":                
+                toastService.ShowWarning(message.Message, "WARNING");
+                break;
+                case "ERROR":                
+                toastService.ShowError(message.Message, "ERROR");
+                break;
+            }
         }
     }
 

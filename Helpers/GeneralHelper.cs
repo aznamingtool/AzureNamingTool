@@ -201,6 +201,7 @@ namespace AzNamingTool.Helpers
                     if (config.AdminPassword != "")
                     {
                         config.AdminPassword = EncryptString(config.AdminPassword, salt.ToString());
+                        state.Password = true;
                     }
                     else
                     {
@@ -226,6 +227,13 @@ namespace AzNamingTool.Helpers
 
             var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
             File.WriteAllText(appSettingsPath, newJson);
+        }
+
+        public static void ResetState(StateContainer state)
+        {
+            state.SetVerified(false);
+            state.SetAdmin(false);
+            state.SetPassword(false);
         }
     }
 }

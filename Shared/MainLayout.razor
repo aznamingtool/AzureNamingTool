@@ -2,9 +2,12 @@
 @inherits LayoutComponentBase
 @implements IDisposable
 @inject StateContainer state
+@inject IToastService toastService
+@inject IJSRuntime JsRuntime
+@using Blazored.Toast.Configuration
 
 <PageTitle>Azure Naming Tool</PageTitle>
-
+<BlazoredToasts Position="ToastPosition.BottomRight" ShowProgressBar="true" Timeout="3" />
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -12,6 +15,7 @@
 
     <main>
         <div class="top-row px-4 auth">
+                <button type="button" class="btn btn-danger" @onclick="@(e => MagicReset())" title="Magic reset">Magic Reset</button>
         </div>
 
         <article class="content px-4">
@@ -20,18 +24,15 @@
     </main>
 </div>
 
-<button type="button" class="btn btn-danger btn-sm" 
-        @onclick="() => OpenDeleteDialog()">Delete</button>
-
-@if (DeleteDialogOpen)
+@if (PasswordModalOpen)
 {
-    <PasswordModal OnClose="@OnDeleteDialogClose">
+    <PasswordModal OnClose="@OnPasswordModalClose">
     </PasswordModal>
 }
 
 @code {
 
-    public bool DeleteDialogOpen { get; set; }
+    public bool PasswordModalOpen { get; set; }
 
     private string? message;
 
@@ -41,7 +42,7 @@
         // Check that the admin password is set
         if(!state.Password)
         {
-            OpenDeleteDialog();
+            OpenPasswordModal();
         }
     }
 
@@ -54,15 +55,43 @@
         state.OnChange -= StateHasChanged;
     }
 
-    private void OpenDeleteDialog()
+    private void OpenPasswordModal()
     {
-        DeleteDialogOpen = true;
+        PasswordModalOpen = true;
         StateHasChanged();
     }
 
-    private async Task OnDeleteDialogClose(bool accepted)
+    private async Task OnPasswordModalClose(bool accepted)
     {
-        DeleteDialogOpen = false;
+        PasswordModalOpen = false;
         StateHasChanged();
+    }
+
+    private async void MagicReset()
+    {
+        bool confrimAPIKeyGenerate = await JsRuntime.InvokeAsync<bool>("confirm", "This will reset the site settings. Are you sure?");
+        if (confrimAPIKeyGenerate)
+        {
+
+            var config = new ConfigurationBuilder()
+                        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                        .AddJsonFile("appsettings.json")
+                        .Build()
+                        .Get<Config>();
+
+            config.SALTKey = "";
+            config.AdminPassword = "";
+            config.APIKey = "";
+
+            GeneralHelper.UpdateSettings(config);
+            GeneralHelper.ResetState(state);
+            GeneralHelper.VerifySecurity(state);
+
+            toastService.ShowSuccess("The site has been reset.", "MAGIC RESET ENABLED!");
+
+            OpenPasswordModal();
+
+            StateHasChanged();
+        }
     }
 }

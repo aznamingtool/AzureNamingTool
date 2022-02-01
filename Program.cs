@@ -2,6 +2,7 @@ using AzNamingTool.Attributes;
 using AzNamingTool.Helpers;
 using AzNamingTool.Pages;
 using BlazorDownloadFile;
+using Blazored.Toast;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddMvcCore().AddApiExplorer();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions(x => x.MaximumReceiveMessageSize = 102400000);
 builder.Services.AddBlazorDownloadFile();
+builder.Services.AddBlazoredToast();
 
 builder.Services.AddSingleton<StateContainer>();
 
