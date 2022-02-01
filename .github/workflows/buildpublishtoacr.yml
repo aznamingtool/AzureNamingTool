@@ -1,10 +1,10 @@
 name: Build a Docker image and Push it to ACR
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  # push:
+  #   branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
 
   workflow_dispatch:
 
