@@ -41,7 +41,7 @@ This project contains a .NET Core application, with Docker support. To use:
 
 - Run the follwing **Docker command** to build the image
 
-  *docker built -t aznaming tool .*
+  *docker build -t aznamingtool .*
   
   **NOTE**  
   - Ensure the '.' is included in the command
