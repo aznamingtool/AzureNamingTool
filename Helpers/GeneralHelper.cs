@@ -137,6 +137,7 @@ namespace AzNamingTool.Helpers
             byte[] array;
             using (Aes aes = Aes.Create())
             {
+                aes.KeySize = 256;
                 aes.Key = Encoding.UTF8.GetBytes(keyString);
                 aes.IV = iv;
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -161,6 +162,7 @@ namespace AzNamingTool.Helpers
             byte[] buffer = Convert.FromBase64String(cipherText);
             using (Aes aes = Aes.Create())
             {
+                aes.KeySize = 256;
                 aes.Key = Encoding.UTF8.GetBytes(keyString);
                 aes.IV = iv;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
