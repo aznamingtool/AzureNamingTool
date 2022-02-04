@@ -11,11 +11,11 @@
 <div class="card-body">
 
     <p>This component shows a sample generate name for each resource type.</p>
-    <div>
+    @*<div>
         Search: <InputText class="form-control" id="search" ValueExpression="@(()=>searchText)"
                            Value="@searchText" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                           ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
-    </div>
+                           ValueChanged="@((string value) => OnSearchChanged(value))" />
+    </div>*@
 
 
     @if (servicesData.ResourceTypes == null)
@@ -181,10 +181,10 @@
         return name;
     }
 
-    private Task OnSearchChanged(string value)
-    {
-        searchText = value;
-        return Task.CompletedTask;
-    }
+    //private Task OnSearchChanged(string value)
+    //{
+    //    searchText = value;
+    //    return Task.CompletedTask;
+    //}
 }
 
