@@ -11,6 +11,12 @@
 <div class="card-body">
 
     <p>This component shows a sample generate name for each resource type.</p>
+    <div>
+        Search: <InputText class="form-control" id="search" ValueExpression="@(()=>searchText)"
+                           Value="@searchText" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                           ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
+    </div>
+
 
     @if (servicesData.ResourceTypes == null)
     {
@@ -20,7 +26,8 @@
     }
     else
     {
-        <table class="table table-striped">
+        <div class="table-responsive">
+            <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Resource</th>
@@ -116,11 +123,13 @@
                 }
             </tbody>
         </table>
+        </div>
     }
 </div>
 @code {
     private ServicesData servicesData = new();
     private ResourceDelimiter? resourceDelimiter;
+    private string? searchText;
 
     protected override async Task OnInitializedAsync()
     {
@@ -172,5 +181,10 @@
         return name;
     }
 
+    private Task OnSearchChanged(string value)
+    {
+        searchText = value;
+        return Task.CompletedTask;
+    }
 }
 
