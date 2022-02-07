@@ -4,18 +4,18 @@
 @using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @using AzNamingTool.Services
+@inject IJSRuntime JsRuntime
 
 <div class="card bg-primary text-white mb-3">
     <div class="card-body"><h2>Reference</h2></div>
 </div>
 <div class="card-body">
-
-    <p>This component shows a sample generate name for each resource type.</p>
+    <p>This component shows a sample generated name for each resource type.</p>
     @*<div>
         Search: <InputText class="form-control" id="search" ValueExpression="@(()=>searchText)"
-                           Value="@searchText" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                           ValueChanged="@((string value) => OnSearchChanged(value))" />
-    </div>*@
+        Value="@searchText" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+        ValueChanged="@((string value) => OnSearchChanged(value))" />
+        </div>*@
 
 
     @if (servicesData.ResourceTypes == null)
@@ -26,115 +26,231 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Resource</th>
-                    <th>Example</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
+        <div class="card" style="margin-bottom:10px;">
+            <h4 class="card-header text-white bg-secondary">
+                Jump To
+            </h4>
+            <div class="card card-body">
+                <select @onchange="OnTypeChanged" class="form-control">
+                    <option value="">Select a resource type</option>
+                    @foreach (var type in @servicesData.ResourceTypes)
+                    {
+                        <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <table class="table table-responsive table-striped w-auto">
             <tbody>
                 @foreach (var resourcetype in servicesData.ResourceTypes)
                 {
-                    <tr>
-                        <td className="type">@resourcetype.Resource</td>
-                        <td>
-                            <div>
-                                <p className="example">@GenerateName(resourcetype.ShortName)001</p>
-                                <p>
-                                    <strong>Components:</strong>
-                                </p>
-                                <ul>
-                                    @foreach (var resourceComponent in servicesData.ResourceComponents)
-                                    {
-                                        switch (resourceComponent.Name)
-                                        {
-                                            case "ResourceEnvironment":
-                                                <li>
-                                                    Environment: @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceInstance":
-                                                <li>
-                                                    Instance: 001
-                                                </li>
-                                                break;
-                                            case "ResourceLocation":
-                                                <li>
-                                                    Location: @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceOrg":
-                                                <li>
-                                                    Org: @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceProjAppSvc":
-                                                <li>
-                                                    ProjAppSvc: @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceType":
-                                                <li>
-                                                    Type: @resourcetype.Resource (@resourcetype.ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceUnitDept":
-                                                <li>
-                                                    Unit/Dept: @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
-                                                </li>
-                                                break;
-                                            case "ResourceVmRole":
-                                                <li>
-                                                    VM Role: @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
-                                                </li>
-                                                break;
-                                        }
-                                    }
-                                </ul>
-                            </div>
-                        </td>
-                        <td>
-                            <p>
-                                <strong>Optional Components:</strong> @resourcetype.Optional
-                            </p>
-                            <p>
-                                <strong>Excluded Components:</strong> @resourcetype.Exclude
-                            </p>
-                            <p>
-                                <strong>Short Name:</strong> @resourcetype.ShortName
-                            </p>
-                            <p>
-                                <strong>Scope:</strong> @resourcetype.Scope
-                            </p>
-                            <p>
-                                <strong>Length:</strong> @resourcetype.LengthMin - @resourcetype.LengthMax characters
-                            </p>
-                            <p>
-                                <strong>Valid Characters:</strong> @resourcetype.ValidText
-                            </p>
-                            <p>
-                                <strong>Invalid Characters:</strong>@resourcetype.InvalidCharacters
-                            </p>
+                    <tr class="table-dark">
+                        <td style="word-wrap:anywhere;">
+                            <h3>@resourcetype.Resource</h3>
                         </td>
                     </tr>
+                    <tr>
+                        <td class="table-success" style="word-wrap:anywhere; font-style:italic;">
+                            Example:  @GenerateName(resourcetype.ShortName)001
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Components</strong>
+                                    </td>
+                                </tr>
+                                @foreach (var resourceComponent in servicesData.ResourceComponents)
+                                {
+                                    switch (resourceComponent.Name)
+                                    {
+                                        case "ResourceEnvironment":
+                                            <tr>
+                                                <td>
+                                                    Environment:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)<a id="@resourcetype.Id"></a>
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceInstance":
+                                            <tr>
+                                                <td>
+                                                    Instance:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    001
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceLocation":
+                                            <tr>
+                                                <td>
+                                                    Location:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceOrg":
+                                            <tr>
+                                                <td>
+                                                    Org:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceProjAppSvc":
+                                            <tr>
+                                                <td>
+                                                    ProjAppSvc:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceType":
+                                            <tr>
+                                                <td>
+                                                    Type:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @resourcetype.Resource (@resourcetype.ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceUnitDept":
+                                            <tr>
+                                                <td>
+                                                    Unit/Dept:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                        case "ResourceVmRole":
+                                            <tr>
+                                                <td>
+                                                    VM Role:
+                                                </td>
+                                                <td style="word-wrap:anywhere;">
+                                                    @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
+                                                </td>
+                                            </tr>
+                                            break;
+                                    }
+                                }
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Guidelines</strong>
+                                    </td>
+                                </tr>
+                                @if (@resourcetype.Optional != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Optional Components:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.Optional
+                                        </td>
+                                    </tr>
+                                }
+                                @if (@resourcetype.Exclude != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Excluded Components:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.Exclude
+                                        </td>
+                                    </tr>
+                                }
+                                @if (@resourcetype.ShortName != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Short Name:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.ShortName
+                                        </td>
+                                    </tr>
+                                }
+                                @if (@resourcetype.Scope != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Scope:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.Scope
+                                        </td>
+                                    </tr>
+                                }
+                                @if ((@resourcetype.LengthMin != "") && (@resourcetype.LengthMax != ""))
+                                {
+                                    <tr>
+                                        <td>
+                                            Length:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.LengthMin - @resourcetype.LengthMax characters
+                                        </td>
+                                    </tr>
+                                }
+                                @if (@resourcetype.ValidText != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Valid Characters:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.ValidText
+                                        </td>
+                                    </tr>
+                                }
+                                @if (@resourcetype.InvalidCharacters != "")
+                                {
+                                    <tr>
+                                        <td>
+                                            Invalid Characters:
+                                        </td>
+                                        <td style="word-wrap:anywhere;">
+                                            @resourcetype.InvalidCharacters
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
+
                 }
             </tbody>
         </table>
-        </div>
     }
 </div>
+
+
 @code {
     private ServicesData servicesData = new();
     private ResourceDelimiter? resourceDelimiter;
+    private string? selectedResourceType;
     private string? searchText;
 
     protected override async Task OnInitializedAsync()
     {
         servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
-        resourceDelimiter = (ResourceDelimiter) servicesData.ResourceDelimiters[0];
+        resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
     }
 
     protected string GenerateName(string shortName)
@@ -181,10 +297,8 @@
         return name;
     }
 
-    //private Task OnSearchChanged(string value)
-    //{
-    //    searchText = value;
-    //    return Task.CompletedTask;
-    //}
-}
-
+    private async void OnTypeChanged(ChangeEventArgs e)
+    {
+        await JsRuntime.InvokeVoidAsync("scrollIntoView", e.Value.ToString());
+    }
+    }
