@@ -45,12 +45,12 @@
                 @foreach (var resourcetype in servicesData.ResourceTypes)
                 {
                     <tr class="table-dark">
-                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                             <h3>@resourcetype.Resource</h3>
                         </td>
                     </tr>
                     <tr>
-                        <td class="table-success" style="word-wrap:break-word;overflow-wrap:anywhere;font-style:italic;">
+                        <td class="table-success" style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
                             Example:  @GenerateName(resourcetype.ShortName)001
                         </td>
                     </tr>
@@ -71,7 +71,7 @@
                                                 <td>
                                                     Environment:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)<a id="@resourcetype.Id"></a>
                                                 </td>
                                             </tr>
@@ -81,7 +81,7 @@
                                                 <td>
                                                     Instance:
                                                 </td>
-                                                <td style="word-wrap:break-word;">
+                                                <td style="word-wrap:break-word;white-space: normal;">
                                                     001
                                                 </td>
                                             </tr>
@@ -91,7 +91,7 @@
                                                 <td>
                                                     Location:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
                                                 </td>
                                             </tr>
@@ -101,7 +101,7 @@
                                                 <td>
                                                     Org:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
                                                 </td>
                                             </tr>
@@ -111,7 +111,7 @@
                                                 <td>
                                                     ProjAppSvc:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
                                                 </td>
                                             </tr>
@@ -121,7 +121,7 @@
                                                 <td>
                                                     Type:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @resourcetype.Resource (@resourcetype.ShortName)
                                                 </td>
                                             </tr>
@@ -131,7 +131,7 @@
                                                 <td>
                                                     Unit/Dept:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
                                                 </td>
                                             </tr>
@@ -141,7 +141,7 @@
                                                 <td>
                                                     VM Role:
                                                 </td>
-                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                                <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                                     @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
                                                 </td>
                                             </tr>
@@ -159,7 +159,7 @@
                                         <td>
                                             Optional Components:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.Optional
                                         </td>
                                     </tr>
@@ -170,7 +170,7 @@
                                         <td>
                                             Excluded Components:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.Exclude
                                         </td>
                                     </tr>
@@ -181,7 +181,7 @@
                                         <td>
                                             Short Name:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.ShortName
                                         </td>
                                     </tr>
@@ -192,7 +192,7 @@
                                         <td>
                                             Scope:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.Scope
                                         </td>
                                     </tr>
@@ -203,7 +203,7 @@
                                         <td>
                                             Length:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.LengthMin - @resourcetype.LengthMax characters
                                         </td>
                                     </tr>
@@ -214,7 +214,7 @@
                                         <td>
                                             Valid Characters:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere; ">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.ValidText
                                         </td>
                                     </tr>
@@ -225,7 +225,7 @@
                                         <td>
                                             Invalid Characters:
                                         </td>
-                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;">
+                                        <td style="word-wrap:break-word;overflow-wrap:anywhere;white-space: normal;">
                                             @resourcetype.InvalidCharacters
                                         </td>
                                     </tr>
