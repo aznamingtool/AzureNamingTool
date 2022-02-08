@@ -10,13 +10,7 @@
     <div class="card-body"><h2>Reference</h2></div>
 </div>
 <div class="card-body">
-    <p>This component shows a sample generated name for each resource type.</p>
-    @*<div>
-        Search: <InputText class="form-control" id="search" ValueExpression="@(()=>searchText)"
-        Value="@searchText" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-        ValueChanged="@((string value) => OnSearchChanged(value))" />
-        </div>*@
-
+    <p>This component shows an example of a generated name using the selected components for each resource type.</p>
 
     @if (servicesData.ResourceTypes == null)
     {
