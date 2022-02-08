@@ -84,7 +84,7 @@
         bool updateConfig = false;
 
         message.Header = "INFORMATION";
-        message.Type = "INFO";
+        message.Type = MessageTypesEnum.INFORMATION;
 
         switch (action)
         {
@@ -100,7 +100,7 @@
                 else
                 {
                     state.SetAdmin(false);
-                    message.Type = "ERROR";
+                    message.Type = MessageTypesEnum.ERROR;
                     message.Header = "ERROR";
                     message.Message = "Login failed";
                 }
@@ -115,7 +115,7 @@
                     // Set the new admin password
                     config.AdminPassword = GeneralHelper.EncryptString(newpassword, config.SALTKey);
                     updateConfig = true;
-                    message.Type = "SUCCESS";
+                    message.Type = MessageTypesEnum.SUCCESS;
                     message.Header = "SUCCESS";
                     message.Message = "Password updated!";
                 }
@@ -127,7 +127,7 @@
                 {
                     config.APIKey = GeneralHelper.EncryptString(currentapikey, config.SALTKey);
                     updateConfig = true;
-                    message.Type = "SUCCESS";
+                    message.Type = MessageTypesEnum.SUCCESS;
                     message.Header = "SUCCESS";
                     message.Message = "API Key updated!";
                 }
@@ -142,7 +142,7 @@
                     config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
                     currentapikey = guid.ToString();
                     updateConfig = true;
-                    message.Type = "SUCCESS";
+                    message.Type = MessageTypesEnum.SUCCESS;
                     message.Header = "SUCCESS";
                     message.Message = "API Key generated!";
                 }
@@ -167,16 +167,16 @@
         {
             switch (message.Type)
             {
-                case "INFO":
+                case MessageTypesEnum.INFORMATION:
                     toastService.ShowInfo(message.Message, "INFORMATION");
                     break;
-                case "SUCCESS":                
+                case MessageTypesEnum.SUCCESS:                
                 toastService.ShowSuccess(message.Message, "SUCCESS");
                 break;
-                case "WARNING":                
+                case MessageTypesEnum.WARNING:                
                 toastService.ShowWarning(message.Message, "WARNING");
                 break;
-                case "ERROR":                
+                case MessageTypesEnum.ERROR:                
                 toastService.ShowError(message.Message, "ERROR");
                 break;
             }

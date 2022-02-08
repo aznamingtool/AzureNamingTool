@@ -36,148 +36,210 @@
                 @if (servicesData != null)
                 {
                     <h3>Base Configuration</h3>
+
                     <div class="card">
-                        <h4 class="card-header text-white bg-secondary">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#components" role="button" aria-expanded="false" aria-controls="components">
+                        <h4 class="card-header text-white bg-dark text-white">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Components
                             </a>
                         </h4>
                         <div class="collapse card card-body" id="components">
-                            <h5>Current Components</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        @if (admin)
-                                        {
-                                            <th>Actions</th>
-                                        }
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in @servicesData.ResourceComponents)
-                                    {
-                                        <tr>
-                                            <td>@item.Name</td>
-                                            @if (admin)
+                            <div class="card">
+                                <div class="card card-header bg-secondary text-white">
+                                    Current Components
+                                </div>
+                                <div class="card card-body">
+                                    <p>The current Components.</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                @if (admin)
+                                                {
+                                                    <th>Actions</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in @servicesData.ResourceComponents)
                                             {
-                                                <td>
-                                                    @if (item.Enabled)
+                                                <tr>
+                                                    <td>@item.Name</td>
+                                                    @if (admin)
                                                     {
-                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"up"))" title="Move up">
-                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                        </button>
-                                                        <span> </span>
-                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"down"))" title="Move down">
-                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                        </button>
-                                                        <span> </span>
-                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceComponent",item.Id,"disable"))" title="Disable">
-                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                        </button>
+                                                        <td>
+                                                            @if (item.Enabled)
+                                                            {
+                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"up"))" title="Move up">
+                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                </button>
+                                                                <span> </span>
+                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"down"))" title="Move down">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                </button>
+                                                                <span> </span>
+                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceComponent",item.Id,"disable"))" title="Disable">
+                                                                    <span class="oi oi-x" aria-hidden="true"></span>
+                                                                </button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            }
+                                                        </td>
                                                     }
-                                                    else
-                                                    {
-                                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable">
-                                                            <span class="oi oi-plus" aria-hidden="true"></span>
-                                                        </button>
-                                                    }
-                                                </td>
+                                                </tr>
                                             }
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             @if (admin)
                             {
-                                <div>
-                                    <h5>Configuration</h5>
-                                    <table class="mb-3">
-                                        <tr>
-                                            <td>JSON</td>
-                                            <td>
-                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceComponent",0,"download")) title="Download">
-                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                    </button>
-                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Save">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                    </button>
+                                <div class="card">
+                                    <div class="card card-header bg-secondary text-white">
+                                        Configuration
+                                    </div>
+                                    <div class="card card-body">
+                                        <div class="card  w-auto">
+                                            <div class="card card-header bg-default">
+                                                Export the current Resource Components Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>
+                                                    Click <strong>Export</strong> to export the current Resource Components Configuration.
+                                                </p>
+                                                <p>
+                                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceComponent",0,"download")) title="Export">
+                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default">
+                                                Import Components Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>
+                                                    Enter the new Components Configuration JSON below and click <strong>Import</strong> to import the Components Configuration. <strong>NOTE:</strong> This will overwrite the existing Components Configuration.
+                                                </p>
+                                                <p>
+                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                </p>
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Import">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
                     </div>
+
                 }
 
                 @if (servicesData.ResourceDelimiters != null)
                 {
                     <div class="card">
-                        <h4 class="card-header text-white bg-secondary">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#delimiters" role="button" aria-expanded="false" aria-controls="delimiters">
+                        <h4 class="card-header text-white bg-dark text-white">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Delimiters
                             </a>
                         </h4>
                         <div class="collapse card card-body" id="delimiters">
-                            <h5>Current Delimiters</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Delimiter</th>
-                                        @if (admin)
-                                        {
-                                            <th>Actions</th>
-                                        }
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in @servicesData.ResourceDelimiters)
-                                    {
-                                        <tr>
-                                            <td>@item.Name</td>
-                                            <td>@item.Delimiter</td>
-                                            @if (admin)
+                            <div class="card">
+                                <div class="card card-header bg-secondary text-white">
+                                    Current Delimiters
+                                </div>
+                                <div class="card card-body">
+                                    <p>The current Delimiters.</p>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Delimiter</th>
+                                                @if (admin)
+                                                {
+                                                    <th>Actions</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in @servicesData.ResourceDelimiters)
                                             {
-                                                <td>
-                                                    @if (item.Enabled)
+                                                <tr>
+                                                    <td>@item.Name</td>
+                                                    <td>@item.Delimiter</td>
+                                                    @if (admin)
                                                     {
-                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
-                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                        </button>
+                                                        <td>
+                                                            @if (item.Enabled)
+                                                            {
+                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
+                                                                    <span class="oi oi-x" aria-hidden="true"></span>
+                                                                </button>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"enable"))" title="Enable">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            }
+                                                        </td>
                                                     }
-                                                    else
-                                                    {
-                                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"enable"))" title="Enable">
-                                                            <span class="oi oi-plus" aria-hidden="true"></span>
-                                                        </button>
-                                                    }
-                                                </td>
+                                                </tr>
                                             }
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             @if (admin)
                             {
-                                <div>
-                                    <h5>Configuration</h5>
-                                    <table class="mb-3">
-                                        <tr>
-                                            <td>JSON</td>
-                                            <td>
-                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceDelimiter",0,"download")) title="Download">
-                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                    </button>
-                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Save">
-                                        <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                    </button>
+                                <div class="card">
+                                    <div class="card card-header bg-secondary text-white">
+                                        Configuration
+                                    </div>
+                                    <div class="card card-body">
+                                        <div class="card  w-auto">
+                                            <div class="card card-header bg-default">
+                                                Export the current Resource Delimiters Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>
+                                                    Click <strong>Export</strong> to export the current Resource Delimiters Configuration.
+                                                </p>
+                                                <p>
+                                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceDelimiter",0,"download")) title="Export">
+                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default">
+                                                Import Delimiters Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>
+                                                    Enter the new Resource Delimiters Configuration JSON below and click <strong>Import</strong> to import the Resource Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
+                                                </p>
+                                                <p>
+                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                </p>
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         </div>
@@ -195,88 +257,129 @@
                             @if (servicesData.ResourceEnvironments != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#environments" role="button" aria-expanded="false" aria-controls="environments">
+                                    <h4 class="card-header text-white bg-dark text-white">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Environments
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="environments">
-                                        <h5>Current Environments</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                    @if (admin)
-                                                    {
-                                                        <th>Actions</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceEnvironments)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                        @if (admin)
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Environments
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Environments.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                            @if (admin)
+                                                            {
+                                                                <th>Actions</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceEnvironments)
                                                         {
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                                @if (admin)
+                                                                {
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"up"))" title="Move up">
+                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"down"))" title="Move down">
+                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
                                                         }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div class="mb-3">
-                                                <h5>New Environment</h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Short Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New Environment
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new Environment.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceEnvironment",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export the current Environments Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Environments Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceEnvironment",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Orgs Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -287,51 +390,111 @@
                             @if (servicesData.ResourceLocations != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#locations" role="button" aria-expanded="false" aria-controls="locations">
+                                    <h4 class="card-header text-white bg-dark text-white">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Locations
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="locations">
-                                        <h5>Current Locations</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceLocations)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Locations
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Locations.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceLocations)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceLocation",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New Location
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new Location.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export the current Locations Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Locations Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceLocation",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Orgs Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
-
                                     </div>
                                 </div>
                             }
@@ -340,88 +503,129 @@
                             @if (servicesData.ResourceOrgs != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#orgs" role="button" aria-expanded="false" aria-controls="orgs">
+                                    <h4 class="card-header text-white bg-dark text-white">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Orgs
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="orgs">
-                                        <h5>Current Orgs</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                    @if (admin)
-                                                    {
-                                                        <th>Actions</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceOrgs)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                        @if (admin)
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Orgs
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Orgs.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                            @if (admin)
+                                                            {
+                                                                <th>Actions</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceOrgs)
                                                         {
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                                @if (admin)
+                                                                {
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"up"))" title="Move up">
+                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"down"))" title="Move down">
+                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
                                                         }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div class="mb-3">
-                                                <h5>New Org</h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Short Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New Org
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new Org.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceOrg",0,"download"))>
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export the current Orgs Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Orgs Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceOrg",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Orgs Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration. <strong>NOTE:</strong> This will overwrite the existing Orgs Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -432,88 +636,129 @@
                             @if (servicesData.ResourceProjAppSvcs != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="projsappssvcs">
+                                    <h4 class="card-header text-white bg-dark text-white">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Projects/Apps/Services
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="projsappssvcs">
-                                        <h5>Current Projects/Apps/Services</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                    @if (admin)
-                                                    {
-                                                        <th>Actions</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceProjAppSvcs)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                        @if (admin)
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Projects/Apps/Services
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Projects/Apps/Services.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                            @if (admin)
+                                                            {
+                                                                <th>Actions</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceProjAppSvcs)
                                                         {
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                                @if (admin)
+                                                                {
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"up"))" title="Move up">
+                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"down"))" title="Move down">
+                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
                                                         }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div class="mb-3">
-                                                <h5>New Project/App/Service</h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Short Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New Project/App/Service
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new Project/App/Service.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export the current Projects/Apps/Services Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Projects/Apps/Services Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Projects/Apps/Services Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -524,49 +769,78 @@
                             @if (servicesData.ResourceTypes != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#types" role="button" aria-expanded="false" aria-controls="types">
-                                            Types
+                                    <h4 class="card-header text-white bg-dark text-white">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                            Resource Types
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="types">
-                                        <h5>Current Types</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceTypes)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Resource</td>
-                                                        <td>@item.ShortName</td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Resource Types
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Resource Types.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceTypes)
+                                                        {
+                                                            <tr>
+                                                                <td>@item.Resource</td>
+                                                                <td>@item.ShortName</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceType",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export the current Resource Types Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Resource Types Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceType",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Resource Types Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -577,88 +851,129 @@
                             @if (servicesData.ResourceUnitDepts != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
+                                    <h4 class="card-header text-white bg-dark text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Units/Depts
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="unitsdepts">
-                                        <h5>Current Units/Depts</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                    @if (admin)
-                                                    {
-                                                        <th>Actions</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceUnitDepts)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                        @if (admin)
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current Units/Depts
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current Units/Depts.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                            @if (admin)
+                                                            {
+                                                                <th>Actions</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceUnitDepts)
                                                         {
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                                @if (admin)
+                                                                {
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"up"))" title="Move up">
+                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"down"))" title="Move down">
+                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
                                                         }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div class="mb-3">
-                                                <h5>New Unit/Dept</h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Short Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New Unit/Dept
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new Unit/Dept.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceUnitDept",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export Units/Depts Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current Units/Depts Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceUnitDept",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import Units/Depts Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -669,88 +984,129 @@
                             @if (servicesData.ResourceVmRoles != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-secondary">
+                                    <h4 class="card-header text-white bg-dark text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
                                             VM Roles
                                         </a>
                                     </h4>
                                     <div class="collapse card card-body" id="vmroles">
-                                        <h5>Current Vm Roles</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Short Name</th>
-                                                    @if (admin)
-                                                    {
-                                                        <th>Actions</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in @servicesData.ResourceVmRoles)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Name</td>
-                                                        <td>@item.ShortName</td>
-                                                        @if (admin)
+                                        <div class="card">
+                                            <div class="card card-header bg-secondary text-white">
+                                                Current VM Roles
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>The current VM Roles.</p>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Short Name</th>
+                                                            @if (admin)
+                                                            {
+                                                                <th>Actions</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var item in @servicesData.ResourceVmRoles)
                                                         {
-                                                            <td>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"delete"))" title="Delete">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
+                                                            <tr>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.ShortName</td>
+                                                                @if (admin)
+                                                                {
+                                                                    <td>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"up"))" title="Move up">
+                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
+                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                        </button>
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </td>
+                                                                }
+                                                            </tr>
                                                         }
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                         @if (admin)
                                         {
-                                            <div class="mb-3">
-                                                <h5>New Vm Role</h5>
-                                                <table>
-                                                    <tr>
-                                                        <td>Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Short Name</td>
-                                                        <td>
-                                                            <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    New VM Role
+                                                </div>
+                                                <div class="card card-body">
+                                                    <p>Add a new VM Role.</p>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Short Name</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2">
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
+                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h5>Configuration</h5>
-                                                <table class="mb-3">
-                                                    <tr>
-                                                        <td>JSON</td>
-                                                        <td>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Download">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                                </button>
-                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Save">
-                                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                                </button>
+                                            <div class="card">
+                                                <div class="card card-header bg-secondary text-white">
+                                                    Configuration
+                                                </div>
+                                                <div class="card card-body">
+                                                    <div class="card  w-auto">
+                                                        <div class="card card-header bg-default">
+                                                            Export VM Role Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Click <strong>Export</strong> to export the current VM Role Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Export">
+                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card">
+                                                        <div class="card card-header bg-default">
+                                                            Import VM Role Configuration
+                                                        </div>
+                                                        <div class="card card-body">
+                                                            <p>
+                                                                Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
+                                                            </p>
+                                                            <p>
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         }
                                     </div>
@@ -762,33 +1118,52 @@
             </div>
             @if (admin)
             {
-                <div class="mb-3">
+                <div>
                     <h3>General Configuration</h3>
                     <div class="card">
-                        <h4 class="card-header text-white bg-secondary">
+                        <h4 class="card-header text-white bg-dark text-white">
                             <a class="link-light text-decoration-none" data-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
                                 Master Configuration
                             </a>
                         </h4>
                         <div class="collapse card card-body" id="master">
-                            <div>
-                                <table class="mb-3">
-                                    <tr>
-                                        <td>JSON</td>
-                                        <td>
-                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
-                                        </td>
-                                    </tr>
-                                </table>
-                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Master",0,"download")) title="Download">
-                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                                </button>
-                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Save">
-                                    <span class="oi oi-plus" aria-hidden="true"></span> Save
-                                </button>
+                            <div class="card w-auto">
+                                <div class="card card-header bg-default">
+                                    Export the current Master Configuration
+                                </div>
+                                <div class="card card-body">
+                                    <p>
+                                        Click <strong>Export</strong> to export the current Master Configuration. This includes all component, settings, and admin passwords/API keys.
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Master",0,"download")) title="Export">
+                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                        </button>
+                                    </p>
+                                </div>
                             </div>
+                            <div class="card">
+                                <div class="card card-header bg-default">
+                                    Import Master Configuration
+                                </div>
+                                <div class="card card-body">
+                                    <p>
+                                        Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
+                                    </p>
+                                    <p>
+                                        <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                    </p>
+                                    <p>
+                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
+                                            <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+
                     @*<div class="card">
                         <h4 class="card-header text-white bg-secondary">
                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
@@ -861,7 +1236,17 @@
                             {
                                 resourceComponent.SortOrder += -1;
                             }
-                            await ResourceComponentService.PostItem(resourceComponent);
+                            serviceResponse = await ResourceComponentService.PostItem(resourceComponent);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceComponent.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceComponent.Name + " move failed!";
+                            }
                             break;
                         case "down":
                             resourceComponent = servicesData.ResourceComponents.Find(x => x.Id == id);
@@ -869,21 +1254,50 @@
                             {
                                 resourceComponent.SortOrder += 1;
                             }
-                            await ResourceComponentService.PostItem(resourceComponent);
+                            serviceResponse = await ResourceComponentService.PostItem(resourceComponent);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceComponent.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceComponent.Name + " move failed!";
+                            }
                             break;
                         case "enable":
                             resourceComponent = servicesData.ResourceComponents.Find(x => x.Id == id);
                             resourceComponent.Enabled = true;
                             resourceComponent.SortOrder = servicesData.ResourceComponents.Count + 1;
-                            await ResourceComponentService.PostItem(resourceComponent);
+                            serviceResponse = await ResourceComponentService.PostItem(resourceComponent);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceComponent.Name + " enabled!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceComponent.Name + " enabling failed!";
+                            }
                             break;
                         case "disable":
                             resourceComponent = servicesData.ResourceComponents.Find(x => x.Id == id);
                             resourceComponent.Enabled = false;
-                            await ResourceComponentService.PostItem(resourceComponent);
+                            serviceResponse = await ResourceComponentService.PostItem(resourceComponent);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceComponent.Name + " disabled!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceComponent.Name + " disabling failed!";
+                            }
                             break;
                         case "download":
-
                             serviceResponse = await ResourceComponentService.GetItems(true);
                             var componentjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("componentsconfig.json", JsonSerializer.Serialize(componentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
@@ -894,12 +1308,12 @@
                                 serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Components config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Components config update failed!";
                                 }
                             }
@@ -916,12 +1330,32 @@
                         case "enable":
                             resourceDelimiter = servicesData.ResourceDelimiters.Find(x => x.Id == id);
                             resourceDelimiter.Enabled = true;
-                            await ResourceDelimiterService.PostItem(resourceDelimiter);
+                            serviceResponse = await ResourceDelimiterService.PostItem(resourceDelimiter);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceDelimiter.Name + " enabled!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceDelimiter.Name + " enabling failed!";
+                            }
                             break;
                         case "disable":
                             resourceDelimiter = servicesData.ResourceDelimiters.Find(x => x.Id == id);
                             resourceDelimiter.Enabled = false;
-                            await ResourceDelimiterService.PostItem(resourceDelimiter);
+                            serviceResponse = await ResourceDelimiterService.PostItem(resourceDelimiter);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceDelimiter.Name + " disabled!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceDelimiter.Name + " disabling failed!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceDelimiterService.GetItems(admin);
@@ -934,12 +1368,12 @@
                                 serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Delimiters config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Delimiters config update failed!";
                                 }
                             }
@@ -959,7 +1393,17 @@
                             {
                                 resourceEnvironment.SortOrder += -1;
                             }
-                            await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                            serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceEnvironment.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceEnvironment.Name + " move failed!";
+                            }
                             break;
                         case "down":
                             resourceEnvironment = servicesData.ResourceEnvironments.Find(x => x.Id == id);
@@ -967,14 +1411,34 @@
                             {
                                 resourceEnvironment.SortOrder += 1;
                             }
-                            await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                            serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceEnvironment.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceEnvironment.Name + " move failed!";
+                            }
                             break;
                         case "delete":
                             bool confirmEnvironmentDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmEnvironmentDelete)
                             {
                                 resourceEnvironment = servicesData.ResourceEnvironments.Find(x => x.Id == id);
-                                await ResourceEnvironmentService.DeleteItem(Convert.ToInt32(resourceEnvironment.Id));
+                                serviceResponse = await ResourceEnvironmentService.DeleteItem(Convert.ToInt32(resourceEnvironment.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceEnvironment.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceEnvironment.Name + " deletion failed!";
+                                }
                             }
                             break;
                         case "add":
@@ -987,7 +1451,17 @@
                                         ShortName = newItemShortName
                                     };
 
-                                await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                                serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceEnvironment.Name + " added!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceEnvironment.Name + " addition failed!";
+                                }
                             }
                             break;
                         case "download":
@@ -1001,12 +1475,12 @@
                                 serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Environments config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Environments config update failed!";
                                 }
                             }
@@ -1029,12 +1503,12 @@
                                 serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Locations config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Locations config update failed!";
                                 }
                             }
@@ -1055,7 +1529,17 @@
                             {
                                 resourceOrg.SortOrder += -1;
                             }
-                            await ResourceOrgService.PostItem(resourceOrg);
+                            serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceOrg.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceOrg.Name + " move failed!";
+                            }
                             break;
                         case "down":
                             resourceOrg = servicesData.ResourceOrgs.Find(x => x.Id == id);
@@ -1063,14 +1547,34 @@
                             {
                                 resourceOrg.SortOrder += 1;
                             }
-                            await ResourceOrgService.PostItem(resourceOrg);
+                            serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceOrg.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceOrg.Name + " move failed!";
+                            }
                             break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmOrgDelete)
                             {
                                 resourceOrg = servicesData.ResourceOrgs.Find(x => x.Id == id);
-                                await ResourceOrgService.DeleteItem(Convert.ToInt32(resourceOrg.Id));
+                                serviceResponse = await ResourceOrgService.DeleteItem(Convert.ToInt32(resourceOrg.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceOrg.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceOrg.Name + " deletion failed!";
+                                }
                             }
                             break;
                         case "add":
@@ -1083,7 +1587,17 @@
                                         ShortName = newItemShortName
                                     };
 
-                                await ResourceOrgService.PostItem(resourceOrg);
+                                serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceOrg.Name + " added!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceOrg.Name + " addition failed!";
+                                }
                             }
                             break;
                         case "download":
@@ -1097,12 +1611,12 @@
                                 serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Orgs config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Orgs config update failed!";
                                 }
                             }
@@ -1122,7 +1636,17 @@
                             {
                                 resourceProjAppSvc.SortOrder += -1;
                             }
-                            await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                            serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceProjAppSvc.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceProjAppSvc.Name + " move failed!";
+                            }
                             break;
                         case "down":
                             resourceProjAppSvc = servicesData.ResourceProjAppSvcs.Find(x => x.Id == id);
@@ -1130,14 +1654,34 @@
                             {
                                 resourceProjAppSvc.SortOrder += 1;
                             }
-                            await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                            serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceProjAppSvc.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceProjAppSvc.Name + " move failed!";
+                            }
                             break;
                         case "delete":
                             bool coinfirmProjAppSvcDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (coinfirmProjAppSvcDelete)
                             {
                                 resourceProjAppSvc = servicesData.ResourceProjAppSvcs.Find(x => x.Id == id);
-                                await ResourceProjAppSvcService.DeleteItem(Convert.ToInt32(resourceProjAppSvc.Id));
+                                serviceResponse = await ResourceProjAppSvcService.DeleteItem(Convert.ToInt32(resourceProjAppSvc.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceProjAppSvc.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceProjAppSvc.Name + " deletion failed!";
+                                }
                             }
                             break;
                         case "add":
@@ -1150,7 +1694,17 @@
                                         ShortName = newItemShortName
                                     };
 
-                                await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                                serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceProjAppSvc.Name + " added!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceProjAppSvc.Name + " addition failed!";
+                                }
                             }
                             break;
                         case "download":
@@ -1164,12 +1718,12 @@
                                 serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource ProjAppSvcs config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource ProjAppSvcs config update failed!";
                                 }
                             }
@@ -1193,12 +1747,12 @@
                                 serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Types config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Types config update failed!";
                                 }
                             }
@@ -1218,7 +1772,17 @@
                             {
                                 resourceUnitDept.SortOrder += -1;
                             }
-                            await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                            serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceUnitDept.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceUnitDept.Name + " move failed!";
+                            }
                             break;
                         case "down":
                             resourceUnitDept = servicesData.ResourceUnitDepts.Find(x => x.Id == id);
@@ -1226,14 +1790,34 @@
                             {
                                 resourceUnitDept.SortOrder += 1;
                             }
-                            await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                            serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceUnitDept.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceUnitDept.Name + " move failed!";
+                            }
                             break;
                         case "delete":
                             bool confirmUnitDeptDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmUnitDeptDelete)
                             {
                                 resourceUnitDept = servicesData.ResourceUnitDepts.Find(x => x.Id == id);
-                                await ResourceUnitDeptService.DeleteItem(Convert.ToInt32(resourceUnitDept.Id));
+                                serviceResponse = await ResourceUnitDeptService.DeleteItem(Convert.ToInt32(resourceUnitDept.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceUnitDept.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceUnitDept.Name + " deletion failed!";
+                                }
                             }
                             break;
                         case "add":
@@ -1246,7 +1830,17 @@
                                         ShortName = newItemShortName
                                     };
 
-                                await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                                serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceUnitDept.Name + " added!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceUnitDept.Name + " addition failed!";
+                                }
                             }
                             break;
                         case "download":
@@ -1260,12 +1854,12 @@
                                 serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource UnitDepts config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource UnitDepts config update failed!";
                                 }
                             }
@@ -1285,7 +1879,18 @@
                             {
                                 resourceVmRole.SortOrder += -1;
                             }
-                            await ResourceVmRoleService.PostItem(resourceVmRole);
+                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceVmRole.Name + " moved up!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceVmRole.Name + " move failed!";
+                            }
+
                             break;
                         case "down":
                             resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
@@ -1293,14 +1898,34 @@
                             {
                                 resourceVmRole.SortOrder += 1;
                             }
-                            await ResourceVmRoleService.PostItem(resourceVmRole);
+                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            if (serviceResponse.Success)
+                            {
+                                message.Type = MessageTypesEnum.SUCCESS;
+                                message.Message = resourceVmRole.Name + " moved down!";
+                            }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = resourceVmRole.Name + " move failed!";
+                            }
                             break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmOrgDelete)
                             {
                                 resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
-                                await ResourceVmRoleService.DeleteItem(Convert.ToInt32(resourceVmRole.Id));
+                                serviceResponse = await ResourceVmRoleService.DeleteItem(Convert.ToInt32(resourceVmRole.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceVmRole.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceVmRole.Name + " deletion failed!";
+                                }
                             }
                             break;
                         case "add":
@@ -1312,8 +1937,17 @@
                                         Name = newItemName,
                                         ShortName = newItemShortName
                                     };
-
-                                await ResourceVmRoleService.PostItem(resourceVmRole);
+                                serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceVmRole.Name + " added!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceVmRole.Name + " addition failed!";
+                                }
                             }
                             break;
                         case "download":
@@ -1327,12 +1961,12 @@
                                 serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Vm Roles config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Resource Vm Roles config update failed!";
                                 }
                             }
@@ -1355,12 +1989,12 @@
                                 serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newItemConfig));
                                 if (serviceResponse.Success)
                                 {
-                                    message.Type = "SUCCESS";
+                                    message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Master config update succeeded!";
                                 }
                                 else
                                 {
-                                    message.Type = "ERROR";
+                                    message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Master config update failed!";
                                 }
                             }
@@ -1388,7 +2022,7 @@
         }
         catch (Exception ex)
         {
-            message.Type = "ERROR";
+            message.Type = MessageTypesEnum.ERROR;
             message.Message = "There was a problem with the request.";
         }
 
@@ -1397,18 +2031,18 @@
         {
             switch (message.Type)
             {
-                case "INFO":
+                case MessageTypesEnum.INFORMATION:
                     toastService.ShowInfo(message.Message, "INFORMATION");
                     break;
-                case "SUCCESS":                
-                toastService.ShowSuccess(message.Message, "SUCCESS");
-                break;
-                case "WARNING":                
-                toastService.ShowWarning(message.Message, "WARNING");
-                break;
-                case "ERROR":                
-                toastService.ShowError(message.Message, "ERROR");
-                break;
+                case MessageTypesEnum.SUCCESS:
+                    toastService.ShowSuccess(message.Message, "SUCCESS");
+                    break;
+                case MessageTypesEnum.WARNING:
+                    toastService.ShowWarning(message.Message, "WARNING");
+                    break;
+                case MessageTypesEnum.ERROR:
+                    toastService.ShowError(message.Message, "ERROR");
+                    break;
             }
         }
     }
