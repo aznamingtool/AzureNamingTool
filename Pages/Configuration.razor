@@ -35,17 +35,17 @@
             <div class="mb-3">
                 @if (servicesData != null)
                 {
-                    <h3>Base Configuration</h3>
+                    <h4>Base Configuration</h4>
 
                     <div class="card">
-                        <h4 class="card-header text-white bg-dark text-white">
+                        <h5 class="card-header text-white bg-secondary text-white">
                             <a class="link-light text-decoration-none" data-toggle="collapse" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Components
                             </a>
-                        </h4>
+                        </h5>
                         <div class="collapse card card-body" id="components">
                             <div class="card">
-                                <div class="card card-header bg-secondary text-white">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
                                     Current Components
                                 </div>
                                 <div class="card card-body">
@@ -99,12 +99,12 @@
                             @if (admin)
                             {
                                 <div class="card">
-                                    <div class="card card-header bg-secondary text-white">
+                                    <div class="card card-header bg-default" style="font-weight:bold;">
                                         Configuration
                                     </div>
                                     <div class="card card-body">
                                         <div class="card  w-auto">
-                                            <div class="card card-header bg-default">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Export the current Resource Components Configuration
                                             </div>
                                             <div class="card card-body">
@@ -119,7 +119,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Import Components Configuration
                                             </div>
                                             <div class="card card-body">
@@ -147,14 +147,14 @@
                 @if (servicesData.ResourceDelimiters != null)
                 {
                     <div class="card">
-                        <h4 class="card-header text-white bg-dark text-white">
+                        <h5 class="card-header text-white bg-secondary text-white">
                             <a class="link-light text-decoration-none" data-toggle="collapse" href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Delimiters
                             </a>
-                        </h4>
+                        </h5>
                         <div class="collapse card card-body" id="delimiters">
                             <div class="card">
-                                <div class="card card-header bg-secondary text-white">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
                                     Current Delimiters
                                 </div>
                                 <div class="card card-body">
@@ -202,12 +202,12 @@
                             @if (admin)
                             {
                                 <div class="card">
-                                    <div class="card card-header bg-secondary text-white">
+                                    <div class="card card-header bg-default" style="font-weight:bold;">
                                         Configuration
                                     </div>
                                     <div class="card card-body">
                                         <div class="card  w-auto">
-                                            <div class="card card-header bg-default">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Export the current Resource Delimiters Configuration
                                             </div>
                                             <div class="card card-body">
@@ -222,7 +222,7 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Import Delimiters Configuration
                                             </div>
                                             <div class="card card-body">
@@ -248,7 +248,7 @@
             </div>
 
             <div class="mb-3">
-                <h3>Component Configuration</h3>
+                <h4>Component Configuration</h4>
                 @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents.OrderBy(x => x.Name))
                 {
                     switch (resourceComponent.Name)
@@ -257,14 +257,14 @@
                             @if (servicesData.ResourceEnvironments != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Environments
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="environments">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Environments
                                             </div>
                                             <div class="card card-body">
@@ -311,7 +311,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New Environment
                                                 </div>
                                                 <div class="card card-body">
@@ -342,12 +342,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export the current Environments Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -362,7 +362,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Orgs Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -390,14 +390,14 @@
                             @if (servicesData.ResourceLocations != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Locations
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="locations">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Locations
                                             </div>
                                             <div class="card card-body">
@@ -424,7 +424,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New Location
                                                 </div>
                                                 <div class="card card-body">
@@ -455,12 +455,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export the current Locations Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -475,7 +475,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Orgs Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -503,14 +503,14 @@
                             @if (servicesData.ResourceOrgs != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Orgs
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="orgs">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Orgs
                                             </div>
                                             <div class="card card-body">
@@ -557,7 +557,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New Org
                                                 </div>
                                                 <div class="card card-body">
@@ -588,12 +588,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export the current Orgs Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -608,7 +608,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Orgs Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -636,14 +636,14 @@
                             @if (servicesData.ResourceProjAppSvcs != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Projects/Apps/Services
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="projsappssvcs">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Projects/Apps/Services
                                             </div>
                                             <div class="card card-body">
@@ -690,7 +690,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New Project/App/Service
                                                 </div>
                                                 <div class="card card-body">
@@ -721,12 +721,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export the current Projects/Apps/Services Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -741,7 +741,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Projects/Apps/Services Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -769,14 +769,14 @@
                             @if (servicesData.ResourceTypes != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Resource Types
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="types">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Resource Types
                                             </div>
                                             <div class="card card-body">
@@ -803,12 +803,12 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export the current Resource Types Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -823,7 +823,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Resource Types Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -851,14 +851,14 @@
                             @if (servicesData.ResourceUnitDepts != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Units/Depts
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="unitsdepts">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Units/Depts
                                             </div>
                                             <div class="card card-body">
@@ -905,7 +905,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New Unit/Dept
                                                 </div>
                                                 <div class="card card-body">
@@ -936,12 +936,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export Units/Depts Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -956,7 +956,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import Units/Depts Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -984,14 +984,14 @@
                             @if (servicesData.ResourceVmRoles != null)
                             {
                                 <div class="card">
-                                    <h4 class="card-header text-white bg-dark text-white">
+                                    <h5 class="card-header text-white bg-secondary text-white">
                                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
                                             VM Roles
                                         </a>
-                                    </h4>
+                                    </h5>
                                     <div class="collapse card card-body" id="vmroles">
                                         <div class="card">
-                                            <div class="card card-header bg-secondary text-white">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current VM Roles
                                             </div>
                                             <div class="card card-body">
@@ -1038,7 +1038,7 @@
                                         @if (admin)
                                         {
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     New VM Role
                                                 </div>
                                                 <div class="card card-body">
@@ -1069,12 +1069,12 @@
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card card-header bg-secondary text-white">
+                                                <div class="card card-header bg-default" style="font-weight:bold;">
                                                     Configuration
                                                 </div>
                                                 <div class="card card-body">
                                                     <div class="card  w-auto">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export VM Role Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -1089,7 +1089,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="card">
-                                                        <div class="card card-header bg-default">
+                                                        <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Import VM Role Configuration
                                                         </div>
                                                         <div class="card card-body">
@@ -1119,16 +1119,16 @@
             @if (admin)
             {
                 <div>
-                    <h3>General Configuration</h3>
+                    <h4>General Configuration</h4>
                     <div class="card">
-                        <h4 class="card-header text-white bg-dark text-white">
+                        <h5 class="card-header text-white bg-secondary text-white">
                             <a class="link-light text-decoration-none" data-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
                                 Master Configuration
                             </a>
-                        </h4>
+                        </h5>
                         <div class="collapse card card-body" id="master">
                             <div class="card w-auto">
-                                <div class="card card-header bg-default">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
                                     Export the current Master Configuration
                                 </div>
                                 <div class="card card-body">
@@ -1143,7 +1143,7 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card card-header bg-default">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
                                     Import Master Configuration
                                 </div>
                                 <div class="card card-body">
@@ -1165,11 +1165,11 @@
                     </div>
 
                     @*<div class="card">
-                        <h4 class="card-header text-white bg-secondary">
+                        <h5 class="card-header text-white bg-secondary">
                         <a class="link-light text-decoration-none" data-toggle="collapse" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
                         Policy
                         </a>
-                        </h4>
+                        </h5>
                         <div class="collapse card card-body" id="policy">
                         <div>
                         <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Download">

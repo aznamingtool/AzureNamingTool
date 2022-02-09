@@ -21,9 +21,9 @@
     else
     {
         <div class="card" style="margin-bottom:10px;">
-            <h4 class="card-header text-white bg-secondary">
+            <h5 class="card-header text-white bg-secondary">
                 Jump To
-            </h4>
+            </h5>
             <div class="card card-body">
                 <select @onchange="OnTypeChanged" class="form-control">
                     <option value="">Select a resource type</option>
@@ -42,13 +42,13 @@
                         <td>
                             <table class="table table-responsive">
                                 <tbody>
-                                    <tr class="table-dark">
+                                    <tr class="bg-secondary">
                                         <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">
-                                            <h3 style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">@resourcetype.Resource</h3>
+                                            <h5 class="text-white bg-secondary" style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">@resourcetype.Resource</h5>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="" style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
+                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
                                             <table class="table table-success w-100" style="margin-bottom:0;">
                                                 <tbody>
                                                     <tr>

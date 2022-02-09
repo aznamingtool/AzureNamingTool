@@ -11,185 +11,228 @@
 </div>
 <div class="card-body">
 
-<p>This component generates a name for the selected resource type.</p>
+    <p>This component generates a name for the selected resource type. Select the desired options and click <strong>Generate</strong>.</p>
 
-@if (servicesData.ResourceTypes == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <EditForm Model="@resourceNameRequest" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+    @if (servicesData.ResourceTypes == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <EditForm Model="@resourceNameRequest" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-        <div id="generator">
-            <div class="mb-3">
-                <h5>Delimiter</h5>
-                @resourceDelimiter.Name: @resourceDelimiter.Delimiter
-            </div>
-            <div class="mb-3">
-                <h5>Resource Type</h5>
-                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
-                         Value="@selectedResourceType"
-                         ValueChanged="@((string value) => OnTypeChanged(value))">
-                    <option value="">Select a resource type</option>
-                    @foreach (var type in @servicesData.ResourceTypes)
-                {
-                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
-                }
-            </InputSelect>
-        </div>
-        @((MarkupString)namingGuidelines)
-        @if (selectedResourceType != null)
-            {
-                @if (componentsVisible == "collapse")
-                {
-                    <button type="button" class="btn btn-primary mb-3" data-toggle="collapse" data-target="#components">Show/Hide Components</button>
-                }
-                <div class="@componentsVisible" id="components">
-                    @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents)
-                    {
-                        if (!selectedResourceTypeExclude.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
-                        {
-                            switch (resourceComponent.Name)
-                            {
-                                case "ResourceEnvironment":
-                                    <div class="mb-3">
-                                        <h5>Resource Environment</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
-                             Value="@selectedResourceEnvironment"
-                             ValueChanged="@((string value) => OnComponentChanged("re",value))">
-                                            <option value="">Select an environment</option>
-                                            @foreach (var item in @servicesData.ResourceEnvironments)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                                case "ResourceInstance":
-                                    <div class="mb-3">
-                                        <h5>Resource Instance </h5>
-                                        <InputText class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
-                           Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                           ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
-                                    </div>
-                                    break;
-                                case "ResourceLocation":
-                                    <div class="mb-3">
-                                        <h5>Resource Location</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
-                             Value="@selectedResourceLocation"
-                             ValueChanged="@((string value) => OnComponentChanged("rl",value))">
-                                            <option value="">Select a location</option>
-                                            @foreach (var item in @servicesData.ResourceLocations)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                                case "ResourceOrg":
-                                    <div class="mb-3">
-                                        <h5>Resource Org</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
-                             Value="@selectedResourceOrg"
-                             ValueChanged="@((string value) => OnComponentChanged("ro",value))">
-                                            <option value="">Select an org</option>
-                                            @foreach (var item in @servicesData.ResourceOrgs)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                                case "ResourceProjAppSvc":
-                                    <div class="mb-3">
-                                        <h5>Resource Project/App/Service</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
-                             Value="@selectedResourceProjAppSvc"
-                             ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
-                                            <option value="">Select a project/app/service</option>
-                                            @foreach (var item in @servicesData.ResourceProjAppSvcs)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                                case "ResourceUnitDept":
-                                    <div class="mb-3">
-                                        <h5>Resource Unit/Dept</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
-                             Value="@selectedResourceUnitDept"
-                             ValueChanged="@((string value) => OnComponentChanged("rud",value))">
-                                            <option value="">Select a unit/dept</option>
-                                            @foreach (var item in @servicesData.ResourceUnitDepts)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                                case "ResourceVmRole":
-                                    <div class="mb-3">
-                                        <h5>Resource Org</h5>
-                                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceVmRole)"
-                             Value="@selectedResourceVmRole"
-                             ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
-                                            <option value="">Select a VM Role</option>
-                                            @foreach (var item in @servicesData.ResourceVmRoles)
-                    {
-                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                    }
-                </InputSelect>
-            </div>
-                                    break;
-                            }
-                        }
-                    }
-                    <div class="mb-3">
-                        <br />
-                        <button class="btn btn-success" type="submit" disabled=@boolFormDisabled>
-                            Generate
-                        </button>
+            <div id="generator">
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary">
+                        Delimiter
+                    </h5>
+                    <div class="card card-body">
+                        @resourceDelimiter.Name: @resourceDelimiter.Delimiter
                     </div>
                 </div>
-                @if (@resourceNameRequestResponse != null)
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary">
+                        Resource Type
+                    </h5>
+                    <div class="card card-body">
+                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
+                                 Value="@selectedResourceType"
+                                 ValueChanged="@((string value) => OnTypeChanged(value))">
+                            <option value="">Select a resource type</option>
+                            @foreach (var type in @servicesData.ResourceTypes)
+                        {
+                            <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                        }
+                    </InputSelect>
+
+                    @((MarkupString)namingGuidelines)
+                </div>
+            </div>
+
+
+            @if (selectedResourceType != null)
                 {
-                    <div class="card @resultClass text-white">
-                        <div class="card-header">@resultHeader</div>
-                        <div class="card-body">
-                            @if (@generatedName != null)
+                    @if (componentsVisible == "collapse")
+                    {
+                        <div class="mt-3">
+                        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#components">Show/Hide Components</button>
+                        </div>
+                    }
+
+                    <div class="@componentsVisible" id="components">
+                        @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents)
+                        {
+                            if (!selectedResourceTypeExclude.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
                             {
-                                @if (@generatedName != "")
+                                switch (resourceComponent.Name)
                                 {
-                                    <div>
-                                        <strong>Generated Name: </strong>
-                                        <label>@generatedName</label>
-                                    </div>
+                                    case "ResourceEnvironment":
+
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Environment
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
+                                     Value="@selectedResourceEnvironment"
+                                     ValueChanged="@((string value) => OnComponentChanged("re",value))">
+                                                    <option value="">Select an environment</option>
+                                                    @foreach (var item in @servicesData.ResourceEnvironments)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
+                                    case "ResourceInstance":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Instance
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputText class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
+                                   Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                   ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
+                                            </div>
+                                        </div>
+                                        break;
+                                    case "ResourceLocation":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Location
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
+                                     Value="@selectedResourceLocation"
+                                     ValueChanged="@((string value) => OnComponentChanged("rl",value))">
+                                                    <option value="">Select a location</option>
+                                                    @foreach (var item in @servicesData.ResourceLocations)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
+                                    case "ResourceOrg":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Org
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
+                                     Value="@selectedResourceOrg"
+                                     ValueChanged="@((string value) => OnComponentChanged("ro",value))">
+                                                    <option value="">Select an org</option>
+                                                    @foreach (var item in @servicesData.ResourceOrgs)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
+                                    case "ResourceProjAppSvc":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Proejct/App/Service
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
+                                     Value="@selectedResourceProjAppSvc"
+                                     ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
+                                                    <option value="">Select a project/app/service</option>
+                                                    @foreach (var item in @servicesData.ResourceProjAppSvcs)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
+                                    case "ResourceUnitDept":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                Unit/Dept
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
+                                     Value="@selectedResourceUnitDept"
+                                     ValueChanged="@((string value) => OnComponentChanged("rud",value))">
+                                                    <option value="">Select a unit/dept</option>
+                                                    @foreach (var item in @servicesData.ResourceUnitDepts)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
+                                    case "ResourceVmRole":
+                                        <div class="card">
+                                            <h5 class="card-header text-white bg-secondary">
+                                                VM Role
+                                            </h5>
+                                            <div class="card card-body">
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceVmRole)"
+                                     Value="@selectedResourceVmRole"
+                                     ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
+                                                    <option value="">Select a VM Role</option>
+                                                    @foreach (var item in @servicesData.ResourceVmRoles)
+                            {
+                                <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+                                        break;
                                 }
                             }
-                            @if (@message != null)
-                            {
-                                @if (@message != "")
-                                {
-                                    <div>
-                                        <strong>Message: </strong>
-                                        <label>
-                                            @message
-                                        </label>
-                                    </div>
-                                }
-                            }
+                        }
+                        <div class="mb-3">
+                            <br />
+                            <button class="btn btn-success" type="submit" disabled=@boolFormDisabled>
+                                Generate
+                            </button>
                         </div>
                     </div>
+                    @if (@resourceNameRequestResponse != null)
+                    {
+                        <div class="card @resultClass text-white mt-3">
+                            <div class="card-header">@resultHeader</div>
+                            <div class="card-body">
+                                @if (@generatedName != null)
+                                {
+                                    @if (@generatedName != "")
+                                    {
+                                        <div>
+                                            <strong>Generated Name: </strong>
+                                            <label>@generatedName</label>
+                                        </div>
+                                    }
+                                }
+                                @if (@message != null)
+                                {
+                                    @if (@message != "")
+                                    {
+                                        <div>
+                                            <strong>Message: </strong>
+                                            <label>
+                                                @message
+                                            </label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
                 }
-            }
-        </div>
-    </EditForm>
-}
+            </div>
+        </EditForm>
+    }
 </div>
 @code {
     private ServicesData servicesData = new();
@@ -216,7 +259,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
-        resourceDelimiter = (ResourceDelimiter) servicesData.ResourceDelimiters[0];
+        resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
         componentsVisible = "collapse show";
     }
 
@@ -262,22 +305,43 @@ else
         // Assign the selected value to the Model
         selectedResourceType = value;
 
+        namingGuidelines = "";
+
         // Find the selected resoruce type
         ResourceType currentResourceType = servicesData.ResourceTypes.Find((t) => t.Id == Convert.ToInt32(selectedResourceType));
 
         // Create the naming guidelines HTML
-        namingGuidelines = "<div class=\"mb-3\">";
-        namingGuidelines += "<a class=\"btn btn-primary mb-3\" data-toggle=\"collapse\" href=\"#guidelines\" role=\"button\" aria-expanded=\"false\" aria-controls=\"guidelines\">";
-        namingGuidelines += "Resource Naming Guidelines";
-        namingGuidelines += "</a>";
-        namingGuidelines += "<div id=\"guidelines\" class=\"card bg-secondary text-white mb-3\">";
+        //namingGuidelines = "<div class=\"mb-3\">";
+        //namingGuidelines += "<a class=\"btn btn-primary mb-3\" data-toggle=\"collapse\" href=\"#guidelines\" role=\"button\" aria-expanded=\"false\" aria-controls=\"guidelines\">";
+        //namingGuidelines += "Resource Naming Guidelines";
+        //namingGuidelines += "</a>";
+        namingGuidelines += "<div id=\"guidelines\" class=\"card bg-default mt-3\">";
+        namingGuidelines += "<h5 class=\"card-header\">";
+        namingGuidelines += "Naming Guidelines";
+        namingGuidelines += "</h5>";
         namingGuidelines += "<div class=\"card-body \">";
-        namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
-        namingGuidelines += "<div><strong>Maximum Length:</strong> " + currentResourceType.LengthMax + "</div>";
-        namingGuidelines += "<div><strong>Valid Text:</strong> " + currentResourceType.ValidText + "</div>";
-        namingGuidelines += "<div><strong>Optional:</strong> " + currentResourceType.Optional + "</div>";
-        namingGuidelines += "<div><strong>Excluded:</strong> " + currentResourceType.Exclude + "</div>";
-        namingGuidelines += "</div></div></div>";
+        if (currentResourceType.LengthMin != "")
+        {
+            namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
+        }
+        if (currentResourceType.LengthMax != "")
+        {
+            namingGuidelines += "<div><strong>Maximum Length:</strong> " + currentResourceType.LengthMax + "</div>";
+        }
+        if (currentResourceType.ValidText != "")
+        {
+            namingGuidelines += "<div><strong>Valid Text:</strong> " + currentResourceType.ValidText + "</div>";
+        }
+        if (currentResourceType.Optional != "")
+        {
+            namingGuidelines += "<div><strong>Optional:</strong> " + currentResourceType.Optional + "</div>";
+        }
+        if (currentResourceType.Exclude != "")
+        {
+            namingGuidelines += "<div><strong>Excluded:</strong> " + currentResourceType.Exclude + "</div>";
+        }
+        namingGuidelines += "</div></div>";
+        //namingGuidelines += "</div>";
 
 
         // Set the excluded components
