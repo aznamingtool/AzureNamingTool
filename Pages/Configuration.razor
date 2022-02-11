@@ -127,7 +127,7 @@
                                                     Enter the new Components Configuration JSON below and click <strong>Import</strong> to import the Components Configuration. <strong>NOTE:</strong> This will overwrite the existing Components Configuration.
                                                 </p>
                                                 <p>
-                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newComponentConfig",(string)ui.Value);})">@newComponentConfig</textarea>
                                                 </p>
                                                 <p>
                                                     <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Import">
@@ -230,7 +230,7 @@
                                                     Enter the new Resource Delimiters Configuration JSON below and click <strong>Import</strong> to import the Resource Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
                                                 </p>
                                                 <p>
-                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
                                                 </p>
                                                 <p>
                                                     <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
@@ -321,13 +321,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newEnvironmentName" @onchange="@((ui) => { SetFormValue("newEnvironmentName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newEnvironmentShortName" @onchange="@((ui) => { SetFormValue("newEnvironmentShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -363,14 +363,14 @@
                                                     </div>
                                                     <div class="card">
                                                         <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Orgs Configuration
+                                                            Import Environments Configuration
                                                         </div>
                                                         <div class="card card-body">
                                                             <p>
                                                                 Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
@@ -434,13 +434,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newLocationName" @onchange="@((ui) => { SetFormValue("newLocationName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newLocationShortName" @onchange="@((ui) => { SetFormValue("newLocationShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -476,14 +476,14 @@
                                                     </div>
                                                     <div class="card">
                                                         <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Orgs Configuration
+                                                            Import Locations Configuration
                                                         </div>
                                                         <div class="card card-body">
                                                             <p>
                                                                 Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
@@ -567,13 +567,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newOrgName" @onchange="@((ui) => { SetFormValue("newOrgName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newOrgShortName" @onchange="@((ui) => { SetFormValue("newOrgShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -616,7 +616,7 @@
                                                                 Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration. <strong>NOTE:</strong> This will overwrite the existing Orgs Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
@@ -700,13 +700,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newProjAppSvcName" @onchange="@((ui) => { SetFormValue("newProjAppSvcName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newProjAppSvcShortName" @onchange="@((ui) => { SetFormValue("newProjAppSvcShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -749,7 +749,7 @@
                                                                 Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
@@ -831,7 +831,7 @@
                                                                 Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
@@ -915,13 +915,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newUnitDeptName" @onchange="@((ui) => { SetFormValue("newUnitDeptName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newUnitDeptShortName" @onchange="@((ui) => { SetFormValue("newUnitDeptShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -964,7 +964,7 @@
                                                                 Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
@@ -1048,13 +1048,13 @@
                                                             <tr>
                                                                 <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("name",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newVmRoleName" @onchange="@((ui) => { SetFormValue("newVmRoleName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Short Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" @onchange="@((ui) => { SetFormValue("shortName",(string)ui.Value);})" />
+                                                                    <input class="form-control" type="text" value="@newVmRoleShortName" @onchange="@((ui) => { SetFormValue("newVmRoleShortName",(string)ui.Value);})" />
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1097,7 +1097,7 @@
                                                                 Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
@@ -1151,7 +1151,7 @@
                                         Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
                                     </p>
                                     <p>
-                                        <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("configjson",(string)ui.Value);})" />
+                                        <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
                                     </p>
                                     <p>
                                         <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
@@ -1198,9 +1198,31 @@
     private ServicesData servicesData = new();
     private bool dataLoaded = false;
     private bool admin;
-    private string? newItemName;
-    private string? newItemShortName;
-    private string? newItemConfig;
+
+
+    private string? newComponentConfig;
+    private string? newDelimiterConfig;
+    private string? newEnvironmentName;
+    private string? newEnvironmentShortName;
+    private string? newEnvironmentConfig;
+    private string? newLocationName;
+    private string? newLocationShortName;
+    private string? newLocationConfig;
+    private string? newOrgName;
+    private string? newOrgShortName;
+    private string? newOrgConfig;
+    private string? newProjAppSvcName;
+    private string? newProjAppSvcShortName;
+    private string? newProjAppSvcConfig;
+    private string? newTypeConfig;
+    private string? newUnitDeptName;
+    private string? newUnitDeptShortName;
+    private string? newUnitDeptConfig;
+    private string? newVmRoleName;
+    private string? newVmRoleShortName;
+    private string? newVmRoleConfig;
+    private string? newMasterConfig;
+
     private ResponseMessage message = new();
 
     protected override async Task OnInitializedAsync()
@@ -1303,9 +1325,9 @@
                             await BlazorDownloadFileService.DownloadFileFromText("componentsconfig.json", JsonSerializer.Serialize(componentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newTypeConfig != null)
                             {
-                                serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newItemConfig));
+                                serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newTypeConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
@@ -1363,9 +1385,9 @@
                             await BlazorDownloadFileService.DownloadFileFromText("delimitersconfig.json", JsonSerializer.Serialize(delimiterjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newDelimiterConfig != null)
                             {
-                                serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newItemConfig));
+                                serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newDelimiterConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
@@ -1442,13 +1464,13 @@
                             }
                             break;
                         case "add":
-                            if ((newItemName != null) && (newItemShortName != null))
+                            if ((newEnvironmentName != null) && (newEnvironmentShortName != null))
                             {
                                 // Add the new item
                                 resourceEnvironment = new ResourceEnvironment()
                                     {
-                                        Name = newItemName,
-                                        ShortName = newItemShortName
+                                        Name = newEnvironmentName,
+                                        ShortName = newEnvironmentShortName
                                     };
 
                                 serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
@@ -1456,6 +1478,8 @@
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = resourceEnvironment.Name + " added!";
+                                    newEnvironmentName = null;
+                                    newEnvironmentShortName = null;
                                 }
                                 else
                                 {
@@ -1470,13 +1494,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("environmentsconfig.json", JsonSerializer.Serialize(environmentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newEnvironmentConfig != null)
                             {
-                                serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newItemConfig));
+                                serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newEnvironmentConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Environments config update succeeded!";
+                                    newEnvironmentConfig = null;
                                 }
                                 else
                                 {
@@ -1498,13 +1523,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("locationsconfig.json", JsonSerializer.Serialize(locationjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newLocationConfig != null)
                             {
-                                serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newItemConfig));
+                                serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newLocationConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Locations config update succeeded!";
+                                    newLocationConfig = null;
                                 }
                                 else
                                 {
@@ -1578,13 +1604,13 @@
                             }
                             break;
                         case "add":
-                            if ((newItemName != null) && (newItemShortName != null))
+                            if ((newOrgName != null) && (newOrgShortName != null))
                             {
                                 // Add the new item
                                 resourceOrg = new ResourceOrg()
                                     {
-                                        Name = newItemName,
-                                        ShortName = newItemShortName
+                                        Name = newOrgName,
+                                        ShortName = newOrgShortName
                                     };
 
                                 serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
@@ -1592,6 +1618,8 @@
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = resourceOrg.Name + " added!";
+                                    newOrgName = null;
+                                    newOrgShortName = null;
                                 }
                                 else
                                 {
@@ -1606,13 +1634,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("orgsconfig.json", JsonSerializer.Serialize(orgjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newOrgConfig != null)
                             {
-                                serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newItemConfig));
+                                serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newOrgConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Orgs config update succeeded!";
+                                    newOrgConfig = null;
                                 }
                                 else
                                 {
@@ -1685,13 +1714,13 @@
                             }
                             break;
                         case "add":
-                            if ((newItemName != null) && (newItemShortName != null))
+                            if ((newProjAppSvcName != null) && (newProjAppSvcShortName != null))
                             {
                                 // Add the new item
                                 resourceProjAppSvc = new ResourceProjAppSvc()
                                     {
-                                        Name = newItemName,
-                                        ShortName = newItemShortName
+                                        Name = newProjAppSvcName,
+                                        ShortName = newProjAppSvcShortName
                                     };
 
                                 serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
@@ -1699,6 +1728,8 @@
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = resourceProjAppSvc.Name + " added!";
+                                    newProjAppSvcName = null;
+                                    newProjAppSvcShortName = null;
                                 }
                                 else
                                 {
@@ -1713,13 +1744,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("projappsvcsconfig.json", JsonSerializer.Serialize(projappsvcjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newProjAppSvcConfig != null)
                             {
-                                serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newItemConfig));
+                                serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newProjAppSvcConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource ProjAppSvcs config update succeeded!";
+                                    newProjAppSvcConfig = null;
                                 }
                                 else
                                 {
@@ -1742,13 +1774,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("typesconfig.json", JsonSerializer.Serialize(typejson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newTypeConfig != null)
                             {
-                                serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newItemConfig));
+                                serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newTypeConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Types config update succeeded!";
+                                    newTypeConfig = null;
                                 }
                                 else
                                 {
@@ -1821,13 +1854,13 @@
                             }
                             break;
                         case "add":
-                            if ((newItemName != null) && (newItemShortName != null))
+                            if ((newUnitDeptName != null) && (newUnitDeptShortName != null))
                             {
                                 // Add the new item
                                 resourceUnitDept = new ResourceUnitDept()
                                     {
-                                        Name = newItemName,
-                                        ShortName = newItemShortName
+                                        Name = newUnitDeptName,
+                                        ShortName = newUnitDeptShortName
                                     };
 
                                 serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
@@ -1835,6 +1868,8 @@
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = resourceUnitDept.Name + " added!";
+                                    newUnitDeptName = null;
+                                    newUnitDeptShortName = null;
                                 }
                                 else
                                 {
@@ -1849,13 +1884,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("unitdeptsconfig.json", JsonSerializer.Serialize(unitdeptjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newUnitDeptConfig != null)
                             {
-                                serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newItemConfig));
+                                serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newUnitDeptConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource UnitDepts config update succeeded!";
+                                    newUnitDeptConfig = null;
                                 }
                                 else
                                 {
@@ -1929,19 +1965,21 @@
                             }
                             break;
                         case "add":
-                            if ((newItemName != null) && (newItemShortName != null))
+                            if ((newVmRoleName != null) && (newVmRoleShortName != null))
                             {
                                 // Add the new item
                                 resourceVmRole = new ResourceVmRole()
                                     {
-                                        Name = newItemName,
-                                        ShortName = newItemShortName
+                                        Name = newVmRoleName,
+                                        ShortName = newVmRoleShortName
                                     };
                                 serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = resourceVmRole.Name + " added!";
+                                    newVmRoleName = null;
+                                    newVmRoleShortName = null;
                                 }
                                 else
                                 {
@@ -1956,13 +1994,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("vmrolesconfig.json", JsonSerializer.Serialize(vmroleson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newVmRoleConfig != null)
                             {
-                                serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newItemConfig));
+                                serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newVmRoleConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Resource Vm Roles config update succeeded!";
+                                    newVmRoleConfig = null;
                                 }
                                 else
                                 {
@@ -1984,13 +2023,14 @@
                             await BlazorDownloadFileService.DownloadFileFromText("masterconfig.json", JsonSerializer.Serialize(masterjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newItemConfig != null)
+                            if (newMasterConfig != null)
                             {
-                                serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newItemConfig));
+                                serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newMasterConfig));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Master config update succeeded!";
+                                    newMasterConfig = null;
                                 }
                                 else
                                 {
@@ -2012,13 +2052,7 @@
                     }
                     break;
             }
-
             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
-
-            // Reset the new item variables
-            newItemName = null;
-            newItemShortName = null;
-            newItemConfig = null;
         }
         catch (Exception ex)
         {
@@ -2051,14 +2085,71 @@
     {
         switch (type)
         {
-            case "name":
-                newItemName = value;
+            case "newComponentConfig":
+                newComponentConfig = value;
                 break;
-            case "shortName":
-                newItemShortName = value;
+            case "newDelimiterConfig":
+                newDelimiterConfig = value;
                 break;
-            case "configjson":
-                newItemConfig = value;
+            case "newEnvironmentName":
+                newEnvironmentName = value;
+                break;
+            case "newEnvironmentShortName":
+                newEnvironmentShortName = value;
+                break;
+            case "newEnvironmentConfig":
+                newEnvironmentConfig = value;
+                break;
+            case "newLocationName":
+                newLocationName = value;
+                break;
+            case "newLocationShortName":
+                newLocationShortName = value;
+                break;
+            case "newLocationConfig":
+                newLocationConfig = value;
+                break;
+            case "newOrgName":
+                newOrgName = value;
+                break;
+            case "newOrgShortName":
+                newOrgShortName = value;
+                break;
+            case "newOrgConfig":
+                newOrgConfig = value;
+                break;
+            case "newProjAppSvcName":
+                newProjAppSvcName = value;
+                break;
+            case "newProjAppSvcShortName":
+                newProjAppSvcShortName = value;
+                break;
+            case "newProjAppSvcConfig":
+                newProjAppSvcConfig = value;
+                break;
+            case "newTypeConfig":
+                newTypeConfig = value;
+                break;
+            case "newUnitDeptName":
+                newUnitDeptName = value;
+                break;
+            case "newUnitDeptShortName":
+                newUnitDeptShortName = value;
+                break;
+            case "newUnitDeptConfig":
+                newUnitDeptConfig = value;
+                break;
+            case "newVmRoleName":
+                newVmRoleName = value;
+                break;
+            case "newVmRoleShortName":
+                newVmRoleShortName = value;
+                break;
+            case "newVmRoleConfig":
+                newVmRoleConfig = value;
+                break;
+            case "newMasterConfig":
+                newMasterConfig = value;
                 break;
         }
     }
