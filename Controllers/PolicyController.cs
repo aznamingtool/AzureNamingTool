@@ -26,13 +26,16 @@ namespace AzNamingTool.Controllers
             try
             {
                 serviceResponse = await PolicyService.GetPolicy();
-                MemoryStream stream = serviceResponse.ResponseObject;
+                //MemoryStream stream = serviceResponse.ResponseObject;
                 if (serviceResponse.Success)
                 {
-                    return new FileStreamResult(stream, "application/json")
-                    {
-                        FileDownloadName = "namePolicyDefinition.json"
-                    };
+                    var stream = new MemoryStream();
+                    var writer = new StreamWriter(stream);
+                    writer.Write(serviceResponse.ResponseObject);
+                    writer.Flush();
+                    stream.Position = 0;
+
+                    return File(stream,"application/json" , "namePolicyDefinition.json");
                 }
                 else
                 {

@@ -8,6 +8,7 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using Shared
+@using System.Text
 @inject ILogger<Generate> Logger
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
@@ -1164,20 +1165,30 @@
                         </div>
                     </div>
 
-                    @*<div class="card">
+                    <div class="card">
                         <h5 class="card-header text-white bg-secondary">
-                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
-                        Policy
-                        </a>
+                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
+                                Policy
+                            </a>
                         </h5>
                         <div class="collapse card card-body" id="policy">
-                        <div>
-                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Download">
-                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Download
-                        </button>
+                            <div class="card">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
+                                    Export Azure Policy Deifinition
+                                </div>
+                                <div class="card card-body">
+                                    <p>
+                                       Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.  
+                                    </p>
+                                    <p>
+                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Export Azure Policy Definition">
+                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export Azure Policy Definition
+                                            </button>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                        </div>*@
+                    </div>
                 </div>
             }
         </form>
@@ -2047,7 +2058,16 @@
                         case "download":
                             serviceResponse = await PolicyService.GetPolicy();
                             var policyjson = serviceResponse.ResponseObject;
-                            await BlazorDownloadFileService.DownloadFileFromText("namePolicyDefinition.json", JsonSerializer.Serialize(policyjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+
+                            var stream = new MemoryStream();
+                            var writer = new StreamWriter(stream);
+                            writer.Write(serviceResponse.ResponseObject);
+                            writer.Flush();
+                            stream.Position = 0;
+
+                            string policyString = Encoding.Default.GetString(stream.ToArray());
+
+                            await BlazorDownloadFileService.DownloadFileFromText("namePolicyDefinition.json", policyString, System.Text.Encoding.UTF8, "application/json");
                             break;
                     }
                     break;
