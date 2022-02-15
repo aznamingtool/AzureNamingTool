@@ -60,7 +60,14 @@ namespace AzNamingTool.Services
                 // Set the new id
                 if (item.Id == 0)
                 {
-                    item.Id = items.Count + 1;
+                    if (items.Count > 0)
+                    {
+                        item.Id = items.Max(t => t.Id) + 1;
+                    }
+                    else
+                    {
+                        item.Id = 1;
+                    }
                 }
 
                 int position = 1;

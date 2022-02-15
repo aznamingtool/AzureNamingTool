@@ -40,7 +40,7 @@
 
                     <div class="card">
                         <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Components
                             </a>
                         </h5>
@@ -149,7 +149,7 @@
                 {
                     <div class="card">
                         <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                 Delimiters
                             </a>
                         </h5>
@@ -259,7 +259,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Environments
                                         </a>
                                     </h5>
@@ -297,10 +297,13 @@
                                                                         <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"down"))" title="Move down">
                                                                             <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                         </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
-                                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                                        </button>
+                                                                        @if (servicesData.ResourceEnvironments.Count > 1)
+                                                                        {
+                                                                            <span> </span>
+                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
+                                                                                <span class="oi oi-x" aria-hidden="true"></span>
+                                                                            </button>
+                                                                        }
                                                                     </td>
                                                                 }
                                                             </tr>
@@ -392,7 +395,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Locations
                                         </a>
                                     </h5>
@@ -505,7 +508,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Orgs
                                         </a>
                                     </h5>
@@ -543,10 +546,13 @@
                                                                         <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"down"))" title="Move down">
                                                                             <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                         </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
-                                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                                        </button>
+                                                                        @if (servicesData.ResourceOrgs.Count > 1)
+                                                                        {
+                                                                            <span> </span>
+                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
+                                                                                <span class="oi oi-x" aria-hidden="true"></span>
+                                                                            </button>
+                                                                        }
                                                                     </td>
                                                                 }
                                                             </tr>
@@ -638,7 +644,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Projects/Apps/Services
                                         </a>
                                     </h5>
@@ -676,10 +682,13 @@
                                                                         <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"down"))" title="Move down">
                                                                             <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                         </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
-                                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                                        </button>
+                                                                        @if (servicesData.ResourceProjAppSvcs.Count > 1)
+                                                                        {
+                                                                            <span> </span>
+                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
+                                                                                <span class="oi oi-x" aria-hidden="true"></span>
+                                                                            </button>
+                                                                        }
                                                                     </td>
                                                                 }
                                                             </tr>
@@ -771,7 +780,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Resource Types
                                         </a>
                                     </h5>
@@ -853,7 +862,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
                                             Units/Depts
                                         </a>
                                     </h5>
@@ -891,10 +900,13 @@
                                                                         <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"down"))" title="Move down">
                                                                             <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                         </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
-                                                                            <span class="oi oi-x" aria-hidden="true"></span>
-                                                                        </button>
+                                                                        @if (servicesData.ResourceUnitDepts.Count > 1)
+                                                                        {
+                                                                            <span> </span>
+                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
+                                                                                <span class="oi oi-x" aria-hidden="true"></span>
+                                                                            </button>
+                                                                        }
                                                                     </td>
                                                                 }
                                                             </tr>
@@ -986,7 +998,7 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
+                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
                                             VM Roles
                                         </a>
                                     </h5>
@@ -1024,10 +1036,13 @@
                                                                         <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
                                                                             <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                         </button>
+                                                                        @if (servicesData.ResourceVmRoles.Count > 1)
+                                                                        {
                                                                         <span> </span>
                                                                         <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"delete"))" title="Delete">
                                                                             <span class="oi oi-x" aria-hidden="true"></span>
                                                                         </button>
+                                                                        }
                                                                     </td>
                                                                 }
                                                             </tr>
@@ -1123,7 +1138,7 @@
                     <h4>General Configuration</h4>
                     <div class="card">
                         <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#master" role="button" aria-expanded="false" aria-controls="master">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#master" role="button" aria-expanded="false" aria-controls="master">
                                 Master Configuration
                             </a>
                         </h5>
@@ -1167,7 +1182,7 @@
 
                     <div class="card">
                         <h5 class="card-header text-white bg-secondary">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
+                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#policy" role="button" aria-expanded="false" aria-controls="policy">
                                 Policy
                             </a>
                         </h5>
@@ -1178,12 +1193,12 @@
                                 </div>
                                 <div class="card card-body">
                                     <p>
-                                       Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.  
+                                        Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.
                                     </p>
                                     <p>
-                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Export Azure Policy Definition">
-                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export Azure Policy Definition
-                                            </button>
+                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Export Azure Policy Definition">
+                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export Azure Policy Definition
+                                        </button>
                                     </p>
                                 </div>
                             </div>

@@ -68,11 +68,12 @@ namespace AzNamingTool.Services
 
                 if (item.SortOrder == 0)
                 {
-                    item.SortOrder = items.Count + 1;
+                    item.Id = items.Max(t => t.Id) + 1;
                 }
 
                 // Determine new item id
                 if (items.Count > 0)
+
                 {
                     // Check if the item already exists
                     if (items.Exists(x => x.Id == item.Id))
