@@ -64,7 +64,8 @@ namespace AzNamingTool.Services
                 property.PolicyRule = PolicyRuleFactory.GetNameValidationRules(validations.Select(x => new PolicyRule(x, delimiter)).ToList(), delimiter);
                 PolicyDefinition definition = new(property);
 
-                serviceResponse.ResponseObject = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(definition.ToString()));
+                //serviceResponse.ResponseObject = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(definition.ToString())).ToArray();
+                serviceResponse.ResponseObject = definition;
                 serviceResponse.Success = true;
             }
             catch (Exception ex)
