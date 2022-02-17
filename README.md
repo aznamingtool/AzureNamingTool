@@ -51,7 +51,7 @@ This project contains a .NET Core application, with Docker support. To use:
 	*docker run -p 8081:80 aznamingtool*  
 	
   **NOTES**  
-    - Substitute 8081 for any used port on your machine  
+    - Substitute 8081 for any port not in use on your machine  
     - You will see warnings in the command prompt regarding DataProtection and keys. These indicate that the keys are not persisted and are only local to the container instances. 
 
 - Access the site using the following URL  
