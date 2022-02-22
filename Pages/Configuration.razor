@@ -174,7 +174,7 @@
                                         <tbody>
                                             @foreach (var item in @servicesData.ResourceDelimiters)
                                             {
-                                                <tr>
+                                                <tr style="height:55px;" >
                                                     <td>@item.Name</td>
                                                     <td>@item.Delimiter</td>
                                                     @if (admin)
@@ -182,9 +182,9 @@
                                                         <td>
                                                             @if (item.Enabled)
                                                             {
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
+                                                               @* <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
                                                                     <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
+                                                                </button>*@
                                                             }
                                                             else
                                                             {
