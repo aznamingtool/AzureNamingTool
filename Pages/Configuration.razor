@@ -578,7 +578,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Short Name</td>
+                                                                <td>Short Name (max 5 characters)</td>
                                                                 <td>
                                                                     <input class="form-control" type="text" value="@newOrgShortName" @onchange="@((ui) => { SetFormValue("newOrgShortName",(string)ui.Value);})" />
                                                                 </td>
@@ -714,7 +714,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Short Name</td>
+                                                                <td>Short Name (max 3 characters)</td>
                                                                 <td>
                                                                     <input class="form-control" type="text" value="@newProjAppSvcShortName" @onchange="@((ui) => { SetFormValue("newProjAppSvcShortName",(string)ui.Value);})" />
                                                                 </td>
@@ -932,7 +932,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Short Name</td>
+                                                                <td>Short Name (max 3 characters)</td>
                                                                 <td>
                                                                     <input class="form-control" type="text" value="@newUnitDeptShortName" @onchange="@((ui) => { SetFormValue("newUnitDeptShortName",(string)ui.Value);})" />
                                                                 </td>
@@ -1068,7 +1068,7 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td>Short Name</td>
+                                                                <td>Short Name (max 2 characters)</td>
                                                                 <td>
                                                                     <input class="form-control" type="text" value="@newVmRoleShortName" @onchange="@((ui) => { SetFormValue("newVmRoleShortName",(string)ui.Value);})" />
                                                                 </td>
@@ -1631,7 +1631,14 @@
                             break;
                         case "add":
                             if ((newOrgName != null) && (newOrgShortName != null))
-                            {
+                            {                                
+                                // Validate the value
+                                if(newOrgShortName.Length > 5)
+                                {                                    
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Org Short Name must be 1-5 characters!";
+                                    break;
+                                }
                                 // Add the new item
                                 resourceOrg = new ResourceOrg()
                                     {
@@ -1742,6 +1749,14 @@
                         case "add":
                             if ((newProjAppSvcName != null) && (newProjAppSvcShortName != null))
                             {
+                                // Validate the value
+                                if(newProjAppSvcShortName.Length > 3)
+                                {                                    
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Project/App/Service Short Name must be 1-3 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceProjAppSvc = new ResourceProjAppSvc()
                                     {
@@ -1881,7 +1896,15 @@
                             break;
                         case "add":
                             if ((newUnitDeptName != null) && (newUnitDeptShortName != null))
-                            {
+                            {                                
+                                // Validate the value
+                                if(newUnitDeptShortName.Length > 3)
+                                {                                    
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Unit/Dept Short Name must be 1-3 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceUnitDept = new ResourceUnitDept()
                                     {
@@ -1993,6 +2016,14 @@
                         case "add":
                             if ((newVmRoleName != null) && (newVmRoleShortName != null))
                             {
+                                // Validate the value
+                                if(newVmRoleShortName.Length > 2)
+                                {                                    
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "VM Role Short Name must be 1-2 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceVmRole = new ResourceVmRole()
                                     {
