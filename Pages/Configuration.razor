@@ -14,6 +14,7 @@
 @inject IConfiguration _config
 @inject StateContainer state
 @inject IToastService toastService
+@implements IDisposable
 
 <PageTitle>Azure Naming Tool - Configuration</PageTitle>
 <div class="card bg-primary text-white mb-3">
@@ -32,1181 +33,1225 @@
     }
     else
     {
-        <form>
-            <div class="mb-3">
-                @if (servicesData != null)
-                {
-                    <h4>Base Configuration</h4>
+        <div class="mb-3">
+            @if (servicesData != null)
+            {
+                <h4>Base Configuration</h4>
 
-                    <div class="card">
-                        <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                Components
-                            </a>
-                        </h5>
-                        <div class="collapse card card-body" id="components">
-                            <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Current Components
-                                </div>
-                                <div class="card card-body">
-                                    <p>The current Components.</p>
-                                    <table class="table table-striped">
-                                        <thead>
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary text-white">
+                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                            Components
+                        </a>
+                    </h5>
+                    <div class="collapse card card-body" id="components">
+                        <div class="card">
+                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                Current Components
+                            </div>
+                            <div class="card card-body">
+                                <p>The current Components.</p>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            @if (admin)
+                                            {
+                                                <th>Actions</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in @servicesData.ResourceComponents)
+                                        {
                                             <tr>
-                                                <th>Name</th>
+                                                <td>@item.Name</td>
                                                 @if (admin)
                                                 {
-                                                    <th>Actions</th>
+                                                    <td>
+                                                        @if (item.Enabled)
+                                                        {
+                                                            <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"up"))" title="Move up">
+                                                                <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                            </button>
+                                                            <span> </span>
+                                                            <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"down"))" title="Move down">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                            </button>
+                                                            <span> </span>
+                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceComponent",item.Id,"disable"))" title="Disable">
+                                                                <span class="oi oi-x" aria-hidden="true"></span>
+                                                            </button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span>
+                                                            </button>
+                                                        }
+                                                    </td>
                                                 }
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in @servicesData.ResourceComponents)
-                                            {
-                                                <tr>
-                                                    <td>@item.Name</td>
-                                                    @if (admin)
-                                                    {
-                                                        <td>
-                                                            @if (item.Enabled)
-                                                            {
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"up"))" title="Move up">
-                                                                    <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceComponent",item.Id,"down"))" title="Move down">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                </button>
-                                                                <span> </span>
-                                                                <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceComponent",item.Id,"disable"))" title="Disable">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
-                                                                </button>
-                                                            }
-                                                            else
-                                                            {
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                </button>
-                                                            }
-                                                        </td>
-                                                    }
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @if (admin)
+                        {
+                            <div class="card">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
+                                    Configuration
+                                </div>
+                                <div class="card card-body">
+                                    <div class="card  w-auto">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Export the current Resource Components Configuration
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>
+                                                Click <strong>Export</strong> to export the current Resource Components Configuration.
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceComponent",0,"download")) title="Export">
+                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Import Components Configuration
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>
+                                                Enter the new Components Configuration JSON below and click <strong>Import</strong> to import the Components Configuration. <strong>NOTE:</strong> This will overwrite the existing Components Configuration.
+                                            </p>
+                                            <p>
+                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newComponentConfig",(string)ui.Value);})">@newComponentConfig</textarea>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Import">
+                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            @if (admin)
-                            {
-                                <div class="card">
-                                    <div class="card card-header bg-default" style="font-weight:bold;">
-                                        Configuration
-                                    </div>
-                                    <div class="card card-body">
-                                        <div class="card  w-auto">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Export the current Resource Components Configuration
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>
-                                                    Click <strong>Export</strong> to export the current Resource Components Configuration.
-                                                </p>
-                                                <p>
-                                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceComponent",0,"download")) title="Export">
-                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Import Components Configuration
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>
-                                                    Enter the new Components Configuration JSON below and click <strong>Import</strong> to import the Components Configuration. <strong>NOTE:</strong> This will overwrite the existing Components Configuration.
-                                                </p>
-                                                <p>
-                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newComponentConfig",(string)ui.Value);})">@newComponentConfig</textarea>
-                                                </p>
-                                                <p>
-                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Import">
-                                                        <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
+                        }
                     </div>
+                </div>
 
-                }
+            }
 
-                @if (servicesData.ResourceDelimiters != null)
-                {
-                    <div class="card">
-                        <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                Delimiters
-                            </a>
-                        </h5>
-                        <div class="collapse card card-body" id="delimiters">
-                            <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Current Delimiters
-                                </div>
-                                <div class="card card-body">
-                                    <p>The current Delimiters.</p>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Delimiter</th>
+            @if (servicesData.ResourceDelimiters != null)
+            {
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary text-white">
+                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                            Delimiters
+                        </a>
+                    </h5>
+                    <div class="collapse card card-body" id="delimiters">
+                        <div class="card">
+                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                Current Delimiters
+                            </div>
+                            <div class="card card-body">
+                                <p>The current Delimiters.</p>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Delimiter</th>
+                                            @if (admin)
+                                            {
+                                                <th>Actions</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in @servicesData.ResourceDelimiters)
+                                        {
+                                            <tr style="height:55px;">
+                                                <td>@item.Name</td>
+                                                <td>@item.Delimiter</td>
                                                 @if (admin)
                                                 {
-                                                    <th>Actions</th>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in @servicesData.ResourceDelimiters)
-                                            {
-                                                <tr style="height:55px;" >
-                                                    <td>@item.Name</td>
-                                                    <td>@item.Delimiter</td>
-                                                    @if (admin)
-                                                    {
-                                                        <td>
-                                                            @if (item.Enabled)
-                                                            {
-                                                               @* <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
-                                                                    <span class="oi oi-x" aria-hidden="true"></span>
+                                                    <td>
+                                                        @if (item.Enabled)
+                                                        {
+                                                            @* <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"disable"))" title="Disable">
+                                                                <span class="oi oi-x" aria-hidden="true"></span>
                                                                 </button>*@
-                                                            }
-                                                            else
-                                                            {
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"enable"))" title="Enable">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                </button>
-                                                            }
-                                                        </td>
-                                                    }
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",item.Id,"enable"))" title="Enable">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span>
+                                                            </button>
+                                                        }
+                                                    </td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @if (admin)
+                        {
+                            <div class="card">
+                                <div class="card card-header bg-default" style="font-weight:bold;">
+                                    Configuration
+                                </div>
+                                <div class="card card-body">
+                                    <div class="card  w-auto">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Export the current Resource Delimiters Configuration
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>
+                                                Click <strong>Export</strong> to export the current Resource Delimiters Configuration.
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceDelimiter",0,"download")) title="Export">
+                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Import Delimiters Configuration
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>
+                                                Enter the new Resource Delimiters Configuration JSON below and click <strong>Import</strong> to import the Resource Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
+                                            </p>
+                                            <p>
+                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
+                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            @if (admin)
-                            {
-                                <div class="card">
-                                    <div class="card card-header bg-default" style="font-weight:bold;">
-                                        Configuration
-                                    </div>
-                                    <div class="card card-body">
-                                        <div class="card  w-auto">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Export the current Resource Delimiters Configuration
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>
-                                                    Click <strong>Export</strong> to export the current Resource Delimiters Configuration.
-                                                </p>
-                                                <p>
-                                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceDelimiter",0,"download")) title="Export">
-                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Import Delimiters Configuration
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>
-                                                    Enter the new Resource Delimiters Configuration JSON below and click <strong>Import</strong> to import the Resource Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
-                                                </p>
-                                                <p>
-                                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
-                                                </p>
-                                                <p>
-                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
-                                                        <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                    </button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
+                        }
                     </div>
-                }
-            </div>
+                </div>
+            }
+        </div>
 
-            <div class="mb-3">
-                <h4>Component Configuration</h4>
-                @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents.OrderBy(x => x.Name))
+        <div class="mb-3">
+            <h4>Component Configuration</h4>
+            @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents.OrderBy(x => x.Name))
+            {
+                switch (resourceComponent.Name)
                 {
-                    switch (resourceComponent.Name)
-                    {
-                        case "ResourceEnvironment":
-                            @if (servicesData.ResourceEnvironments != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Environments
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="environments">
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Environments
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>The current Environments.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
+                    case "ResourceEnvironment":
+                        @if (servicesData.ResourceEnvironments != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Environments
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="environments">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Environments
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Environments.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceEnvironments)
+                                                    {
                                                         <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
                                                             @if (admin)
                                                             {
-                                                                <th>Actions</th>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"up"))" title="Move up">
+                                                                        <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"down"))" title="Move down">
+                                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    @if (servicesData.ResourceEnvironments.Count > 1)
+                                                                    {
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    }
+                                                                </td>
                                                             }
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in @servicesData.ResourceEnvironments)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                                @if (admin)
-                                                                {
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"up"))" title="Move up">
-                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"down"))" title="Move down">
-                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        @if (servicesData.ResourceEnvironments.Count > 1)
-                                                                        {
-                                                                            <span> </span>
-                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"delete"))" title="Delete">
-                                                                                <span class="oi oi-x" aria-hidden="true"></span>
-                                                                            </button>
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                    }
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New Environment
-                                                </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new Environment.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newEnvironmentName" @onchange="@((ui) => { SetFormValue("newEnvironmentName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newEnvironmentShortName" @onchange="@((ui) => { SetFormValue("newEnvironmentShortName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export the current Environments Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Environments Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceEnvironment",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Environments Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
                                     </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceLocation":
-                            @if (servicesData.ResourceLocations != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Locations
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="locations">
+                                    @if (admin)
+                                    {
                                         <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Locations
+                                                New Environment
                                             </div>
                                             <div class="card card-body">
-                                                <p>The current Locations.</p>
+                                                <p>Add a new Environment.</p>
                                                 <table class="table table-striped">
-                                                    <thead>
+                                                    <tbody>
                                                         <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newEnvironmentName" @onchange="@((ui) => { SetFormValue("newEnvironmentName",(string)ui.Value);})" />
+                                                            </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in @servicesData.ResourceLocations)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                            </tr>
-                                                        }
+                                                        <tr>
+                                                            <td>Short Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newEnvironmentShortName" @onchange="@((ui) => { SetFormValue("newEnvironmentShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New Location
-                                                </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new Location.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newLocationName" @onchange="@((ui) => { SetFormValue("newLocationName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newLocationShortName" @onchange="@((ui) => { SetFormValue("newLocationShortName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export the current Locations Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Locations Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceLocation",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Locations Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceOrg":
-                            @if (servicesData.ResourceOrgs != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Orgs
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="orgs">
                                         <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Orgs
+                                                Configuration
                                             </div>
                                             <div class="card card-body">
-                                                <p>The current Orgs.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export the current Environments Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Environments Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceEnvironment",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Environments Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceLocation":
+                        @if (servicesData.ResourceLocations != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Locations
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="locations">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Locations
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Locations.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceLocations)
+                                                    {
                                                         <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
                                                             @if (admin)
                                                             {
-                                                                <th>Actions</th>
-                                                            }
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in @servicesData.ResourceOrgs)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                                @if (admin)
-                                                                {
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"up"))" title="Move up">
-                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"down"))" title="Move down">
-                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        @if (servicesData.ResourceOrgs.Count > 1)
-                                                                        {
-                                                                            <span> </span>
-                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
-                                                                                <span class="oi oi-x" aria-hidden="true"></span>
-                                                                            </button>
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New Org
-                                                </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new Org.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
                                                                 <td>
-                                                                    <input class="form-control" type="text" value="@newOrgName" @onchange="@((ui) => { SetFormValue("newOrgName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newOrgShortName" @onchange="@((ui) => { SetFormValue("newOrgShortName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
                                                                     </button>
                                                                 </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export the current Orgs Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Orgs Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceOrg",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Orgs Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration. <strong>NOTE:</strong> This will overwrite the existing Orgs Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceProjAppSvc":
-                            @if (servicesData.ResourceProjAppSvcs != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Projects/Apps/Services
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="projsappssvcs">
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Projects/Apps/Services
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>The current Projects/Apps/Services.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
-                                                            @if (admin)
-                                                            {
-                                                                <th>Actions</th>
                                                             }
                                                         </tr>
-                                                    </thead>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                New Location
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>Add a new Location.</p>
+                                                <table class="table table-striped">
                                                     <tbody>
-                                                        @foreach (var item in @servicesData.ResourceProjAppSvcs)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                                @if (admin)
-                                                                {
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"up"))" title="Move up">
-                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"down"))" title="Move down">
-                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        @if (servicesData.ResourceProjAppSvcs.Count > 1)
-                                                                        {
-                                                                            <span> </span>
-                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
-                                                                                <span class="oi oi-x" aria-hidden="true"></span>
-                                                                            </button>
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        }
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newLocationName" @onchange="@((ui) => { SetFormValue("newLocationName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Short Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newLocationShortName" @onchange="@((ui) => { SetFormValue("newLocationShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New Project/App/Service
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export the current Locations Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Locations Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceLocation",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new Project/App/Service.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Locations Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceOrg":
+                        @if (servicesData.ResourceOrgs != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Orgs
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="orgs">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Orgs
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Orgs.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceOrgs)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
+                                                            @if (admin)
+                                                            {
                                                                 <td>
-                                                                    <input class="form-control" type="text" value="@newProjAppSvcName" @onchange="@((ui) => { SetFormValue("newProjAppSvcName",(string)ui.Value);})" />
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"up"))" title="Move up">
+                                                                        <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"down"))" title="Move down">
+                                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    @if (servicesData.ResourceOrgs.Count > 1)
+                                                                    {
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceOrg",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    }
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                New Org
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>Add a new Org.</p>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newOrgName" @onchange="@((ui) => { SetFormValue("newOrgName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Short Name (max 5 characters)</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newOrgShortName" @onchange="@((ui) => { SetFormValue("newOrgShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export the current Orgs Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Orgs Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceOrg",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Orgs Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration. <strong>NOTE:</strong> This will overwrite the existing Orgs Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceProjAppSvc":
+                        @if (servicesData.ResourceProjAppSvcs != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Projects/Apps/Services
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="projsappssvcs">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Projects/Apps/Services
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Projects/Apps/Services.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceProjAppSvcs)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
+                                                            @if (admin)
+                                                            {
                                                                 <td>
-                                                                    <input class="form-control" type="text" value="@newProjAppSvcShortName" @onchange="@((ui) => { SetFormValue("newProjAppSvcShortName",(string)ui.Value);})" />
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"up"))" title="Move up">
+                                                                        <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"down"))" title="Move down">
+                                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    @if (servicesData.ResourceProjAppSvcs.Count > 1)
+                                                                    {
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    }
                                                                 </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                New Project/App/Service
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>Add a new Project/App/Service.</p>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newProjAppSvcName" @onchange="@((ui) => { SetFormValue("newProjAppSvcName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Short Name (max 3 characters)</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newProjAppSvcShortName" @onchange="@((ui) => { SetFormValue("newProjAppSvcShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export the current Projects/Apps/Services Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Projects/Apps/Services Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Projects/Apps/Services Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceType":
+                        @if (servicesData.ResourceTypes != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Resource Types
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="types">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Resource Types
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Resource Types.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceTypes)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Resource</td>
+                                                            <td>@item.ShortName</td>
+                                                            @if (admin)
+                                                            {
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceType",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
                                                                     </button>
                                                                 </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export the current Projects/Apps/Services Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Projects/Apps/Services Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Projects/Apps/Services Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceType":
-                            @if (servicesData.ResourceTypes != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Resource Types
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="types">
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Resource Types
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>The current Resource Types.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in @servicesData.ResourceTypes)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Resource</td>
-                                                                <td>@item.ShortName</td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export the current Resource Types Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Resource Types Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceType",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Resource Types Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceUnitDept":
-                            @if (servicesData.ResourceUnitDepts != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                            Units/Depts
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="unitsdepts">
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current Units/Depts
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>The current Units/Depts.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
-                                                            @if (admin)
-                                                            {
-                                                                <th>Actions</th>
                                                             }
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var item in @servicesData.ResourceUnitDepts)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                                @if (admin)
-                                                                {
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"up"))" title="Move up">
-                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"down"))" title="Move down">
-                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        @if (servicesData.ResourceUnitDepts.Count > 1)
-                                                                        {
-                                                                            <span> </span>
-                                                                            <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
-                                                                                <span class="oi oi-x" aria-hidden="true"></span>
-                                                                            </button>
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export the current Resource Types Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Resource Types Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceType",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Resource Types Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New Unit/Dept
-                                                </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new Unit/Dept.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceUnitDept":
+                        @if (servicesData.ResourceUnitDepts != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        Units/Depts
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="unitsdepts">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current Units/Depts
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current Units/Depts.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
+                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceUnitDepts)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
+                                                            @if (admin)
+                                                            {
                                                                 <td>
-                                                                    <input class="form-control" type="text" value="@newUnitDeptName" @onchange="@((ui) => { SetFormValue("newUnitDeptName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newUnitDeptShortName" @onchange="@((ui) => { SetFormValue("newUnitDeptShortName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"up"))" title="Move up">
+                                                                        <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
                                                                     </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"down"))" title="Move down">
+                                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    </button>
+
+                                                                    @if (servicesData.ResourceUnitDepts.Count > 1)
+                                                                    {
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    }
                                                                 </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export Units/Depts Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current Units/Depts Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceUnitDept",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import Units/Depts Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                            break;
-                        case "ResourceVmRole":
-                            @if (servicesData.ResourceVmRoles != null)
-                            {
-                                <div class="card">
-                                    <h5 class="card-header text-white bg-secondary text-white">
-                                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
-                                            VM Roles
-                                        </a>
-                                    </h5>
-                                    <div class="collapse card card-body" id="vmroles">
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Current VM Roles
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>The current VM Roles.</p>
-                                                <table class="table table-striped">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Name</th>
-                                                            <th>Short Name</th>
-                                                            @if (admin)
-                                                            {
-                                                                <th>Actions</th>
                                                             }
                                                         </tr>
-                                                    </thead>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                New Unit/Dept
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>Add a new Unit/Dept.</p>
+                                                <table class="table table-striped">
                                                     <tbody>
-                                                        @foreach (var item in @servicesData.ResourceVmRoles)
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newUnitDeptName" @onchange="@((ui) => { SetFormValue("newUnitDeptName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Short Name (max 3 characters)</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newUnitDeptShortName" @onchange="@((ui) => { SetFormValue("newUnitDeptShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export Units/Depts Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current Units/Depts Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceUnitDept",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import Units/Depts Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        break;
+                    case "ResourceVmRole":
+                        @if (servicesData.ResourceVmRoles != null)
+                        {
+                            <div class="card">
+                                <h5 class="card-header text-white bg-secondary text-white">
+                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
+                                        VM Roles
+                                    </a>
+                                </h5>
+                                <div class="collapse card card-body" id="vmroles">
+                                    <div class="card">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Current VM Roles
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>The current VM Roles.</p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Short Name</th>
+                                                        @if (admin)
                                                         {
-                                                            <tr>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.ShortName</td>
-                                                                @if (admin)
-                                                                {
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"up"))" title="Move up">
-                                                                            <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        <span> </span>
-                                                                        <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
-                                                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
-                                                                        </button>
-                                                                        @if (servicesData.ResourceVmRoles.Count > 1)
-                                                                        {
+                                                            <th>Actions</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in @servicesData.ResourceVmRoles)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.ShortName</td>
+                                                            @if (admin)
+                                                            {
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"up"))" title="Move up">
+                                                                        <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
+                                                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
+                                                                    </button>
+                                                                    <span> </span>
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    </button>
+
+                                                                    @if (servicesData.ResourceVmRoles.Count > 1)
+                                                                    {
                                                                         <span> </span>
                                                                         <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"delete"))" title="Delete">
                                                                             <span class="oi oi-x" aria-hidden="true"></span>
                                                                         </button>
-                                                                        }
-                                                                    </td>
-                                                                }
-                                                            </tr>
-                                                        }
+                                                                    }
+                                                                </td>
+                                                            }
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                New VM Role
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>Add a new VM Role.</p>
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newVmRoleName" @onchange="@((ui) => { SetFormValue("newVmRoleName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Short Name (max 2 characters)</td>
+                                                            <td>
+                                                                <input class="form-control" type="text" value="@newVmRoleShortName" @onchange="@((ui) => { SetFormValue("newVmRoleShortName",(string)ui.Value);})" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        @if (admin)
-                                        {
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    New VM Role
-                                                </div>
-                                                <div class="card card-body">
-                                                    <p>Add a new VM Role.</p>
-                                                    <table class="table table-striped">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newVmRoleName" @onchange="@((ui) => { SetFormValue("newVmRoleName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Short Name</td>
-                                                                <td>
-                                                                    <input class="form-control" type="text" value="@newVmRoleShortName" @onchange="@((ui) => { SetFormValue("newVmRoleShortName",(string)ui.Value);})" />
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2">
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
-                                                                        <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                        <div class="card">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Configuration
                                             </div>
-                                            <div class="card">
-                                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                                    Configuration
-                                                </div>
-                                                <div class="card card-body">
-                                                    <div class="card  w-auto">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Export VM Role Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Click <strong>Export</strong> to export the current VM Role Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Export">
-                                                                    <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                                                </button>
-                                                            </p>
-                                                        </div>
+                                            <div class="card card-body">
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Export VM Role Configuration
                                                     </div>
-                                                    <div class="card">
-                                                        <div class="card card-header bg-default" style="font-weight:bold;">
-                                                            Import VM Role Configuration
-                                                        </div>
-                                                        <div class="card card-body">
-                                                            <p>
-                                                                Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
-                                                            </p>
-                                                            <p>
-                                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
-                                                            </p>
-                                                            <p>
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                                                </button>
-                                                            </p>
-                                                        </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Export</strong> to export the current VM Role Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Export">
+                                                                <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Import VM Role Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
+                                                                <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                                            </button>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        }
-                                    </div>
+                                        </div>
+                                    }
                                 </div>
-                            }
-                            break;
-                    }
+                            </div>
+                        }
+                        break;
                 }
-            </div>
-            @if (admin)
-            {
-                <div>
-                    <h4>General Configuration</h4>
-                    <div class="card">
-                        <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#master" role="button" aria-expanded="false" aria-controls="master">
-                                Master Configuration
-                            </a>
-                        </h5>
-                        <div class="collapse card card-body" id="master">
-                            <div class="card w-auto">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Export the current Master Configuration
-                                </div>
-                                <div class="card card-body">
-                                    <p>
-                                        Click <strong>Export</strong> to export the current Master Configuration. This includes all component, settings, and admin passwords/API keys.
-                                    </p>
-                                    <p>
-                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Master",0,"download")) title="Export">
-                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
-                                        </button>
-                                    </p>
-                                </div>
+            }
+        </div>
+        @if (admin)
+        {
+            <div>
+                <h4>General Configuration</h4>
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary text-white">
+                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#master" role="button" aria-expanded="false" aria-controls="master">
+                            Master Configuration
+                        </a>
+                    </h5>
+                    <div class="collapse card card-body" id="master">
+                        <div class="card w-auto">
+                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                Export the current Master Configuration
                             </div>
-                            <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Import Master Configuration
-                                </div>
-                                <div class="card card-body">
-                                    <p>
-                                        Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
-                                    </p>
-                                    <p>
-                                        <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
-                                    </p>
-                                    <p>
-                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
-                                            <span class="oi oi-plus" aria-hidden="true"></span> Import
-                                        </button>
-                                    </p>
-                                </div>
+                            <div class="card card-body">
+                                <p>
+                                    Click <strong>Export</strong> to export the current Master Configuration. This includes all component, settings, and admin passwords/API keys.
+                                </p>
+                                <p>
+                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Master",0,"download")) title="Export">
+                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                    </button>
+                                </p>
                             </div>
-
                         </div>
-                    </div>
+                        <div class="card">
+                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                Import Master Configuration
+                            </div>
+                            <div class="card card-body">
+                                <p>
+                                    Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
+                                </p>
+                                <p>
+                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
+                                </p>
+                                <p>
+                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Import
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
 
-                    <div class="card">
-                        <h5 class="card-header text-white bg-secondary">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;"  href="#policy" role="button" aria-expanded="false" aria-controls="policy">
-                                Policy
-                            </a>
-                        </h5>
-                        <div class="collapse card card-body" id="policy">
-                            <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Export Azure Policy Deifinition
-                                </div>
-                                <div class="card card-body">
-                                    <p>
-                                        Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.
-                                    </p>
-                                    <p>
-                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Export Azure Policy Definition">
-                                            <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export Azure Policy Definition
-                                        </button>
-                                    </p>
-                                </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h5 class="card-header text-white bg-secondary">
+                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#policy" role="button" aria-expanded="false" aria-controls="policy">
+                            Policy
+                        </a>
+                    </h5>
+                    <div class="collapse card card-body" id="policy">
+                        <div class="card">
+                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                Export Azure Policy Deifinition
+                            </div>
+                            <div class="card card-body">
+                                <p>
+                                    Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.
+                                </p>
+                                <p>
+                                    <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Policy",0,"download")) title="Export Azure Policy Definition">
+                                        <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export Azure Policy Definition
+                                    </button>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-            }
-        </form>
+            </div>
+        }
     }
 </div>
 <div class="toast">
@@ -1221,6 +1266,8 @@
 
 @code {
     [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; }
+
     private ServicesData servicesData = new();
     private bool dataLoaded = false;
     private bool admin;
@@ -1257,6 +1304,12 @@
         admin = state.Admin;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
         dataLoaded = true;
+    }
+
+
+    public void Dispose()
+    {
+        StateHasChanged();
     }
 
     private async Task AdminChanged()
@@ -1471,6 +1524,9 @@
                                 message.Message = resourceEnvironment.Name + " move failed!";
                             }
                             break;
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceEnvironment");
+                            break;
                         case "delete":
                             bool confirmEnvironmentDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmEnvironmentDelete)
@@ -1543,6 +1599,9 @@
                 case "ResourceLocation":
                     switch (action)
                     {
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceLocation", true);
+                            break;
                         case "download":
                             serviceResponse = await ResourceLocationService.GetItems();
                             var locationjson = serviceResponse.ResponseObject;
@@ -1568,7 +1627,6 @@
                     }
                     serviceResponse = await ResourceLocationService.GetItems();
                     servicesData.ResourceLocations = (List<ResourceLocation>)serviceResponse.ResponseObject;
-                    break;
                     break;
                 case "ResourceOrg":
                     ResourceOrg resourceOrg;
@@ -1611,6 +1669,9 @@
                                 message.Message = resourceOrg.Name + " move failed!";
                             }
                             break;
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceOrg");
+                            break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmOrgDelete)
@@ -1632,6 +1693,13 @@
                         case "add":
                             if ((newOrgName != null) && (newOrgShortName != null))
                             {
+                                // Validate the value
+                                if (newOrgShortName.Length > 5)
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Org Short Name must be 1-5 characters!";
+                                    break;
+                                }
                                 // Add the new item
                                 resourceOrg = new ResourceOrg()
                                     {
@@ -1721,6 +1789,9 @@
                                 message.Message = resourceProjAppSvc.Name + " move failed!";
                             }
                             break;
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceProjAppSvc");
+                            break;
                         case "delete":
                             bool coinfirmProjAppSvcDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (coinfirmProjAppSvcDelete)
@@ -1742,6 +1813,14 @@
                         case "add":
                             if ((newProjAppSvcName != null) && (newProjAppSvcShortName != null))
                             {
+                                // Validate the value
+                                if (newProjAppSvcShortName.Length > 3)
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Project/App/Service Short Name must be 1-3 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceProjAppSvc = new ResourceProjAppSvc()
                                     {
@@ -1794,6 +1873,9 @@
                     ResourceType resourceType = new();
                     switch (action)
                     {
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceType", true);
+                            break;
                         case "download":
                             serviceResponse = await ResourceTypeService.GetItems();
                             var typejson = serviceResponse.ResponseObject;
@@ -1861,6 +1943,9 @@
                                 message.Message = resourceUnitDept.Name + " move failed!";
                             }
                             break;
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceUnitDept");
+                            break;
                         case "delete":
                             bool confirmUnitDeptDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmUnitDeptDelete)
@@ -1882,6 +1967,14 @@
                         case "add":
                             if ((newUnitDeptName != null) && (newUnitDeptShortName != null))
                             {
+                                // Validate the value
+                                if (newUnitDeptShortName.Length > 3)
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Unit/Dept Short Name must be 1-3 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceUnitDept = new ResourceUnitDept()
                                     {
@@ -1972,6 +2065,9 @@
                                 message.Message = resourceVmRole.Name + " move failed!";
                             }
                             break;
+                         case "edit":
+                            ShowEditModal((int)id, "ResourceVmRole");
+                            break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirmOrgDelete)
@@ -1993,6 +2089,14 @@
                         case "add":
                             if ((newVmRoleName != null) && (newVmRoleShortName != null))
                             {
+                                // Validate the value
+                                if (newVmRoleShortName.Length > 2)
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "VM Role Short Name must be 1-2 characters!";
+                                    break;
+                                }
+
                                 // Add the new item
                                 resourceVmRole = new ResourceVmRole()
                                     {
@@ -2186,6 +2290,32 @@
             case "newMasterConfig":
                 newMasterConfig = value;
                 break;
+        }
+    }
+
+    async void ShowEditModal(int id, string type, bool protectedname = false)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(EditModal.id), id);
+        parameters.Add(nameof(EditModal.type), type);
+        parameters.Add(nameof(EditModal.title), "Edit " + type.Replace("Resource", "Resource "));
+        parameters.Add(nameof(EditModal.protectedName), protectedname);
+
+        var options = new ModalOptions()
+            {
+                HideCloseButton = true,
+                UseCustomLayout = true
+            };
+
+        var modal = Modal.Show<EditModal>("Edit " + type.Replace("Resource", "Resource "), parameters, options);
+        var result = await modal.Result;
+        if (result.Cancelled)
+        {
+        }
+        else
+        {
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+            StateHasChanged();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AzNamingTool.Services
             {
                 // Get list of items
                 var items = await GeneralHelper.GetList<ResourceType>();
-                serviceResponse.ResponseObject = items;
+                serviceResponse.ResponseObject = items.OrderBy(x => x.Resource).ToList(); ;
                 serviceResponse.Success = true;
             }
             catch (Exception ex)

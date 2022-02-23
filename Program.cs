@@ -1,9 +1,9 @@
 using AzNamingTool.Attributes;
 using AzNamingTool.Helpers;
-using AzNamingTool.Pages;
 using BlazorDownloadFile;
 using Blazored.Toast;
 using Microsoft.OpenApi.Models;
+using Blazored.Modal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor().AddHubOptions(x => x.MaximumReceiveMessageSize = 102400000);
 builder.Services.AddBlazorDownloadFile();
 builder.Services.AddBlazoredToast();
+builder.Services.AddBlazoredModal();
 
 builder.Services.AddSingleton<StateContainer>();
 
