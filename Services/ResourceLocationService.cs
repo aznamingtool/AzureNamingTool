@@ -13,7 +13,7 @@ namespace AzNamingTool.Services
             {
                 // Get list of items
                 var items = await GeneralHelper.GetList<ResourceLocation>();
-                serviceResponse.ResponseObject = items;
+                serviceResponse.ResponseObject = items.OrderBy(x => x.Name).ToList(); ;
                 serviceResponse.Success = true;
             }
             catch (Exception ex)
@@ -40,86 +40,89 @@ namespace AzNamingTool.Services
             }
             return serviceResponse;
         }
-        //public static async Task<ServiceResponse> PostItem(ResourceLocation item)
-        //{
-        //    try
-        //    {
-        //        // Make sure the new item short name only contains letters/numbers
-        //        if (!GeneralHelper.CheckAlphanumeric(item.ShortName))
-        //        {
-        //            serviceResponse.Success = false;
-        //            serviceResponse.ResponseObject = "Short name must be alphanumeric.";
-        //            return serviceResponse;
-        //        }
+        public static async Task<ServiceResponse> PostItem(ResourceLocation item)
+        {
+            try
+            {
+                // Make sure the new item short name only contains letters/numbers
+                if (!GeneralHelper.CheckAlphanumeric(item.ShortName))
+                {
+                    serviceResponse.Success = false;
+                    serviceResponse.ResponseObject = "Short name must be alphanumeric.";
+                    return serviceResponse;
+                }
 
+                // Get list of items
+                var items = await GeneralHelper.GetList<ResourceLocation>();
 
-        //        // Get list of items
-        //        var items = await GeneralHelper.GetList<ResourceLocation>();
+                // Set the new id
+                if (item.Id == 0)
+                {
+                    if (items.Count > 0)
+                    {
+                        item.Id = items.Max(t => t.Id) + 1;
+                    }
+                    else
+                    {
+                        item.Id = 1;
+                    }
+                }
 
-        //        // Set the new id
-        //        if (item.Id == 0)
-        //        {
-        //            item.Id = items.Count + 1;
-        //        }
+                // Determine new item id
+                if (items.Count > 0)
+                {
+                    // Check if the item already exists
+                    if (items.Exists(x => x.Id == item.Id))
+                    {
+                        // Remove the updated item from the list
+                        var existingitem = items.Find(x => x.Id == item.Id);
+                        int index = items.IndexOf(existingitem);
+                        items.RemoveAt(index);
+                    }
+                    
+                        // Put the item at the end
+                        items.Add(item);                    
+                }
+                else
+                {
+                    item.Id = 1;
+                    items.Add(item);
+                }
 
-        //        items = items.OrderBy(x => x.Name).ToList();
+                // Write items to file
+                await GeneralHelper.WriteList<ResourceLocation>(items);
+                serviceResponse.Success = true;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.ResponseObject = ex;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
 
-        //        // Determine new item id
-        //        if (items.Count > 0)
-        //        {
-        //            // Check if the item already exists
-        //            if (items.Exists(x => x.Id == item.Id))
-        //            {
-        //                // Remove the updated item from the list
-        //                var existingitem = items.Find(x => x.Id == item.Id);
-        //                int index = items.IndexOf(existingitem);
-        //                items.RemoveAt(index);
-        //            }
-        //            {
-        //                // Put the item at the end
-        //                items.Add(item);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            item.Id = 1;
-        //            items.Add(item);
-        //        }
+        public static async Task<ServiceResponse> DeleteItem(int id)
+        {
+            try
+            {
+                // Get list of items
+                var items = await GeneralHelper.GetList<ResourceLocation>();
+                // Get the specified item
+                var item = items.Find(x => x.Id == id);
+                // Remove the item from the collection
+                items.Remove(item);
 
-        //        // Write items to file
-        //        await GeneralHelper.WriteList<ResourceLocation>(items);
-        //        serviceResponse.Success = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        serviceResponse.ResponseObject = ex;
-        //        serviceResponse.Success = false;
-        //    }
-        //    return serviceResponse;
-        //}
-
-        //public static async Task<ServiceResponse> DeleteItem(int id)
-        //{
-        //    try
-        //    {
-        //        // Get list of items
-        //        var items = await GeneralHelper.GetList<ResourceLocation>();
-        //        // Get the specified item
-        //        var item = items.Find(x => x.Id == id);
-        //        // Remove the item from the collection
-        //        items.Remove(item);
-
-        //        // Write items to file
-        //        await GeneralHelper.WriteList<ResourceLocation>(items);
-        //        serviceResponse.Success = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        serviceResponse.ResponseObject = ex;
-        //        serviceResponse.Success = false;
-        //    }
-        //    return serviceResponse;
-        //}
+                // Write items to file
+                await GeneralHelper.WriteList<ResourceLocation>(items);
+                serviceResponse.Success = true;
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.ResponseObject = ex;
+                serviceResponse.Success = false;
+            }
+            return serviceResponse;
+        }
 
         public static async Task<ServiceResponse> PostConfig(List<ResourceLocation> items)
         {
