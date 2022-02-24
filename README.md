@@ -26,12 +26,12 @@ This project contains a .NET Core application, with Docker support. To use:
 
 - On the **<>Code** tab, select the **<>Code** button and select **Download ZIP**
 
-- Extract the zipped files to your loal machine
+- Extract the zipped files to your local machine
 
 - Change directory to the project folder
 
   **NOTE**  
-  - Ensure you can see the project files and are not in the parent folder)
+  - Ensure you can see the project files and are not in the parent folder
 
 - Open a **Command Prompt** and change directory to the current project folder
 
