@@ -46,10 +46,14 @@ This project contains a .NET Core application, with Docker support. To use:
   **NOTE**  
   - Ensure the '.' is included in the command
 
-- Run the following **Docker command** to create a new container
+- Run the following **Docker command** to create a new volume in your Docker environment
 
-	*docker run -p 8081:80 aznamingtool*  
+	*docker volume create aznamingtoolvol*
+
+- Run the following ##Docker command** to create a new container and mount the new volume
 	
+	*docker run -d -p 8081:80 --mount source=aznamingtoolvol,target=/app/Settings aznamingtool:latest*
+
   **NOTES**  
     - Substitute 8081 for any port not in use on your machine  
     - You will see warnings in the command prompt regarding DataProtection and keys. These indicate that the keys are not persisted and are only local to the container instances. 
