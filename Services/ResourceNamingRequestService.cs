@@ -99,13 +99,22 @@ namespace AzNamingTool.Services
                             }
                             else
                             {
-                                valid = false;
+                                // Check if the prop is optional
+                                if (!resourceType.Optional.ToLower().Contains(component.Name.ToLower().Replace("resource", "")))
+                                {
+                                    valid = false;
+                                    break;
+                                }
                             }
                         }
                         else
                         {
-                            valid = false;
-                            break;
+                            // Check if the prop is optional
+                            if (!resourceType.Optional.ToLower().Contains(component.Name.ToLower().Replace("resource", "")))
+                            {
+                                valid = false;
+                                break;
+                            }
                         }
                     }
                 }

@@ -91,6 +91,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Environment
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("environment"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
@@ -109,6 +113,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Instance
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("instance"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputText class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
@@ -121,6 +129,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Location
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("location"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
@@ -139,6 +151,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Org
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("org"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
@@ -157,6 +173,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Proejct/App/Service
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("projappsvc"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
@@ -175,6 +195,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 Unit/Dept
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("unitdept"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
@@ -193,6 +217,10 @@
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
                                                 VM Role
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("vmrole"))
+                                                {
+                                                    @((MarkupString)optional)
+                                                }
                                             </h5>
                                             <div class="card card-body">
                                                 <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceVmRole)"
@@ -262,6 +290,7 @@
     private string? selectedResourceProjAppSvc;
     private string? selectedResourceType;
     private string selectedResourceTypeExclude;
+    private string selectedResourceTypeOptional;
     private string? selectedResourceUnitDept;
     private string? selectedResourceVmRole;
     private bool boolFormDisabled = true;
@@ -271,6 +300,7 @@
     private string? resultClass;
     private string? resultHeader;
     private string? componentsVisible = "collapse in";
+    private string optional = " (OPTIONAL)";
     private ResourceNameRequest resourceNameRequest = new();
     private ResourceNameResponse resourceNameRequestResponse;
 
@@ -362,6 +392,8 @@
         namingGuidelines += "</div></div>";
         //namingGuidelines += "</div>";
 
+        // Set the optional components
+        selectedResourceTypeOptional = currentResourceType.Optional;
 
         // Set the excluded components
         selectedResourceTypeExclude = currentResourceType.Exclude;
@@ -420,53 +452,58 @@
             boolFormDisabled = false;
             @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents)
             {
+                // Check if the component is excluded for the resource type
                 if (!selectedResourceTypeExclude.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
                 {
-                    switch (resourceComponent.Name)
+                    // Check if the component is optional for the resource type
+                    if (!selectedResourceTypeOptional.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
                     {
-                        case "ResourceEnvironment":
-                            if (selectedResourceEnvironment == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
+                        switch (resourceComponent.Name)
+                        {
+                            case "ResourceEnvironment":
+                                if (selectedResourceEnvironment == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
 
-                        case "ResourceInstance":
-                            if (selectedResourceInstance == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
-                        case "ResourceLocation":
-                            if (selectedResourceLocation == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
-                        case "ResourceOrg":
-                            if (selectedResourceOrg == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
-                        case "ResourceProjAppSvc":
-                            if (selectedResourceProjAppSvc == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
-                        case "ResourceUnitDept":
-                            if (selectedResourceUnitDept == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
-                        case "ResourceVmRole":
-                            if (selectedResourceVmRole == null)
-                            {
-                                boolFormDisabled = true;
-                            }
-                            break;
+                            case "ResourceInstance":
+                                if (selectedResourceInstance == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                            case "ResourceLocation":
+                                if (selectedResourceLocation == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                            case "ResourceOrg":
+                                if (selectedResourceOrg == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                            case "ResourceProjAppSvc":
+                                if (selectedResourceProjAppSvc == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                            case "ResourceUnitDept":
+                                if (selectedResourceUnitDept == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                            case "ResourceVmRole":
+                                if (selectedResourceVmRole == null)
+                                {
+                                    boolFormDisabled = true;
+                                }
+                                break;
+                        }
                     }
                 }
             }
