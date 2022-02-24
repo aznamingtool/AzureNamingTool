@@ -24,10 +24,6 @@ This project contains a .NET Core application, with Docker support. To use:
 
 ### Run as a Docker image
 
-- Fork the **AzNamingTool** repository
-
-- Select your forked repository
-
 - On the **<>Code** tab, select the **<>Code** button and select **Download ZIP**
 
 - Extract the zipped files to your loal machine
