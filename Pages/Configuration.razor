@@ -21,10 +21,8 @@
     <div class="card-body"><h2>Configuration</h2></div>
 </div>
 <div class="card-body">
-    <div class="mb-3" style="float:left">This component displays the current Azure Naming Tool configuration.</div>
-
-    <Admin OnAdminChange="AdminChanged" />
-
+    <div class="mb-3">This component displays the current Azure Naming Tool configuration.</div>
+    
     @if (!dataLoaded)
     {
         <div class="spinner-border blue" role="status">
@@ -299,7 +297,7 @@
                                                                     </button>
                                                                     <span> </span>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceEnvironment",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                     @if (servicesData.ResourceEnvironments.Count > 1)
                                                                     {
@@ -430,8 +428,8 @@
                                                             @if (admin)
                                                             {
                                                                 <td>
-                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                 </td>
                                                             }
@@ -564,7 +562,7 @@
                                                                     </button>
                                                                     <span> </span>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceOrg",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                     @if (servicesData.ResourceOrgs.Count > 1)
                                                                     {
@@ -704,7 +702,7 @@
                                                                     </button>
                                                                     <span> </span>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceProjAppSvc",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                     @if (servicesData.ResourceProjAppSvcs.Count > 1)
                                                                     {
@@ -836,7 +834,7 @@
                                                             {
                                                                 <td>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceType",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                 </td>
                                                             }
@@ -938,7 +936,7 @@
                                                                     </button>
                                                                     <span> </span>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceUnitDept",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
 
                                                                     @if (servicesData.ResourceUnitDepts.Count > 1)
@@ -1079,7 +1077,7 @@
                                                                     </button>
                                                                     <span> </span>
                                                                     <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"edit"))" title="Edit">
-                                                                        <span class="oi oi-cog" aria-hidden="true"></span>
+                                                                        <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
 
                                                                     @if (servicesData.ResourceVmRoles.Count > 1)
@@ -1525,7 +1523,7 @@
                             }
                             break;
                          case "edit":
-                            ShowEditModal((int)id, "ResourceEnvironment");
+                            ShowEditModal((int)id, "ResourceEnvironment", "Edit the Environment.");
                             break;
                         case "delete":
                             bool confirmEnvironmentDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1600,7 +1598,7 @@
                     switch (action)
                     {
                          case "edit":
-                            ShowEditModal((int)id, "ResourceLocation", true);
+                            ShowEditModal((int)id, "ResourceLocation",  "Edit the Location.", true);
                             break;
                         case "download":
                             serviceResponse = await ResourceLocationService.GetItems();
@@ -1670,7 +1668,7 @@
                             }
                             break;
                          case "edit":
-                            ShowEditModal((int)id, "ResourceOrg");
+                            ShowEditModal((int)id, "ResourceOrg", "Edit the Org.<br /><br />Short Name must be 1-5 characters.");
                             break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1694,7 +1692,7 @@
                             if ((newOrgName != null) && (newOrgShortName != null))
                             {
                                 // Validate the value
-                                if (newOrgShortName.Length > 5)
+                                if (!GeneralHelper.ValidateShortName(newOrgShortName, type))
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Org Short Name must be 1-5 characters!";
@@ -1790,7 +1788,7 @@
                             }
                             break;
                          case "edit":
-                            ShowEditModal((int)id, "ResourceProjAppSvc");
+                            ShowEditModal((int)id, "ResourceProjAppSvc", "Edit the Project/App/Service.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
                             bool coinfirmProjAppSvcDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1814,7 +1812,7 @@
                             if ((newProjAppSvcName != null) && (newProjAppSvcShortName != null))
                             {
                                 // Validate the value
-                                if (newProjAppSvcShortName.Length > 3)
+                                if (!GeneralHelper.ValidateShortName(newProjAppSvcShortName, type))
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Project/App/Service Short Name must be 1-3 characters!";
@@ -1874,7 +1872,7 @@
                     switch (action)
                     {
                          case "edit":
-                            ShowEditModal((int)id, "ResourceType", true);
+                            ShowEditModal((int)id, "ResourceType",  "Edit the Type.", true);
                             break;
                         case "download":
                             serviceResponse = await ResourceTypeService.GetItems();
@@ -1944,7 +1942,7 @@
                             }
                             break;
                          case "edit":
-                            ShowEditModal((int)id, "ResourceUnitDept");
+                            ShowEditModal((int)id, "ResourceUnitDept", "Edit the Unit/Dept.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
                             bool confirmUnitDeptDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1968,7 +1966,7 @@
                             if ((newUnitDeptName != null) && (newUnitDeptShortName != null))
                             {
                                 // Validate the value
-                                if (newUnitDeptShortName.Length > 3)
+                                if (!GeneralHelper.ValidateShortName(newUnitDeptShortName, type))
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "Unit/Dept Short Name must be 1-3 characters!";
@@ -2066,7 +2064,7 @@
                             }
                             break;
                          case "edit":
-                            ShowEditModal((int)id, "ResourceVmRole");
+                            ShowEditModal((int)id, "ResourceVmRole", "Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
                             break;
                         case "delete":
                             bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -2090,7 +2088,7 @@
                             if ((newVmRoleName != null) && (newVmRoleShortName != null))
                             {
                                 // Validate the value
-                                if (newVmRoleShortName.Length > 2)
+                                if (!GeneralHelper.ValidateShortName(newVmRoleShortName, type))
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
                                     message.Message = "VM Role Short Name must be 1-2 characters!";
@@ -2293,11 +2291,12 @@
         }
     }
 
-    async void ShowEditModal(int id, string type, bool protectedname = false)
+    async void ShowEditModal(int id, string type, string message, bool protectedname = false)
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(EditModal.id), id);
         parameters.Add(nameof(EditModal.type), type);
+        parameters.Add(nameof(EditModal.message), message);
         parameters.Add(nameof(EditModal.title), "Edit " + type.Replace("Resource", "Resource "));
         parameters.Add(nameof(EditModal.protectedName), protectedname);
 

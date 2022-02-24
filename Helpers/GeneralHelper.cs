@@ -237,5 +237,49 @@ namespace AzNamingTool.Helpers
             state.SetAdmin(false);
             state.SetPassword(false);
         }
+
+        public static bool ValidateShortName(string value, string type)
+        {
+            bool valid = false;
+
+            switch (type)
+            {
+                case "ResourceEnvironment":
+                    valid = true;
+                    break;
+                case "ResourceLocation":
+                    valid = true;
+                    break;
+                case "ResourceOrg":
+                    if (value.Length < 6)
+                    {
+                        valid = true;
+                    }
+                    break;
+                case "ResourceProjAppSvc":
+                    if (value.Length < 4)
+                    {
+                        valid = true;
+                    }
+                    break;
+                case "ResourceType":
+                    valid = true;
+                    break;
+                case "ResourceUnitDept":
+                    if (value.Length < 4)
+                    {
+                        valid = true;
+                    }
+                    break;
+                case "ResourceVmRole":
+                    if (value.Length < 3)
+                    {
+                        valid = true;
+                    }
+                    break;
+            }
+
+            return valid;
+        }
     }
 }

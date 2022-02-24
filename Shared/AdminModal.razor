@@ -1,0 +1,257 @@
+﻿@using AzNamingTool.Helpers
+@using AzNamingTool.Models
+@using AzNamingTool.Services
+@using AzNamingTool.Helpers
+@using Microsoft.AspNetCore.Html
+@inject IJSRuntime JsRuntime
+@inject IConfiguration _config
+@inject StateContainer state
+@inject IToastService toastService
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal-backdrop fade show" @onclick="Close"></div>
+    <div class="modal-dialog" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h3 class="modal-title text-white">Admin</h3>
+            </div>
+            <div class="modal-body">
+                @if (!admin)
+                {
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />
+                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("login"))" title="Login">Login</button>
+                    </div>
+                }
+                else
+                {
+                    <p>
+                        This form allows you to set the Admin password and API key for the Azure Naming Tool.
+                    </p>
+                    <div class="card mb-3">
+                        <h5 class="card-header text-white bg-secondary">
+                            New Password
+                        </h5>
+                        <div class="card card-body">
+                            <p>
+                                Enter a new password for the site.
+                            </p>
+                            <p><strong>Requirements</strong></p>
+                            <ul>
+                                <li>Contain a number</li>
+                                <li>Contain one upper case letter</li>
+                                <li>Be at least 8 characters</li>
+                            </ul>
+                            <div class="form-group">
+                                <input id="newpassword" class="form-control  mb-3" type="password" @onchange="@((ui) => { SetFormValue("password",(string)ui.Value);})" />
+                                <button type="button"  disabled="@disabled" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))" title="Save">Save</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h5 class="card-header text-white bg-secondary">
+                            API Key
+                        </h5>
+                        <div class="card card-body">
+                            <p>
+                                The current API key is displayed. Click <strong>Generate</strong> to generate a new random API Key, or update the text to the desired value.
+                            </p>
+                            <div class="form-group">
+                                <input id="currentapikey" class="form-control mb-3" type="text" @onchange="@((ui) => { SetFormValue("apikey",(string)ui.Value);})" value="@currentapikey" />
+                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeysave"))" title="Save">Save</button>
+                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeygenerate"))" title="Generate">Generate</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                @if (admin)
+                {
+                    <button type="button" class="btn btn-primary" @onclick="@(e => AdminFormAction("logout"))" title="Logout" data-toggle="collapse" href="#admin">Logout</button>
+                }
+                <button @onclick="Close" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter] public EventCallback OnAdminChange { get; set; }
+
+    private ServicesData servicesData = new();
+    private string? currentpassword;
+    private string? newpassword;
+    private string? currentapikey;
+    private ResponseMessage message = new();
+    private bool admin;
+    private bool disabled = true;
+
+    private Config config = new ConfigurationBuilder()
+           .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+           .AddJsonFile("appsettings.json")
+           .Build()
+           .Get<Config>();
+
+    protected override void OnInitialized()
+    {
+        admin = state.Admin;
+        if (admin)
+        {
+            currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
+        }
+    }
+
+    private async void AdminFormAction(string action)
+    {
+        message = new ResponseMessage();
+
+        bool updateConfig = false;
+
+        message.Header = "INFORMATION";
+        message.Type = MessageTypesEnum.INFORMATION;
+
+        switch (action)
+        {
+            case "login":
+                // Check the password
+
+                if (currentpassword == GeneralHelper.DecryptString(config.AdminPassword, config.SALTKey))
+                {
+                    state.SetAdmin(true);
+                    // Load the current API Key
+                    currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
+                    message.Type = MessageTypesEnum.INFORMATION;
+                    message.Header = "INFORMATION";
+                    message.Message = "You have logged in.";
+                }
+                else
+                {
+                    state.SetAdmin(false);
+                    message.Type = MessageTypesEnum.ERROR;
+                    message.Header = "ERROR";
+                    message.Message = "Login failed";
+                }
+                break;
+            case "logout":
+                state.SetAdmin(false);
+                message.Type = MessageTypesEnum.INFORMATION;
+                message.Header = "INFORMATION";
+                message.Message = "You have logged out.";
+                break;
+            case "password":
+                bool confirmPassword = await JsRuntime.InvokeAsync<bool>("confirm", "This will change the admin password. Are you sure?");
+                if (confirmPassword)
+                {
+                    // Set the new admin password
+                    config.AdminPassword = GeneralHelper.EncryptString(newpassword, config.SALTKey);
+                    updateConfig = true;
+                    message.Type = MessageTypesEnum.SUCCESS;
+                    message.Header = "SUCCESS";
+                    message.Message = "Password updated!";
+                }
+                break;
+            case "apikeysave":
+
+                bool confrimAPIKeySave = await JsRuntime.InvokeAsync<bool>("confirm", "This will update the current API Key. Are you sure?");
+                if (confrimAPIKeySave)
+                {
+                    config.APIKey = GeneralHelper.EncryptString(currentapikey, config.SALTKey);
+                    updateConfig = true;
+                    message.Type = MessageTypesEnum.SUCCESS;
+                    message.Header = "SUCCESS";
+                    message.Message = "API Key updated!";
+                }
+                break;
+            case "apikeygenerate":
+
+                bool confrimAPIKeyGenerate = await JsRuntime.InvokeAsync<bool>("confirm", "This will generate a new API Key. Are you sure?");
+                if (confrimAPIKeyGenerate)
+                {
+                    // Set the new api key
+                    Guid guid = Guid.NewGuid();
+                    config.APIKey = GeneralHelper.EncryptString(guid.ToString(), config.SALTKey);
+                    currentapikey = guid.ToString();
+                    updateConfig = true;
+                    message.Type = MessageTypesEnum.SUCCESS;
+                    message.Header = "SUCCESS";
+                    message.Message = "API Key generated!";
+                }
+                break;
+        }
+
+        if (updateConfig)
+        {
+            GeneralHelper.UpdateSettings(config);
+        }
+
+        await InvokeAsync(() =>
+        {
+            base.StateHasChanged();
+        });
+
+        admin = state.Admin;
+
+        await OnAdminChange.InvokeAsync(admin);
+
+        if (message.Message != null)
+        {
+            switch (message.Type)
+            {
+                case MessageTypesEnum.INFORMATION:
+                    toastService.ShowInfo(message.Message, "INFORMATION");
+                    break;
+                case MessageTypesEnum.SUCCESS:
+                    toastService.ShowSuccess(message.Message, "SUCCESS");
+                    break;
+                case MessageTypesEnum.WARNING:
+                    toastService.ShowWarning(message.Message, "WARNING");
+                    break;
+                case MessageTypesEnum.ERROR:
+                    toastService.ShowError(message.Message, "ERROR");
+                    break;
+            }
+        }
+
+        if (action == "logout")
+        {
+            Close();
+        }
+    }
+
+    private void SetFormValue(string type, string value)
+    {
+        switch (type)
+        {
+            case "login":
+                currentpassword = value;
+                break;
+            case "password":            
+                newpassword = value;
+                // Validate the password complexity
+                if (GeneralHelper.ValidatePassword(newpassword))
+                {
+                    disabled = false;
+                }
+                else
+                {
+                    disabled = true;
+                }
+                break;
+            case "apikey":
+                currentapikey = value;
+                break;
+
+        }
+    }
+
+    async Task Close() => await ModalInstance.CancelAsync();
+}
