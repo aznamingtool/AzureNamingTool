@@ -22,7 +22,7 @@ namespace AzNamingTool.Attributes
 
             var config = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("Settings/appsettings.json")
             .Build()
             .Get<Config>();
 
