@@ -1,5 +1,6 @@
 ﻿using AzNamingTool.Helpers;
 using AzNamingTool.Models;
+using Microsoft.AspNetCore.Components;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -123,11 +124,23 @@ namespace AzNamingTool.Services
                 Match match = regx.Match(name);
                 if (!match.Success)
                 {
-                    sbMessage.Append("Resource name generation failed!");
-                    sbMessage.Append(Environment.NewLine);
-                    sbMessage.Append("Please review the Resource Type Naming Guidelines.");
-                    sbMessage.Append(Environment.NewLine);
-                    valid = false;
+                    // Strip the delimiter in case that is causing the issue
+                    name = name.Replace(request.ResourceDelimiter, "");
+
+                    Match match2 = regx.Match(name);
+                    if (match.Success)
+                    {
+
+                        sbMessage.Append("Resource name generation failed!");
+                        sbMessage.Append(Environment.NewLine);
+                        sbMessage.Append("Please review the Resource Type Naming Guidelines.");
+                        sbMessage.Append(Environment.NewLine);
+                        valid = false;
+                    }
+                    else
+                    {
+                        sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
+                    }
                 }
 
                 // VALIDATTION
