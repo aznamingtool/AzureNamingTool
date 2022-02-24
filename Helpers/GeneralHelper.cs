@@ -185,7 +185,7 @@ namespace AzNamingTool.Helpers
             {
                 var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("Settings/appsettings.json")
                 .Build()
                 .Get<Config>();
 
@@ -198,21 +198,29 @@ namespace AzNamingTool.Helpers
                         .Select(s => s[random.Next(s.Length)]).ToArray());
 
                     config.SALTKey = salt.ToString();
-                    // Encrypt the password and API Key
-                    config.SALTKey = salt.ToString();
+                    config.APIKey = EncryptString(config.APIKey, salt.ToString());
+
                     if (config.AdminPassword != "")
                     {
-                        config.AdminPassword = EncryptString(config.AdminPassword, salt.ToString());
+                        config.AdminPassword = EncryptString(config.AdminPassword, config.SALTKey.ToString());
                         state.Password = true;
                     }
                     else
                     {
                         state.Password = false;
                     }
-                    config.APIKey = EncryptString(config.APIKey, salt.ToString());
 
-                    UpdateSettings(config);
                 }
+
+                if (config.AdminPassword != "")
+                {
+                    state.Password = true;
+                }
+                else
+                {
+                    state.Password = false;
+                }
+                UpdateSettings(config);
             }
             state.SetVerified(true);
         }
@@ -227,7 +235,7 @@ namespace AzNamingTool.Helpers
 
             var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
 
-            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Settings/appsettings.json");
             File.WriteAllText(appSettingsPath, newJson);
         }
 

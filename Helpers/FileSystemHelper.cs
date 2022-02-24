@@ -75,7 +75,7 @@ namespace AzNamingTool.Helpers
 
             var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
 
-            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Settings/appsettings.json");
             File.WriteAllText(appSettingsPath, newJson);
 
             return "Success!";
