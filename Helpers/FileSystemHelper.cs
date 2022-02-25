@@ -14,28 +14,28 @@ namespace AzNamingTool.Helpers
         public static async Task<string> ReadFile(string fileName)
         {
             await CheckFile(fileName);
-            string data = await File.ReadAllTextAsync("configs/" + fileName);
+            string data = await File.ReadAllTextAsync("settings/" + fileName);
             return data;
         }
 
         public static async Task WriteFile(string fileName, string content)
         {
             await CheckFile(fileName);
-            File.WriteAllText("configs/" + fileName, content);
+            File.WriteAllText("settings/" + fileName, content);
         }
 
         public static async Task CheckFile(string fileName)
         {
-            if (!File.Exists("configs/" + fileName))
+            if (!File.Exists("settings/" + fileName))
             {
-                var file = File.Create("configs/" + fileName);
+                var file = File.Create("settings/" + fileName);
                 file.Close();
 
                 for (int numTries = 0; numTries < 10; numTries++)
                 {
                     try
                     {
-                        await File.WriteAllTextAsync("configs/" + fileName, "[]");
+                        await File.WriteAllTextAsync("settings/" + fileName, "[]");
                         return;
                     }
                     catch (IOException)
@@ -75,7 +75,7 @@ namespace AzNamingTool.Helpers
 
             var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
 
-            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Settings/appsettings.json");
+            var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/appsettings.json");
             File.WriteAllText(appSettingsPath, newJson);
 
             return "Success!";
