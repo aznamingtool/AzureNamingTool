@@ -73,3 +73,7 @@ a, .btn-link {
 .text-white, .link-light{
     color:#ffffff !important;
 }
+
+.text-dark, .link-dark {
+    color: #000000 !important;
+}
