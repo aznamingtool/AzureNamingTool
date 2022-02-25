@@ -33,7 +33,7 @@
 }
 
 @code {
-    
+
     [CascadingParameter] public IModalService Modal { get; set; }
 
     public bool PasswordModalOpen { get; set; }
@@ -42,6 +42,7 @@
 
     protected override void OnInitialized()
     {
+        GeneralHelper.VerifyConfiguration();
         GeneralHelper.VerifySecurity(state);
         // Check that the admin password is set
         if(!state.Password)
