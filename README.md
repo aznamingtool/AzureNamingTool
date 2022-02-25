@@ -46,11 +46,7 @@ This project contains a .NET Core application, with Docker support. To use:
   **NOTE**  
   - Ensure the '.' is included in the command
 
-- Run the following **Docker command** to create a new volume in your Docker environment
-
-	*docker volume create aznamingtoolvol*
-
-- Run the following ##Docker command** to create a new container and mount the new volume
+- Run the following ##Docker command** to create a new container and mount a new volume
 	
 	*docker run -d -p 8081:80 --mount source=aznamingtoolvol,target=/app/settings aznamingtool:latest*
 
