@@ -52,7 +52,7 @@ This project contains a .NET Core application, with Docker support. To use:
 
 - Run the following ##Docker command** to create a new container and mount the new volume
 	
-	*docker run -d -p 8081:80 --mount source=aznamingtoolvol,target=/app/Settings aznamingtool:latest*
+	*docker run -d -p 8081:80 --mount source=aznamingtoolvol,target=/app/settings aznamingtool:latest*
 
   **NOTES**  
     - Substitute 8081 for any port not in use on your machine  
