@@ -22,7 +22,7 @@
 </div>
 <div class="card-body">
     <div class="mb-3">This component displays the current Azure Naming Tool configuration.</div>
-    
+
     @if (!dataLoaded)
     {
         <div class="spinner-border blue" role="status">
@@ -98,10 +98,12 @@
                         @if (admin)
                         {
                             <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Configuration
+                                <div class="card-header bg-default">
+                                    <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#componentsconfig" role="button" aria-expanded="false" aria-controls="componentsconfig">
+                                        Configuration
+                                    </a>
                                 </div>
-                                <div class="card card-body">
+                                <div class="collapse card card-body" id="componentsconfig">
                                     <div class="card  w-auto">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
                                             Export the current Resource Components Configuration
@@ -201,10 +203,12 @@
                         @if (admin)
                         {
                             <div class="card">
-                                <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Configuration
+                                <div class="card-header bg-default">
+                                    <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#delimitersconfig" role="button" aria-expanded="false" aria-controls="delimitersconfig">
+                                        Configuration
+                                    </a>
                                 </div>
-                                <div class="card card-body">
+                                <div class="collapse card card-body" id="delimitersconfig">
                                     <div class="card  w-auto">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
                                             Export the current Resource Delimiters Configuration
@@ -348,10 +352,12 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#environmentsconfig" role="button" aria-expanded="false" aria-controls="environmentsconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="environmentsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export the current Environments Configuration
@@ -441,7 +447,7 @@
                                     </div>
                                     @if (admin)
                                     {
-                                        <div class="card">
+                                       @* <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
                                                 New Location
                                             </div>
@@ -471,12 +477,14 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
+                                        </div>*@
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#locationsconfig" role="button" aria-expanded="false" aria-controls="locationsconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="locationsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export the current Locations Configuration
@@ -613,10 +621,12 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#orgsconfig" role="button" aria-expanded="false" aria-controls="orgsconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="orgsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export the current Orgs Configuration
@@ -753,10 +763,12 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#projappsvcsconfig" role="button" aria-expanded="false" aria-controls="projappsvcsconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="projappsvcsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export the current Projects/Apps/Services Configuration
@@ -847,10 +859,12 @@
                                     @if (admin)
                                     {
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#typesconfig" role="button" aria-expanded="false" aria-controls="typesconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="typesconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export the current Resource Types Configuration
@@ -988,10 +1002,12 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#unitdeptsconfig" role="button" aria-expanded="false" aria-controls="unitdeptsconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="unitdeptsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export Units/Depts Configuration
@@ -1129,10 +1145,12 @@
                                             </div>
                                         </div>
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                Configuration
+                                            <div class="card-header bg-default">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#vmrolesconfig" role="button" aria-expanded="false" aria-controls="vmrolesconfig">
+                                                    Configuration
+                                                </a>
                                             </div>
-                                            <div class="card card-body">
+                                            <div class="collapse card card-body" id="vmrolesconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Export VM Role Configuration
@@ -1522,7 +1540,7 @@
                                 message.Message = resourceEnvironment.Name + " move failed!";
                             }
                             break;
-                         case "edit":
+                        case "edit":
                             ShowEditModal((int)id, "ResourceEnvironment", "Edit the Environment.");
                             break;
                         case "delete":
@@ -1597,8 +1615,8 @@
                 case "ResourceLocation":
                     switch (action)
                     {
-                         case "edit":
-                            ShowEditModal((int)id, "ResourceLocation",  "Edit the Location.", true);
+                        case "edit":
+                            ShowEditModal((int)id, "ResourceLocation", "Edit the Location.", true);
                             break;
                         case "download":
                             serviceResponse = await ResourceLocationService.GetItems();
@@ -1667,7 +1685,7 @@
                                 message.Message = resourceOrg.Name + " move failed!";
                             }
                             break;
-                         case "edit":
+                        case "edit":
                             ShowEditModal((int)id, "ResourceOrg", "Edit the Org.<br /><br />Short Name must be 1-5 characters.");
                             break;
                         case "delete":
@@ -1787,7 +1805,7 @@
                                 message.Message = resourceProjAppSvc.Name + " move failed!";
                             }
                             break;
-                         case "edit":
+                        case "edit":
                             ShowEditModal((int)id, "ResourceProjAppSvc", "Edit the Project/App/Service.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
@@ -1871,8 +1889,8 @@
                     ResourceType resourceType = new();
                     switch (action)
                     {
-                         case "edit":
-                            ShowEditModal((int)id, "ResourceType",  "Edit the Type.", true);
+                        case "edit":
+                            ShowEditModal((int)id, "ResourceType", "Edit the Type.", true);
                             break;
                         case "download":
                             serviceResponse = await ResourceTypeService.GetItems();
@@ -1941,7 +1959,7 @@
                                 message.Message = resourceUnitDept.Name + " move failed!";
                             }
                             break;
-                         case "edit":
+                        case "edit":
                             ShowEditModal((int)id, "ResourceUnitDept", "Edit the Unit/Dept.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
@@ -2063,7 +2081,7 @@
                                 message.Message = resourceVmRole.Name + " move failed!";
                             }
                             break;
-                         case "edit":
+                        case "edit":
                             ShowEditModal((int)id, "ResourceVmRole", "Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
                             break;
                         case "delete":
