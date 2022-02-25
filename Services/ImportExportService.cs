@@ -50,7 +50,7 @@ namespace AzNamingTool.Services
                 // Get the security settings
                 var config = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("Settings/appsettings.json")
+                    .AddJsonFile("settings/appsettings.json")
                     .Build()
                     .Get<Config>();
 
@@ -86,7 +86,7 @@ namespace AzNamingTool.Services
                 // Set the security settings
                 var config = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("Settings/appsettings.json")
+                    .AddJsonFile("settings/appsettings.json")
                     .Build()
                     .Get<Config>();
 
@@ -102,7 +102,7 @@ namespace AzNamingTool.Services
 
                 var newJson = JsonSerializer.Serialize(config, jsonWriteOptions);
 
-                var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Settings/appsettings.json");
+                var appSettingsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/appsettings.json");
                 File.WriteAllText(appSettingsPath, newJson);
 
                 serviceResponse.Success = true;
