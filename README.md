@@ -106,9 +106,13 @@ For many the steps, a sample proces is provideed, however, there are many ways t
 
 - Create an Azure Storage Fileshare for the persistent storage  
   [Create an Azure file share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share?tabs=azure-portal)
+  
+  ![FileShare](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/FileShare.png)
 
 - Mount the fileshare as local storage for the Azure App Service  
   [Mount Azure Storage as a local share in a custom container in App Service](https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux)
+  
+  ![MountStorage](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/MountStorage.png)
 
 - Deploy the image from the Azure Container Registry to the Azure App Service  
   [Continuous deployment with custom containers in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container?tabs=acr&pivots=container-linux)
