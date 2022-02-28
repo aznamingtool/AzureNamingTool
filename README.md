@@ -24,9 +24,15 @@ The Generator tab provides a drop down menu to select an Azure resource. Once a 
 
 ## TO USE
 
-This project contains a .NET Core application, with Docker support. To use:
+This project contains a .NET Core application, with Docker support. To use, complete the following:
+
+**NOTE**
+
+The Azure Naming Tool requires persistent storage for the configuration files when run as a container. The following processes will explain how to create this volume in your respective envinroment.  
 
 ### Run as a Docker image
+
+Ths process will allow you to deploy the Azure Naming Tool using DOcker to your local environment.
 
 - On the **<>Code** tab, select the **<>Code** button and select **Download ZIP**
 
@@ -60,6 +66,56 @@ This project contains a .NET Core application, with Docker support. To use:
   
   **NOTE**  
   - Substitute 8081 for the port you used in the docker run command
+
+***
+
+### Run as an Azure App Service Container
+
+Ths process will allow you to deploy the Azure Naming Tool to an Azure App Service. 
+
+**NOTE**
+
+For many the steps, a sample proces is provideed, however, there are many ways to accomplsih eash step. 
+
+- On the **<>Code** tab, select the **<>Code** button and select **Download ZIP**
+
+- Extract the zipped files to your local machine
+
+- Change directory to the project folder
+
+  **NOTE**  
+  - Ensure you can see the project files and are not in the parent folder
+
+- Open a **Command Prompt** and change directory to the current project folder
+
+- Run the follwing **Docker command** to build the image
+
+  *docker build -t aznamingtool .*
+  
+  **NOTE**  
+  - Ensure the '.' is included in the command
+  
+- Create an Azure Container Registry  
+  [Create an Azure container registry using the Azure portal](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal#:~:text=%20Quickstart%3A%20Create%20an%20Azure%20container%20registry%20using,must%20log%20in%20to%20the%20registry...%20More%20)
+
+- Build and publish you image to the Azure Container Registry  
+  [Push your first image to your Azure container registry using the Docker CLI](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli?tabs=azure-cli)
+
+- Create an Azure App Service - Web App  
+  [Run a custom container in Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=dotnet&pivots=container-linux) 
+
+- Create an Azure Storage Fileshare for the persistent storage  
+  [Create an Azure file share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share?tabs=azure-portal)
+
+- Mount the fileshare as local storage for the Azure App Service  
+  [Mount Azure Storage as a local share in a custom container in App Service](https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux)
+
+- Deploy the image from the Azure Container Registry to the Azure App Service  
+  [Continuous deployment with custom containers in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container?tabs=acr&pivots=container-linux)
+
+- Access the site using your Azure App Service URL
+
+***
 
 - On first launch, you will be prompted to set the Admin password
 
