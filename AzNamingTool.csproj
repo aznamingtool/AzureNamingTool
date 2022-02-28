@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="configs\" />
-    <Folder Include="settings\" />
   </ItemGroup>
 
 </Project>
