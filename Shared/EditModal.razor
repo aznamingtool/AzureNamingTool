@@ -119,6 +119,7 @@
                     case "ResourceEnvironment":
                         serviceResponse = await ResourceEnvironmentService.GetItem(id);
                         ResourceEnvironment resourceEnvironment = (ResourceEnvironment)serviceResponse.ResponseObject;
+                        resourceEnvironment.Name = itemName;
                         resourceEnvironment.ShortName = itemShortName;
                         serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
                         break;
@@ -131,12 +132,14 @@
                     case "ResourceOrg":
                         serviceResponse = await ResourceOrgService.GetItem(id);
                         ResourceOrg resourceOrg = (ResourceOrg)serviceResponse.ResponseObject;
+                        resourceOrg.Name = itemName;
                         resourceOrg.ShortName = itemShortName;
                         serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
                         break;
                     case "ResourceProjAppSvc":
                         serviceResponse = await ResourceProjAppSvcService.GetItem(id);
                         ResourceProjAppSvc resourceProjAppSvc = (ResourceProjAppSvc)serviceResponse.ResponseObject;
+                        resourceProjAppSvc.Name = itemName;
                         resourceProjAppSvc.ShortName = itemShortName;
                         serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
                         break;
@@ -149,12 +152,14 @@
                     case "ResourceUnitDept":
                         serviceResponse = await ResourceUnitDeptService.GetItem(id);
                         ResourceUnitDept resourceUnitDept = (ResourceUnitDept)serviceResponse.ResponseObject;
+                        resourceUnitDept.Name = itemName;
                         resourceUnitDept.ShortName = itemShortName;
                         serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
                         break;
                     case "ResourceVmRole":
                         serviceResponse = await ResourceVmRoleService.GetItem(id);
                         ResourceVmRole resourceVmRole = (ResourceVmRole)serviceResponse.ResponseObject;
+                        resourceVmRole.Name = itemName;
                         resourceVmRole.ShortName = itemShortName;
                         serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
                         break;

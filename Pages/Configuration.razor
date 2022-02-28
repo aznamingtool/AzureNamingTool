@@ -343,7 +343,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -369,6 +369,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceEnvironment",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Environments Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the Environments Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceEnvironment",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -447,37 +465,37 @@
                                     </div>
                                     @if (admin)
                                     {
-                                       @* <div class="card">
+                                        @* <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New Location
+                                            New Location
                                             </div>
                                             <div class="card card-body">
-                                                <p>Add a new Location.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newLocationName" @onchange="@((ui) => { SetFormValue("newLocationName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newLocationShortName" @onchange="@((ui) => { SetFormValue("newLocationShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <p>Add a new Location.</p>
+                                            <table class="table table-striped">
+                                            <tbody>
+                                            <tr>
+                                            <td>Name</td>
+                                            <td>
+                                            <input class="form-control" type="text" value="@newLocationName" @onchange="@((ui) => { SetFormValue("newLocationName",(string)ui.Value);})" />
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td>Short Name</td>
+                                            <td>
+                                            <input class="form-control" type="text" value="@newLocationShortName" @onchange="@((ui) => { SetFormValue("newLocationShortName",(string)ui.Value);})" />
+                                            </td>
+                                            </tr>
+                                            <tr>
+                                            <td colspan="2">
+                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"add"))" title="Add">
+                                            <span class="oi oi-plus" aria-hidden="true"></span>
+                                            </button>
+                                            </td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
                                             </div>
-                                        </div>*@
+                                            </div>*@
                                         <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#locationsconfig" role="button" aria-expanded="false" aria-controls="locationsconfig">
@@ -496,6 +514,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceLocation",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Locations Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the Locations Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceLocation",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -612,7 +648,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -642,13 +678,34 @@
                                                         </p>
                                                     </div>
                                                 </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Orgs Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the Orgs Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceOrg",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
                                                 <div class="card">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
                                                         Import Orgs Configuration
                                                     </div>
                                                     <div class="card card-body">
                                                         <p>
-                                                            Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration. <strong>NOTE:</strong> This will overwrite the existing Orgs Configuration.
+                                                            Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will overwrite the existing Orgs Configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
@@ -754,7 +811,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -780,6 +837,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Projects/Apps/Services Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the Project/App/Services Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -876,6 +951,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceType",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Types Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the Types Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceType",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -993,7 +1086,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -1019,6 +1112,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceUnitDept",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the Units/Depts Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the UnitsDepts Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceUnitDept",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -1136,7 +1247,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span>
+                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -1162,6 +1273,24 @@
                                                         <p>
                                                             <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Export">
                                                                 <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span> Export
+                                                            </button>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card  w-auto">
+                                                    <div class="card card-header bg-default" style="font-weight:bold;">
+                                                        Reset the VM Roles Configuration
+                                                    </div>
+                                                    <div class="card card-body">
+                                                        <p>
+                                                            Click <strong>Reset</strong> to reset the VM Roles Configuration back to the default values at the time of installation.
+                                                        </p>
+                                                        <p>
+                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                        </p>
+                                                        <p>
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceVmRole",0,"reset")) title="Reset">
+                                                                <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
                                                     </div>
@@ -1288,7 +1417,6 @@
     private bool dataLoaded = false;
     private bool admin;
 
-
     private string? newComponentConfig;
     private string? newDelimiterConfig;
     private string? newEnvironmentName;
@@ -1337,6 +1465,7 @@
     private async Task FormAction(string type, long id, string action)
     {
         message = new ResponseMessage();
+        bool confirm = false;
         try
         {
             ServiceResponse serviceResponse;
@@ -1422,16 +1551,20 @@
                         case "update":
                             if (newTypeConfig != null)
                             {
-                                serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newTypeConfig));
-                                if (serviceResponse.Success)
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Components configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
                                 {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Components config update succeeded!";
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Components config update failed!";
+                                    serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newTypeConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Resource Components config update succeeded!";
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Resource Components config update failed!";
+                                    }
                                 }
                             }
 
@@ -1482,16 +1615,20 @@
                         case "update":
                             if (newDelimiterConfig != null)
                             {
-                                serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newDelimiterConfig));
-                                if (serviceResponse.Success)
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Delimiters configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
                                 {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Delimiters config update succeeded!";
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Delimiters config update failed!";
+                                    serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newDelimiterConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Resource Delimiters config update succeeded!";
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Resource Delimiters config update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1544,8 +1681,8 @@
                             ShowEditModal((int)id, "ResourceEnvironment", "Edit the Environment.");
                             break;
                         case "delete":
-                            bool confirmEnvironmentDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-                            if (confirmEnvironmentDelete)
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
                             {
                                 resourceEnvironment = servicesData.ResourceEnvironments.Find(x => x.Id == id);
                                 serviceResponse = await ResourceEnvironmentService.DeleteItem(Convert.ToInt32(resourceEnvironment.Id));
@@ -1585,26 +1722,51 @@
                                     message.Message = resourceEnvironment.Name + " addition failed!";
                                 }
                             }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = "You must enter a valid name and short name!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceEnvironmentService.GetItems();
                             var environmentjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("environmentsconfig.json", JsonSerializer.Serialize(environmentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newEnvironmentConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Environments configruation and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newEnvironmentConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourceenvironments.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Environments config update succeeded!";
-                                    newEnvironmentConfig = null;
+                                    message.Message = "Environments configruation reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Environments config update failed!";
+                                    message.Message = "Environments configruation reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newEnvironmentConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Environments configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newEnvironmentConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Resource Environments config update succeeded!";
+                                        newEnvironmentConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Resource Environments config update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1623,20 +1785,40 @@
                             var locationjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("locationsconfig.json", JsonSerializer.Serialize(locationjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newLocationConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Locations configruation and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newLocationConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourcelocations.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Locations config update succeeded!";
-                                    newLocationConfig = null;
+                                    message.Message = "Locations configruation reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Locations config update failed!";
+                                    message.Message = "Locations configruation reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newLocationConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Locations configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newLocationConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Resource Locations config update succeeded!";
+                                        newLocationConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Resource Locations config update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1689,8 +1871,8 @@
                             ShowEditModal((int)id, "ResourceOrg", "Edit the Org.<br /><br />Short Name must be 1-5 characters.");
                             break;
                         case "delete":
-                            bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-                            if (confirmOrgDelete)
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
                             {
                                 resourceOrg = servicesData.ResourceOrgs.Find(x => x.Id == id);
                                 serviceResponse = await ResourceOrgService.DeleteItem(Convert.ToInt32(resourceOrg.Id));
@@ -1737,26 +1919,51 @@
                                     message.Message = resourceOrg.Name + " addition failed!";
                                 }
                             }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = "You must enter a valid name and short name!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceOrgService.GetItems();
                             var orgjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("orgsconfig.json", JsonSerializer.Serialize(orgjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newOrgConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Orgs configruation and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newOrgConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourceorgs.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Orgs config update succeeded!";
-                                    newOrgConfig = null;
+                                    message.Message = "Orgs configruation reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Orgs config update failed!";
+                                    message.Message = "Orgs configruation reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newOrgConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Orgs configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newOrgConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Resource Orgs config update succeeded!";
+                                        newOrgConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Resource Orgs config update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1809,8 +2016,8 @@
                             ShowEditModal((int)id, "ResourceProjAppSvc", "Edit the Project/App/Service.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
-                            bool coinfirmProjAppSvcDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-                            if (coinfirmProjAppSvcDelete)
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
                             {
                                 resourceProjAppSvc = servicesData.ResourceProjAppSvcs.Find(x => x.Id == id);
                                 serviceResponse = await ResourceProjAppSvcService.DeleteItem(Convert.ToInt32(resourceProjAppSvc.Id));
@@ -1858,26 +2065,51 @@
                                     message.Message = resourceProjAppSvc.Name + " addition failed!";
                                 }
                             }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = "You must enter a valid name and short name!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceProjAppSvcService.GetItems();
                             var projappsvcjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("projappsvcsconfig.json", JsonSerializer.Serialize(projappsvcjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newProjAppSvcConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Projects/Apps/Services configruation and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newProjAppSvcConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourceprojappsvcs.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource ProjAppSvcs config update succeeded!";
-                                    newProjAppSvcConfig = null;
+                                    message.Message = "Projects/Apps/Services configruation reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource ProjAppSvcs config update failed!";
+                                    message.Message = "Projects/Apps/Services configruation reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newProjAppSvcConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Proejcts/Apps/Services configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newProjAppSvcConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "ProjAppSvcs configuration update succeeded!";
+                                        newProjAppSvcConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "ProjAppSvcs configuration update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1897,20 +2129,40 @@
                             var typejson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("typesconfig.json", JsonSerializer.Serialize(typejson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newTypeConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Types configuration and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newTypeConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourcetypes.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Types config update succeeded!";
-                                    newTypeConfig = null;
+                                    message.Message = "Types configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Types config update failed!";
+                                    message.Message = "Types configuration reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newTypeConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Types configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newTypeConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Types configuration update succeeded!";
+                                        newTypeConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Types configuration update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -1963,8 +2215,8 @@
                             ShowEditModal((int)id, "ResourceUnitDept", "Edit the Unit/Dept.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
-                            bool confirmUnitDeptDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-                            if (confirmUnitDeptDelete)
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
                             {
                                 resourceUnitDept = servicesData.ResourceUnitDepts.Find(x => x.Id == id);
                                 serviceResponse = await ResourceUnitDeptService.DeleteItem(Convert.ToInt32(resourceUnitDept.Id));
@@ -2012,26 +2264,51 @@
                                     message.Message = resourceUnitDept.Name + " addition failed!";
                                 }
                             }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = "You must enter a valid name and short name!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceUnitDeptService.GetItems();
                             var unitdeptjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("unitdeptsconfig.json", JsonSerializer.Serialize(unitdeptjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newUnitDeptConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Units/Depts configuration and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newUnitDeptConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourceunitdepts.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource UnitDepts config update succeeded!";
-                                    newUnitDeptConfig = null;
+                                    message.Message = "Units/Depts configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource UnitDepts config update failed!";
+                                    message.Message = "Units/Depts configuration reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newUnitDeptConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Units/Depts confgiruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newUnitDeptConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Units/Depts configuration update succeeded!";
+                                        newVmRoleConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Units/Depts configuration update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -2085,8 +2362,8 @@
                             ShowEditModal((int)id, "ResourceVmRole", "Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
                             break;
                         case "delete":
-                            bool confirmOrgDelete = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
-                            if (confirmOrgDelete)
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
                             {
                                 resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
                                 serviceResponse = await ResourceVmRoleService.DeleteItem(Convert.ToInt32(resourceVmRole.Id));
@@ -2133,26 +2410,51 @@
                                     message.Message = resourceVmRole.Name + " addition failed!";
                                 }
                             }
+                            else
+                            {
+                                message.Type = MessageTypesEnum.ERROR;
+                                message.Message = "You must enter a valid name and short name!";
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceVmRoleService.GetItems();
                             var vmroleson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("vmrolesconfig.json", JsonSerializer.Serialize(vmroleson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
-                        case "update":
-                            if (newVmRoleConfig != null)
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current VM Roles configuration and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
                             {
-                                serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newVmRoleConfig));
-                                if (serviceResponse.Success)
+                                if (FileSystemHelper.ResetConfiguration("resourcevmroles.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Resource Vm Roles config update succeeded!";
-                                    newVmRoleConfig = null;
+                                    message.Message = "VM Roles configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Resource Vm Roles config update failed!";
+                                    message.Message = "VM Roles configuration reset failed!";
+                                }
+                            }
+                            break;
+                        case "update":
+                            if (newVmRoleConfig != null)
+                            {
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current VM Roles configuration and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
+                                {
+                                    serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newVmRoleConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "VM Roles configuration update succeeded!";
+                                        newVmRoleConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "VM Roles configuration update failed!";
+                                    }
                                 }
                             }
                             break;
@@ -2171,17 +2473,21 @@
                         case "update":
                             if (newMasterConfig != null)
                             {
-                                serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newMasterConfig));
-                                if (serviceResponse.Success)
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Master configruation and cannot be undone!\n\nAre you sure?");
+                                if (confirm)
                                 {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Master config update succeeded!";
-                                    newMasterConfig = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Master config update failed!";
+                                    serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newMasterConfig));
+                                    if (serviceResponse.Success)
+                                    {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Master config update succeeded!";
+                                        newMasterConfig = null;
+                                    }
+                                    else
+                                    {
+                                        message.Type = MessageTypesEnum.ERROR;
+                                        message.Message = "Master config update failed!";
+                                    }
                                 }
                             }
                             break;

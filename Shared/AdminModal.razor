@@ -19,6 +19,9 @@
             <div class="modal-body">
                 @if (!admin)
                 {
+                    <p>
+                        Enter the Admin Password to configure the Azure Naming Tool site.
+                    </p>
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -55,7 +56,7 @@ namespace AzNamingTool.Helpers
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 };
-                
+
                 await FileSystemHelper.WriteFile(configFileName, JsonSerializer.Serialize(configdata, options));
                 return "Config updated.";
             }
@@ -79,6 +80,30 @@ namespace AzNamingTool.Helpers
             File.WriteAllText(appSettingsPath, newJson);
 
             return "Success!";
+        }
+
+        public static bool ResetConfiguration(string filename)
+        {
+            bool result = false;
+            try
+            {
+                // Get all the files in teh repository folder
+                DirectoryInfo dirRepository = new DirectoryInfo("repository");
+                foreach (FileInfo file in dirRepository.GetFiles())
+                {
+                    if(file.Name == filename)
+                    { 
+                        // Copy the repository file to the settings folder
+                        file.CopyTo("settings/" + file.Name, true);
+                        result = true;
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+            }
+            return result;
         }
     }
 }
