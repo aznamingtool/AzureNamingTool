@@ -455,6 +455,13 @@
                                                                     <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
                                                                         <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
+                                                                    @if (servicesData.ResourceLocations.Count > 1)
+                                                                    {
+                                                                        <span> </span>
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceLocation",item.Id,"delete"))" title="Delete">
+                                                                            <span class="oi oi-x" aria-hidden="true"></span>
+                                                                        </button>
+                                                                    }
                                                                 </td>
                                                             }
                                                         </tr>
@@ -1775,10 +1782,29 @@
                     servicesData.ResourceEnvironments = (List<ResourceEnvironment>)serviceResponse.ResponseObject;
                     break;
                 case "ResourceLocation":
+                    ResourceLocation resourceLocation;
                     switch (action)
                     {
                         case "edit":
                             ShowEditModal((int)id, "ResourceLocation", "Edit the Location.", true);
+                            break;
+                        case "delete":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+                            if (confirm)
+                            {
+                                resourceLocation = servicesData.ResourceLocations.Find(x => x.Id == id);
+                                serviceResponse = await ResourceLocationService.DeleteItem(Convert.ToInt32(resourceLocation.Id));
+                                if (serviceResponse.Success)
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = resourceLocation.Name + " deleted!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = resourceLocation.Name + " deletion failed!";
+                                }
+                            }
                             break;
                         case "download":
                             serviceResponse = await ResourceLocationService.GetItems();
