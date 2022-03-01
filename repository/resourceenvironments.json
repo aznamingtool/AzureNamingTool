@@ -1,1 +1,20 @@
-[{"id":7,"name":"Sample Environment","shortName":"se","sortOrder":1}]
+[
+  {
+    "id": 8,
+    "name": "Development",
+    "shortName": "dev",
+    "sortOrder": 1
+  },
+  {
+    "id": 9,
+    "name": "QA",
+    "shortName": "qa",
+    "sortOrder": 2
+  },
+  {
+    "id": 10,
+    "name": "Production",
+    "shortName": "prod",
+    "sortOrder": 3
+  }
+]
