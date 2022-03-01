@@ -11,16 +11,19 @@ Further documentation on the script can be found on [Microsoft's Cloud Adoption
 ![Home Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/HomePage.png)
 
 ## Configuration
-![Configuration Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/ConfigurationPage.png)
 The Configuration page shows the current Name Generation configuration. This page also provides an Admin section for updating the configuration. 
 
+![Configuration Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/ConfigurationPage.png)
+
 ## Reference
-![Reference Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/ReferencePage.png)
 The References tab provides examples for each type of Azure resource. The example values do not include any excluded naming components. Optional components are always displayed and are identified below the example . Since unique names are only required at specific scopes, the examples provided are only generated for the scopes above the resource scope: resource group, resource group & region, region, global, subscription, and tenant.
 
+![Reference Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/ReferencePage.png)
+
 ## Generate
-![Generate Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/GeneratePage.png)
 The Generator tab provides a drop down menu to select an Azure resource. Once a resource is selected, naming component options are provided. Read-only components cannot be changed, like the value for a resource type or organization. Optional components, if left blank, will be null and not shown in the output. Required components do not allow a null value, and the first value in the array is set as the default.
+
+![Generate Page](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/GeneratePage.png)
 
 ## TO USE
 
