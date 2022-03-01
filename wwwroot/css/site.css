@@ -70,8 +70,8 @@ a, .btn-link {
     z-index: 99; /* Make sure it does not overlap */
 }
 
-.text-white, .link-light{
-    color:#ffffff !important;
+.text-white, .link-light, .nav-item[b-iendnmapjp] a {
+    color: #ffffff !important;
 }
 
 .text-dark, .link-dark {
