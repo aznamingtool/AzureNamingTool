@@ -1,4 +1,9 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using AzNamingTool.Helpers
+@using AzNamingTool.Models
+@inject StateContainer state
+@inject IJSRuntime JsRuntime
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Azure Naming Tool</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -29,16 +34,61 @@
                 <span class="oi oi-plus" aria-hidden="true"></span> Generate
             </NavLink>
         </div>
+        @if (PageType.ToString() == "AzNamingTool.Pages.Configuration")
+        {
+            <div class="card bg-transparent">
+                <div class="card card-header bg-default text-white" style="font-weight:bold;">
+                    Jump To
+                </div>
+                <div class="card bg-transparent py-3">
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
+                    </div>
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
+                    </div>
+                    @if (servicesData.ResourceComponents != null)
+                    {
+                        @foreach (ResourceComponent resourceComponent in servicesData.ResourceComponents.OrderBy(x => x.Name))
+                        {
+                            @if (resourceComponent.Name != "ResourceInstance")
+                            {
+                                <div class="px-4">
+                                    <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick(resourceComponent.Name))' @onclick:preventDefault href="">@(resourceComponent.DisplayName)</a>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        }
     </nav>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
+    private ServicesData servicesData = new();
+    private bool admin;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    [Parameter]
+    public Type PageType { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Load the values from state
+        admin = state.Admin;
+        servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+    }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async void OnConfigNavClick(string e)
+    {
+        await JsRuntime.InvokeVoidAsync("scrollIntoView", e);
     }
 }

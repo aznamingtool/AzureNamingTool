@@ -38,7 +38,7 @@
 
                 <div class="card">
                     <h5 class="card-header text-white bg-secondary text-white">
-                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#components" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                        <a id="ResourceComponent" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#components" role="button" aria-expanded="false" aria-controls="components">
                             Components
                         </a>
                     </h5>
@@ -63,7 +63,7 @@
                                         @foreach (var item in @servicesData.ResourceComponents)
                                         {
                                             <tr>
-                                                <td>@item.Name</td>
+                                                    <td>@item.DisplayName</td>                                                
                                                 @if (admin)
                                                 {
                                                     <td>
@@ -119,7 +119,25 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="card">
+                                    <div class="card  w-auto">
+                                        <div class="card card-header bg-default" style="font-weight:bold;">
+                                            Reset the Components Configuration
+                                        </div>
+                                        <div class="card card-body">
+                                            <p>
+                                                Click <strong>Reset</strong> to reset the Componnets Configuration back to the default values at the time of installation.
+                                            </p>
+                                            <p>
+                                                <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                            </p>
+                                            <p>
+                                                <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceComponent",0,"reset")) title="Reset">
+                                                    <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
+                                                </button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--<div class="card">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
                                             Import Components Configuration
                                         </div>
@@ -137,7 +155,8 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                    -->
+                    </div>
                             </div>
                         }
                     </div>
@@ -149,7 +168,7 @@
             {
                 <div class="card">
                     <h5 class="card-header text-white bg-secondary text-white">
-                        <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#delimiters" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                        <a id="ResourceDelimiter" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#delimiters" role="button" aria-expanded="false" aria-controls="delimiters">
                             Delimiters
                         </a>
                     </h5>
@@ -261,8 +280,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#environments" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Environments
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#environments" role="button" aria-expanded="false" aria-controls="environments">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="environments">
@@ -421,8 +440,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#locations" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Locations
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#locations" role="button" aria-expanded="false" aria-controls="locations">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="locations">
@@ -573,8 +592,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#orgs" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Orgs
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#orgs" role="button" aria-expanded="false" aria-controls="orgs">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="orgs">
@@ -736,8 +755,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Projects/Apps/Services
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#projsappssvcs" role="button" aria-expanded="false" aria-controls="projsappssvcs">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="projsappssvcs">
@@ -896,8 +915,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#types" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Resource Types
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#types" role="button" aria-expanded="false" aria-controls="types">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="types">
@@ -1010,8 +1029,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
-                                        Units/Depts
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#unitsdepts" role="button" aria-expanded="false" aria-controls="unitsdepts">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="unitsdepts">
@@ -1171,8 +1190,8 @@
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
-                                        VM Roles
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
+                                        @resourceComponent.DisplayName
                                     </a>
                                 </h5>
                                 <div class="collapse card card-body" id="vmroles">
@@ -1451,7 +1470,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Load the values form state
+        // Load the values from state
         admin = state.Admin;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
         dataLoaded = true;
@@ -1554,6 +1573,22 @@
                             serviceResponse = await ResourceComponentService.GetItems(true);
                             var componentjson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("componentsconfig.json", JsonSerializer.Serialize(componentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+                            break;
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Components configruation and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
+                            {
+                                if (FileSystemHelper.ResetConfiguration("resourcecomponents.json"))
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = "Components configruation reset!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Components configruation reset failed!";
+                                }
+                            }
                             break;
                         case "update":
                             if (newTypeConfig != null)

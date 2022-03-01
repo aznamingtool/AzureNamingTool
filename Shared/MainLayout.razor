@@ -10,7 +10,7 @@
 <BlazoredToasts Position="ToastPosition.BottomRight" ShowProgressBar="true" Timeout="3" />
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
+        <NavMenu  PageType="@PageType" />
     </div>
 
     <main>
@@ -37,6 +37,12 @@
     [CascadingParameter] public IModalService Modal { get; set; }
 
     public bool PasswordModalOpen { get; set; }
+    public Type PageType { get; set; }
+
+     protected override void OnParametersSet()
+    {    
+       PageType = (this.Body.Target as RouteView)?.RouteData.PageType;
+    }
 
     private string? message;
 
