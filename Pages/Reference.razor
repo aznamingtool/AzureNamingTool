@@ -49,15 +49,30 @@
                                     </tr>
                                     <tr>
                                         <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
-                                            <table class="table table-success w-100" style="margin-bottom:0;">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <strong>Example:  @GenerateName(resourcetype.ShortName, resourcetype.StaticValues)001</strong><a id="@resourcetype.Id"></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            @if (filteredscopes.Contains(resourcetype.Scope))
+                                            {
+                                                <table class="table table-success w-100" style="margin-bottom:0;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <strong>Example:  @GenerateName(resourcetype.ShortName, resourcetype.StaticValues)001</strong><a id="@resourcetype.Id"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table table-warning w-100" style="margin-bottom:0;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <strong>This resource has a lower-level scope and does not require a unique name.</strong><a id="@resourcetype.Id"></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            }
                                         </td>
                                     </tr>
                                     <tr>
@@ -66,95 +81,98 @@
                                             {
                                                 <table class="table table-striped w-100">
                                                     <tbody>
-                                                        <tr>
-                                                            <td colspan="2" class="table-secondary">
-                                                                <strong>Components</strong>
-                                                            </td>
-                                                        </tr>
-                                                        @foreach (var resourceComponent in servicesData.ResourceComponents)
+                                                        @if (filteredscopes.Contains(resourcetype.Scope))
                                                         {
-                                                            switch (resourceComponent.Name)
+                                                            <tr>
+                                                                <td colspan="2" class="table-secondary">
+                                                                    <strong>Components</strong>
+                                                                </td>
+                                                            </tr>
+                                                            @foreach (var resourceComponent in servicesData.ResourceComponents)
                                                             {
-                                                                case "ResourceEnvironment":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Environment:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceInstance":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Instance:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            001
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceLocation":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Location:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceOrg":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Org:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceProjAppSvc":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            ProjAppSvc:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceType":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Type:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @resourcetype.Resource (@resourcetype.ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceUnitDept":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            Unit/Dept:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
-                                                                case "ResourceVmRole":
-                                                                    <tr>
-                                                                        <td class="align-top w-25">
-                                                                            VM Role:
-                                                                        </td>
-                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                            @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
-                                                                        </td>
-                                                                    </tr>
-                                                                    break;
+                                                                switch (resourceComponent.Name)
+                                                                {
+                                                                    case "ResourceEnvironment":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Environment:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceInstance":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Instance:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                001
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceLocation":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Location:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceOrg":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Org:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceProjAppSvc":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                ProjAppSvc:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceType":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Type:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @resourcetype.Resource (@resourcetype.ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceUnitDept":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                Unit/Dept:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                    case "ResourceVmRole":
+                                                                        <tr>
+                                                                            <td class="align-top w-25">
+                                                                                VM Role:
+                                                                            </td>
+                                                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
+                                                                            </td>
+                                                                        </tr>
+                                                                        break;
+                                                                }
                                                             }
                                                         }
                                                         <tr>
@@ -264,6 +282,7 @@
     private ResourceDelimiter? resourceDelimiter;
     private string? selectedResourceType;
     private string? searchText;
+    private string[] filteredscopes = new string[] { "resource group", "resource group & region", "region", "global", "subscription", "tenant" };
 
     protected override async Task OnInitializedAsync()
     {
