@@ -1,6 +1,6 @@
 # AzNamingTool
 
-[Disclaimer](#disclaimer)
+[Overview](#overview)
 
 [Pages](#pages)
 
@@ -9,7 +9,7 @@
 * [Run as an Azure App Service Container](#run-as-an-azure-app-service-container)
 
 
-## DISCLAIMER
+## OVERVIEW
 
 This Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined, users can use the tool to geernate aname for the desred Azure resource.
 
