@@ -301,12 +301,25 @@
     private string? resultHeader;
     private string? componentsVisible = "collapse in";
     private string optional = " (OPTIONAL)";
+    private string[] filteredscopes = new string[]{"resource group","resource group & region","region","global","subscription","tenant"};
     private ResourceNameRequest resourceNameRequest = new();
     private ResourceNameResponse resourceNameRequestResponse;
 
     protected override async Task OnInitializedAsync()
     {
         servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
+        List<ResourceType> filteredtypes = new List<ResourceType>();
+        // Filter out the types w/o the scope
+        foreach(ResourceType type in servicesData.ResourceTypes)
+        {
+            if(filteredscopes.Contains(type.Scope))
+            {
+                filteredtypes.Add(type);
+            }
+        }
+        servicesData.ResourceTypes = filteredtypes;
+ 
+
         resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
         componentsVisible = "collapse show";
     }
