@@ -11,7 +11,7 @@
 
 ## DISCLAIMER
 
-This Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging), and uses a PowerShell script to define your organization's preferred naming configuration. Once the organizational components have been defined, CSV files are used to further define the values for Azure naming components. These values are imported and hard coded into a JavaScript object for reference documentation.
+This Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined, users can use the tool to geernate aname for the desred Azure resource.
 
 Further documentation on the script can be found on [Microsoft's Cloud Adoption Framework GitHub repo](https://github.com/microsoft/CloudAdoptionFramework/tree/master/ready/AzNamingTool).
 
