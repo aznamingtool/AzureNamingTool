@@ -73,7 +73,7 @@ Ths process will allow you to deploy the Azure Naming Tool using DOcker to your 
 
   **NOTES**  
     - Substitute 8081 for any port not in use on your machine  
-    - You will see warnings in the command prompt regarding DataProtection and keys. These indicate that the keys are not persisted and are only local to the container instances. 
+    - You may see warnings in the command prompt regarding DataProtection and keys. These indicate that the keys are not persisted and are only local to the container instances. 
 
 - Access the site using the following URL  
 
