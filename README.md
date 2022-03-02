@@ -90,7 +90,7 @@ Ths process will allow you to deploy the Azure Naming Tool to an Azure App Servi
 
 **NOTE**
 
-For many the steps, a sample proces is provideed, however, there are many ways to accomplsih eash step. 
+For many the steps, a sample proces is provided, however, there are many ways to accomplsih each step. 
 
 - On the **<>Code** tab, select the **<>Code** button and select **Download ZIP**
 
