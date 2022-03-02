@@ -42,10 +42,10 @@
                 </div>
                 <div class="card bg-transparent py-3">
                     <div class="px-4">
-                        <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
                     </div>
                     <div class="px-4">
-                        <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
                     </div>
                     @if (servicesData.ResourceComponents != null)
                     {
@@ -54,7 +54,7 @@
                             @if (resourceComponent.Name != "ResourceInstance")
                             {
                                 <div class="px-4">
-                                    <a class="text-decoration-none text-white" @onclick='(() => OnConfigNavClick(resourceComponent.Name))' @onclick:preventDefault href="">@(resourceComponent.DisplayName)</a>
+                                    <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick(resourceComponent.Name))' @onclick:preventDefault href="">@(resourceComponent.DisplayName)</a>
                                 </div>
                             }
                         }
