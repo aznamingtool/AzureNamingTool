@@ -106,11 +106,11 @@
                                 <div class="collapse card card-body" id="componentsconfig">
                                     <div class="card  w-auto">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
-                                            Export the current Resource Components Configuration
+                                            Export the current Components Configuration
                                         </div>
                                         <div class="card card-body">
                                             <p>
-                                                Click <strong>Export</strong> to export the current Resource Components Configuration.
+                                                Click <strong>Export</strong> to export the current Components Configuration.
                                             </p>
                                             <p>
                                                 <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceComponent",0,"download")) title="Export">
@@ -125,7 +125,7 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>
-                                                Click <strong>Reset</strong> to reset the Componnets Configuration back to the default values at the time of installation.
+                                                Click <strong>Reset</strong> to reset the Components Configuration back to the default values at the time of installation.
                                             </p>
                                             <p>
                                                 <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
@@ -230,11 +230,11 @@
                                 <div class="collapse card card-body" id="delimitersconfig">
                                     <div class="card  w-auto">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
-                                            Export the current Resource Delimiters Configuration
+                                            Export the current Delimiters Configuration
                                         </div>
                                         <div class="card card-body">
                                             <p>
-                                                Click <strong>Export</strong> to export the current Resource Delimiters Configuration.
+                                                Click <strong>Export</strong> to export the current Delimiters Configuration.
                                             </p>
                                             <p>
                                                 <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceDelimiter",0,"download")) title="Export">
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>
-                                                Enter the new Resource Delimiters Configuration JSON below and click <strong>Import</strong> to import the Resource Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
+                                                Enter the new Delimiters Configuration JSON below and click <strong>Import</strong> to import the Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
                                             </p>
                                             <p>
                                                 <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
@@ -448,7 +448,7 @@
                                                             @if (admin)
                                                             {
                                                                 <td>
-                                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceLocation",item.Id,"edit"))" title="Edit">
                                                                         <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
                                                                     @if (servicesData.ResourceLocations.Count > 1)
@@ -1605,7 +1605,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceEnvironment", "Edit the Environment.");
+                            ShowEditModal((int)id, "ResourceEnvironment","Edit Environment",  "Edit the Environment.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1626,7 +1626,7 @@
                             }
                             break;
                         case "add":
-                            ShowAddModal((int)id, "ResourceEnvironment", "<p>Add an Environment.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li></ul>");
+                            ShowAddModal((int)id, "ResourceEnvironment", "Add Environment", "<p>Add an Environment.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceEnvironmentService.GetItems();
@@ -1679,7 +1679,7 @@
                     switch (action)
                     {
                         case "edit":
-                            ShowEditModal((int)id, "ResourceLocation", "Edit the Location.", true);
+                            ShowEditModal((int)id, "ResourceLocation", "Edit Location", "Edit the Location.", true);
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1787,7 +1787,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceOrg", "Edit the Org.<br /><br />Short Name must be 1-5 characters.");
+                            ShowEditModal((int)id, "ResourceOrg","Edit Org", "Edit the Org.<br /><br />Short Name must be 1-5 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1808,7 +1808,7 @@
                             }
                             break;
                         case "add":
-                            ShowAddModal((int)id, "ResourceOrg", "<p>Add an Org.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-5 characters.</li></ul>");
+                            ShowAddModal((int)id, "ResourceOrg","Add Org", "<p>Add an Org.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-5 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceOrgService.GetItems();
@@ -1898,7 +1898,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceProjAppSvc", "Edit the Project/App/Service.<br /><br />Short Name must be 1-3 characters.");
+                            ShowEditModal((int)id, "ResourceProjAppSvc","Edit Project/App/Service", "Edit the Project/App/Service.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -1919,7 +1919,7 @@
                             }
                             break;
                         case "add":                        
-                            ShowAddModal((int)id, "ResourceProjAppSvc", "<p>Add an Project/App/Service.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
+                            ShowAddModal((int)id, "ResourceProjAppSvc","Add Project/App/Service", "<p>Add an Project/App/Service.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceProjAppSvcService.GetItems();
@@ -1972,7 +1972,7 @@
                     switch (action)
                     {
                         case "edit":
-                            ShowEditModal((int)id, "ResourceType", "Edit the Type.", true);
+                            ShowEditModal((int)id, "ResourceType", "Edit Resource Type", "Edit the Resource Type.", true);
                             break;
                         case "download":
                             serviceResponse = await ResourceTypeService.GetItems();
@@ -2062,7 +2062,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceUnitDept", "Edit the Unit/Dept.<br /><br />Short Name must be 1-3 characters.");
+                            ShowEditModal((int)id, "ResourceUnitDept","Edit Unit/Dept", "Edit the Unit/Dept.<br /><br />Short Name must be 1-3 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -2083,7 +2083,7 @@
                             }
                             break;
                         case "add":                            
-                            ShowAddModal((int)id, "ResourceUnitDept", "<p>Add an Unit/Dept.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
+                            ShowAddModal((int)id, "ResourceUnitDept","Add Unit/Dept",  "<p>Add a Unit/Dept.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceUnitDeptService.GetItems();
@@ -2174,7 +2174,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceVmRole", "Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
+                            ShowEditModal((int)id, "ResourceVmRole","Edit VM Role","Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -2195,7 +2195,7 @@
                             }
                             break;
                         case "add":                            
-                            ShowAddModal((int)id, "ResourceVmRole", "<p>Add an VM Role.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-2 characters.</li></ul>");
+                            ShowAddModal((int)id, "ResourceVmRole","Add VM Role", "<p>Add an VM Role.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-2 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceVmRoleService.GetItems();
@@ -2396,13 +2396,13 @@
         }
     }
 
-    async void ShowAddModal(int id, string type, string message)
+    async void ShowAddModal(int id, string type, string title, string message)
     {
         var parameters = new ModalParameters();
-        parameters.Add(nameof(EditModal.id), id);
-        parameters.Add(nameof(EditModal.type), type);
-        parameters.Add(nameof(EditModal.message), message);
-        parameters.Add(nameof(EditModal.title), "Add " + type.Replace("Resource", "Resource "));
+        parameters.Add(nameof(AddModal.id), id);
+        parameters.Add(nameof(AddModal.type), type);
+        parameters.Add(nameof(AddModal.message), message);
+        parameters.Add(nameof(AddModal.title), title);
 
         var options = new ModalOptions()
             {
@@ -2410,7 +2410,7 @@
                 UseCustomLayout = true
             };
 
-        var modal = Modal.Show<AddModal>("Add " + type.Replace("Resource", "Resource "), parameters, options);
+        var modal = Modal.Show<AddModal>(title, parameters, options);
         var result = await modal.Result;
         if (result.Cancelled)
         {
@@ -2423,13 +2423,13 @@
     }
 
 
-    async void ShowEditModal(int id, string type, string message, bool protectedname = false)
+    async void ShowEditModal(int id, string type, string title, string message, bool protectedname = false)
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(EditModal.id), id);
         parameters.Add(nameof(EditModal.type), type);
         parameters.Add(nameof(EditModal.message), message);
-        parameters.Add(nameof(EditModal.title), "Edit " + type.Replace("Resource", "Resource "));
+        parameters.Add(nameof(EditModal.title), title);
         parameters.Add(nameof(EditModal.protectedName), protectedname);
 
         var options = new ModalOptions()
@@ -2438,7 +2438,7 @@
                 UseCustomLayout = true
             };
 
-        var modal = Modal.Show<EditModal>("Edit " + type.Replace("Resource", "Resource "), parameters, options);
+        var modal = Modal.Show<EditModal>(title, parameters, options);
         var result = await modal.Result;
         if (result.Cancelled)
         {
