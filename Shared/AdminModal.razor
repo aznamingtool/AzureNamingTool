@@ -25,7 +25,6 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />
-                        <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("login"))" title="Login">Login</button>
                     </div>
                 }
                 else
@@ -74,7 +73,11 @@
             <div class="modal-footer">
                 @if (admin)
                 {
-                    <button type="button" class="btn btn-primary" @onclick="@(e => AdminFormAction("logout"))" title="Logout" data-toggle="collapse" href="#admin">Logout</button>
+                    <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("logout"))" title="Logout" data-toggle="collapse" href="#admin">Logout</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("login"))" title="Login">Login</button>
                 }
                 <button @onclick="Close" class="btn btn-secondary">Close</button>
             </div>
