@@ -116,13 +116,13 @@ For many the steps, a sample proces is provided, however, there are many ways to
 - Build and publish you image to the Azure Container Registry  
   [Push your first image to your Azure container registry using the Docker CLI](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-docker-cli?tabs=azure-cli)
 
-- Create an Azure App Service - Web App  
-  [Run a custom container in Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=dotnet&pivots=container-linux) 
-
 - Create an Azure Storage Fileshare for the persistent storage  
   [Create an Azure file share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share?tabs=azure-portal)
   
   ![FileShare](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/FileShare.png)
+
+- Create an Azure App Service - Web App  
+  [Run a custom container in Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=dotnet&pivots=container-linux) 
 
 - Mount the fileshare as local storage for the Azure App Service  
   [Mount Azure Storage as a local share in a custom container in App Service](https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux)
