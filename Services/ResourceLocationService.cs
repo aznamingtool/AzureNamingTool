@@ -52,6 +52,9 @@ namespace AzNamingTool.Services
                     return serviceResponse;
                 }
 
+                // Force lowercase on the shortname
+                item.ShortName = item.ShortName.ToLower();
+
                 // Get list of items
                 var items = await GeneralHelper.GetList<ResourceLocation>();
 
@@ -142,6 +145,10 @@ namespace AzNamingTool.Services
                         serviceResponse.ResponseObject = "Short name must be alphanumeric.";
                         return serviceResponse;
                     }
+
+                    // Force lowercase on the shortname
+                    item.ShortName = item.ShortName.ToLower();
+
                     item.Id = i;
                     newitems.Add(item);
                     i += 1;

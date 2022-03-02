@@ -55,7 +55,7 @@ namespace AzNamingTool.Services
                         // Check if the property is the resource type
                         if (component.Name == "ResourceType")
                         {
-                            prop = resourceType.ShortName;
+                            prop = resourceType.ShortName.ToLower();
                         }
                         // Add property value to name, if exists
                         if (prop != null)
@@ -92,7 +92,7 @@ namespace AzNamingTool.Services
                                     }
                                 }
                                 // Add the delimeter to the string, if needed
-                                name += prop;
+                                name += prop.ToLower();
 
                                 // Add property to aray for indivudal component validation
                                 dictComponents.Add(component.Name, prop);
@@ -137,9 +137,8 @@ namespace AzNamingTool.Services
                     name = name.Replace(request.ResourceDelimiter, "");
 
                     Match match2 = regx.Match(name);
-                    if (match.Success)
+                    if (!match.Success)
                     {
-
                         sbMessage.Append("Resource name generation failed!");
                         sbMessage.Append(Environment.NewLine);
                         sbMessage.Append("Please review the Resource Type Naming Guidelines.");
@@ -163,7 +162,6 @@ namespace AzNamingTool.Services
                         valid = false;
                     }
                 }
-
 
                 // Check min length
                 if (name.Length < int.Parse(resourceType.LengthMin))
@@ -257,7 +255,7 @@ namespace AzNamingTool.Services
                 if (valid)
                 {
                     response.Success = true;
-                    response.ResourceName = name;
+                    response.ResourceName = name.ToLower();
                     response.Message = sbMessage.ToString();
                     return response;
                 }

@@ -63,7 +63,7 @@
                                         @foreach (var item in @servicesData.ResourceComponents)
                                         {
                                             <tr>
-                                                    <td>@item.DisplayName</td>                                                
+                                                <td>@item.DisplayName</td>
                                                 @if (admin)
                                                 {
                                                     <td>
@@ -291,6 +291,14 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current Environments.</p>
+                                            @if (admin)
+                                            {
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add Environment">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add Environment
+                                                    </button>
+                                                </p>
+                                            }
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -339,37 +347,6 @@
                                     </div>
                                     @if (admin)
                                     {
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New Environment
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>Add a new Environment.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newEnvironmentName" @onchange="@((ui) => { SetFormValue("newEnvironmentName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newEnvironmentShortName" @onchange="@((ui) => { SetFormValue("newEnvironmentShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
                                         <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#environmentsconfig" role="button" aria-expanded="false" aria-controls="environmentsconfig">
@@ -603,6 +580,14 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current Orgs.</p>
+                                            @if (admin)
+                                            {
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add Org">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add Org
+                                                    </button>
+                                                </p>
+                                            }
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -651,37 +636,6 @@
                                     </div>
                                     @if (admin)
                                     {
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New Org
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>Add a new Org.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newOrgName" @onchange="@((ui) => { SetFormValue("newOrgName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name (max 5 characters)</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newOrgShortName" @onchange="@((ui) => { SetFormValue("newOrgShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
                                         <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#orgsconfig" role="button" aria-expanded="false" aria-controls="orgsconfig">
@@ -766,6 +720,14 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current Projects/Apps/Services.</p>
+                                            @if (admin)
+                                            {
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add Project/App/Service">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add Project/App/Service
+                                                    </button>
+                                                </p>
+                                            }
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -814,37 +776,6 @@
                                     </div>
                                     @if (admin)
                                     {
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New Project/App/Service
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>Add a new Project/App/Service.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newProjAppSvcName" @onchange="@((ui) => { SetFormValue("newProjAppSvcName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name (max 3 characters)</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newProjAppSvcShortName" @onchange="@((ui) => { SetFormValue("newProjAppSvcShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
                                         <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#projappsvcsconfig" role="button" aria-expanded="false" aria-controls="projappsvcsconfig">
@@ -1040,6 +971,14 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current Units/Depts.</p>
+                                            @if (admin)
+                                            {
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add Unit/Dept">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add Unit/Dept
+                                                    </button>
+                                                </p>
+                                            }
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -1089,37 +1028,6 @@
                                     </div>
                                     @if (admin)
                                     {
-                                        <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New Unit/Dept
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>Add a new Unit/Dept.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newUnitDeptName" @onchange="@((ui) => { SetFormValue("newUnitDeptName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name (max 3 characters)</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newUnitDeptShortName" @onchange="@((ui) => { SetFormValue("newUnitDeptShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
                                         <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#unitdeptsconfig" role="button" aria-expanded="false" aria-controls="unitdeptsconfig">
@@ -1201,6 +1109,14 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current VM Roles.</p>
+                                            @if (admin)
+                                            {
+                                                <p>
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add VM Role">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add VM Role
+                                                    </button>
+                                                </p>
+                                            }
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -1251,37 +1167,6 @@
                                     @if (admin)
                                     {
                                         <div class="card">
-                                            <div class="card card-header bg-default" style="font-weight:bold;">
-                                                New VM Role
-                                            </div>
-                                            <div class="card card-body">
-                                                <p>Add a new VM Role.</p>
-                                                <table class="table table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newVmRoleName" @onchange="@((ui) => { SetFormValue("newVmRoleName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Short Name (max 2 characters)</td>
-                                                            <td>
-                                                                <input class="form-control" type="text" value="@newVmRoleShortName" @onchange="@((ui) => { SetFormValue("newVmRoleShortName",(string)ui.Value);})" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="2">
-                                                                <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add">
-                                                                    <span class="oi oi-plus" aria-hidden="true"></span> Add
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="card">
                                             <div class="card-header bg-default">
                                                 <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#vmrolesconfig" role="button" aria-expanded="false" aria-controls="vmrolesconfig">
                                                     <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
@@ -1330,7 +1215,7 @@
                                                             Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
+                                                            <textarea title="New VM Role Config" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
@@ -1741,34 +1626,7 @@
                             }
                             break;
                         case "add":
-                            if ((newEnvironmentName != null) && (newEnvironmentShortName != null))
-                            {
-                                // Add the new item
-                                resourceEnvironment = new ResourceEnvironment()
-                                    {
-                                        Name = newEnvironmentName,
-                                        ShortName = newEnvironmentShortName
-                                    };
-
-                                serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
-                                if (serviceResponse.Success)
-                                {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceEnvironment.Name + " added!";
-                                    newEnvironmentName = null;
-                                    newEnvironmentShortName = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceEnvironment.Name + " addition failed!";
-                                }
-                            }
-                            else
-                            {
-                                message.Type = MessageTypesEnum.ERROR;
-                                message.Message = "You must enter a valid name and short name!";
-                            }
+                            ShowAddModal((int)id, "ResourceEnvironment", "<p>Add an Environment.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceEnvironmentService.GetItems();
@@ -1950,41 +1808,7 @@
                             }
                             break;
                         case "add":
-                            if ((newOrgName != null) && (newOrgShortName != null))
-                            {
-                                // Validate the value
-                                if (!GeneralHelper.ValidateShortName(newOrgShortName, type))
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Org Short Name must be 1-5 characters!";
-                                    break;
-                                }
-                                // Add the new item
-                                resourceOrg = new ResourceOrg()
-                                    {
-                                        Name = newOrgName,
-                                        ShortName = newOrgShortName
-                                    };
-
-                                serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
-                                if (serviceResponse.Success)
-                                {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceOrg.Name + " added!";
-                                    newOrgName = null;
-                                    newOrgShortName = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceOrg.Name + " addition failed!";
-                                }
-                            }
-                            else
-                            {
-                                message.Type = MessageTypesEnum.ERROR;
-                                message.Message = "You must enter a valid name and short name!";
-                            }
+                            ShowAddModal((int)id, "ResourceOrg", "<p>Add an Org.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-5 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceOrgService.GetItems();
@@ -2094,43 +1918,8 @@
                                 }
                             }
                             break;
-                        case "add":
-                            if ((newProjAppSvcName != null) && (newProjAppSvcShortName != null))
-                            {
-                                // Validate the value
-                                if (!GeneralHelper.ValidateShortName(newProjAppSvcShortName, type))
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Project/App/Service Short Name must be 1-3 characters!";
-                                    break;
-                                }
-
-                                // Add the new item
-                                resourceProjAppSvc = new ResourceProjAppSvc()
-                                    {
-                                        Name = newProjAppSvcName,
-                                        ShortName = newProjAppSvcShortName
-                                    };
-
-                                serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
-                                if (serviceResponse.Success)
-                                {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceProjAppSvc.Name + " added!";
-                                    newProjAppSvcName = null;
-                                    newProjAppSvcShortName = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceProjAppSvc.Name + " addition failed!";
-                                }
-                            }
-                            else
-                            {
-                                message.Type = MessageTypesEnum.ERROR;
-                                message.Message = "You must enter a valid name and short name!";
-                            }
+                        case "add":                        
+                            ShowAddModal((int)id, "ResourceProjAppSvc", "<p>Add an Project/App/Service.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceProjAppSvcService.GetItems();
@@ -2293,43 +2082,8 @@
                                 }
                             }
                             break;
-                        case "add":
-                            if ((newUnitDeptName != null) && (newUnitDeptShortName != null))
-                            {
-                                // Validate the value
-                                if (!GeneralHelper.ValidateShortName(newUnitDeptShortName, type))
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Unit/Dept Short Name must be 1-3 characters!";
-                                    break;
-                                }
-
-                                // Add the new item
-                                resourceUnitDept = new ResourceUnitDept()
-                                    {
-                                        Name = newUnitDeptName,
-                                        ShortName = newUnitDeptShortName
-                                    };
-
-                                serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
-                                if (serviceResponse.Success)
-                                {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceUnitDept.Name + " added!";
-                                    newUnitDeptName = null;
-                                    newUnitDeptShortName = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceUnitDept.Name + " addition failed!";
-                                }
-                            }
-                            else
-                            {
-                                message.Type = MessageTypesEnum.ERROR;
-                                message.Message = "You must enter a valid name and short name!";
-                            }
+                        case "add":                            
+                            ShowAddModal((int)id, "ResourceUnitDept", "<p>Add an Unit/Dept.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-3 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceUnitDeptService.GetItems();
@@ -2440,42 +2194,8 @@
                                 }
                             }
                             break;
-                        case "add":
-                            if ((newVmRoleName != null) && (newVmRoleShortName != null))
-                            {
-                                // Validate the value
-                                if (!GeneralHelper.ValidateShortName(newVmRoleShortName, type))
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "VM Role Short Name must be 1-2 characters!";
-                                    break;
-                                }
-
-                                // Add the new item
-                                resourceVmRole = new ResourceVmRole()
-                                    {
-                                        Name = newVmRoleName,
-                                        ShortName = newVmRoleShortName
-                                    };
-                                serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
-                                if (serviceResponse.Success)
-                                {
-                                    message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceVmRole.Name + " added!";
-                                    newVmRoleName = null;
-                                    newVmRoleShortName = null;
-                                }
-                                else
-                                {
-                                    message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceVmRole.Name + " addition failed!";
-                                }
-                            }
-                            else
-                            {
-                                message.Type = MessageTypesEnum.ERROR;
-                                message.Message = "You must enter a valid name and short name!";
-                            }
+                        case "add":                            
+                            ShowAddModal((int)id, "ResourceVmRole", "<p>Add an VM Role.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-2 characters.</li></ul>");
                             break;
                         case "download":
                             serviceResponse = await ResourceVmRoleService.GetItems();
@@ -2675,6 +2395,33 @@
                 break;
         }
     }
+
+    async void ShowAddModal(int id, string type, string message)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(EditModal.id), id);
+        parameters.Add(nameof(EditModal.type), type);
+        parameters.Add(nameof(EditModal.message), message);
+        parameters.Add(nameof(EditModal.title), "Add " + type.Replace("Resource", "Resource "));
+
+        var options = new ModalOptions()
+            {
+                HideCloseButton = true,
+                UseCustomLayout = true
+            };
+
+        var modal = Modal.Show<AddModal>("Add " + type.Replace("Resource", "Resource "), parameters, options);
+        var result = await modal.Result;
+        if (result.Cancelled)
+        {
+        }
+        else
+        {
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+            StateHasChanged();
+        }
+    }
+
 
     async void ShowEditModal(int id, string type, string message, bool protectedname = false)
     {

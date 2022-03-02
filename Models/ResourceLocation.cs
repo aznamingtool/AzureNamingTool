@@ -8,7 +8,12 @@ namespace AzNamingTool.Models
         public long Id { get; set; }
         [Required()]
         public string Name { get; set; }
+        private string _ShortName;
         [Required()]
-        public string ShortName { get; set; }
+        public string ShortName
+        {
+            get { return _ShortName; }   // get method
+            set => _ShortName = value?.ToLower();   // set method
+        }
     }
 }
