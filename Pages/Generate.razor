@@ -55,11 +55,24 @@
                         Resource Type
                     </h5>
                     <div class="card card-body">
-                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
+                        <p>
+                            Use the filters below to jump to a specifc resource type.
+                        </p>
+                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceTypeCategory)"
+                                 Value="@selectedResourceTypeCategory"
+                                 ValueChanged="@((string value) => OnCategoryChanged(value))">
+                            <option value="">Select a resource type provider (OPTIONAL)</option>
+                            @foreach (var category in @categories)
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </InputSelect>
+
+                    <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
                                  Value="@selectedResourceType"
                                  ValueChanged="@((string value) => OnTypeChanged(value))">
-                            <option value="">Select a resource type</option>
-                            @foreach (var type in @servicesData.ResourceTypes)
+                        <option value="">Select a resource type</option>
+                        @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                         {
                             <option value="@type.Id">@type.Resource (@type.ShortName)</option>
                         }
@@ -70,7 +83,7 @@
             </div>
 
 
-            @if (selectedResourceType != null)
+            @if (selectedResourceType != "")
                 {
                     @if (componentsVisible == "collapse")
                     {
@@ -288,9 +301,11 @@
     private string? selectedResourceLocation;
     private string? selectedResourceOrg;
     private string? selectedResourceProjAppSvc;
-    private string? selectedResourceType;
+    private string? selectedResourceTypeCategory = "";
+    private string? selectedResourceType = "";
     private string selectedResourceTypeExclude;
     private string selectedResourceTypeOptional;
+    private List<string> categories = new List<string>();
     private string? selectedResourceUnitDept;
     private string? selectedResourceVmRole;
     private bool boolFormDisabled = true;
@@ -301,7 +316,7 @@
     private string? resultHeader;
     private string? componentsVisible = "collapse in";
     private string optional = " (OPTIONAL)";
-    private string[] filteredscopes = new string[]{"resource group","resource group & region","region","global","subscription","tenant"};
+    private string[] filteredscopes = new string[] { "resource group", "resource group & region", "region", "global", "subscription", "tenant" };
     private ResourceNameRequest resourceNameRequest = new();
     private ResourceNameResponse resourceNameRequestResponse;
 
@@ -310,15 +325,17 @@
         servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
         List<ResourceType> filteredtypes = new List<ResourceType>();
         // Filter out the types w/o the scope
-        foreach(ResourceType type in servicesData.ResourceTypes)
+        foreach (ResourceType type in servicesData.ResourceTypes)
         {
-            if(filteredscopes.Contains(type.Scope))
+            if (filteredscopes.Contains(type.Scope))
             {
                 filteredtypes.Add(type);
             }
         }
         servicesData.ResourceTypes = filteredtypes;
- 
+
+        // Get the list of categories
+        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
 
         resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
         componentsVisible = "collapse show";
@@ -361,6 +378,14 @@
         }
     }
 
+    private void OnCategoryChanged(string value)
+    {
+        selectedResourceTypeCategory = value;
+        selectedResourceType = "";
+        namingGuidelines = "";
+        componentsVisible = "collapse show";
+    }
+
     private Task OnTypeChanged(string value)
     {
         resourceNameRequestResponse = null;
@@ -368,61 +393,63 @@
         selectedResourceType = value;
 
         namingGuidelines = "";
-
-        // Find the selected resoruce type
-        ResourceType currentResourceType = servicesData.ResourceTypes.Find((t) => t.Id == Convert.ToInt32(selectedResourceType));
-
-        // Create the naming guidelines HTML
-        //namingGuidelines = "<div class=\"mb-3\">";
-        //namingGuidelines += "<a class=\"btn btn-primary mb-3\" data-toggle=\"collapse\" href=\"#guidelines\" role=\"button\" aria-expanded=\"false\" aria-controls=\"guidelines\">";
-        //namingGuidelines += "Resource Naming Guidelines";
-        //namingGuidelines += "</a>";
-        namingGuidelines += "<div id=\"guidelines\" class=\"card bg-default mt-3\">";
-        namingGuidelines += "<h5 class=\"card-header\">";
-        namingGuidelines += "Naming Guidelines";
-        namingGuidelines += "</h5>";
-        namingGuidelines += "<div class=\"card-body \">";
-        if (currentResourceType.LengthMin != "")
-        {
-            namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
-        }
-        if (currentResourceType.LengthMax != "")
-        {
-            namingGuidelines += "<div><strong>Maximum Length:</strong> " + currentResourceType.LengthMax + "</div>";
-        }
-        if (currentResourceType.ValidText != "")
-        {
-            namingGuidelines += "<div><strong>Valid Text:</strong> " + currentResourceType.ValidText + "</div>";
-        }
-        if (currentResourceType.Optional != "")
-        {
-            namingGuidelines += "<div><strong>Optional:</strong> " + currentResourceType.Optional + "</div>";
-        }
-        if (currentResourceType.Exclude != "")
-        {
-            namingGuidelines += "<div><strong>Excluded:</strong> " + currentResourceType.Exclude + "</div>";
-        }
-        namingGuidelines += "</div></div>";
-        //namingGuidelines += "</div>";
-
-        // Set the optional components
-        selectedResourceTypeOptional = currentResourceType.Optional;
-
-        // Set the excluded components
-        selectedResourceTypeExclude = currentResourceType.Exclude;
-
-        // Reset the selected items
-        selectedResourceEnvironment = null;
-        selectedResourceInstance = null;
-        selectedResourceLocation = null;
-        selectedResourceOrg = null;
-        selectedResourceProjAppSvc = null;
-        selectedResourceUnitDept = null;
-        selectedResourceVmRole = null;
-
         componentsVisible = "collapse show";
 
-        Logger.LogInformation(currentResourceType.Resource);
+        if (selectedResourceType != "")
+        {
+            // Find the selected resoruce type
+            ResourceType currentResourceType = servicesData.ResourceTypes.Find((t) => t.Id == Convert.ToInt32(selectedResourceType));
+
+            // Create the naming guidelines HTML
+            //namingGuidelines = "<div class=\"mb-3\">";
+            //namingGuidelines += "<a class=\"btn btn-primary mb-3\" data-toggle=\"collapse\" href=\"#guidelines\" role=\"button\" aria-expanded=\"false\" aria-controls=\"guidelines\">";
+            //namingGuidelines += "Resource Naming Guidelines";
+            //namingGuidelines += "</a>";
+            namingGuidelines += "<div id=\"guidelines\" class=\"card bg-default mt-3\">";
+            namingGuidelines += "<h5 class=\"card-header\">";
+            namingGuidelines += "Naming Guidelines";
+            namingGuidelines += "</h5>";
+            namingGuidelines += "<div class=\"card-body \">";
+            if (currentResourceType.LengthMin != "")
+            {
+                namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
+            }
+            if (currentResourceType.LengthMax != "")
+            {
+                namingGuidelines += "<div><strong>Maximum Length:</strong> " + currentResourceType.LengthMax + "</div>";
+            }
+            if (currentResourceType.ValidText != "")
+            {
+                namingGuidelines += "<div><strong>Valid Text:</strong> " + currentResourceType.ValidText + "</div>";
+            }
+            if (currentResourceType.Optional != "")
+            {
+                namingGuidelines += "<div><strong>Optional:</strong> " + currentResourceType.Optional + "</div>";
+            }
+            if (currentResourceType.Exclude != "")
+            {
+                namingGuidelines += "<div><strong>Excluded:</strong> " + currentResourceType.Exclude + "</div>";
+            }
+            namingGuidelines += "</div></div>";
+            //namingGuidelines += "</div>";
+
+            // Set the optional components
+            selectedResourceTypeOptional = currentResourceType.Optional;
+
+            // Set the excluded components
+            selectedResourceTypeExclude = currentResourceType.Exclude;
+
+            // Reset the selected items
+            selectedResourceEnvironment = null;
+            selectedResourceInstance = null;
+            selectedResourceLocation = null;
+            selectedResourceOrg = null;
+            selectedResourceProjAppSvc = null;
+            selectedResourceUnitDept = null;
+            selectedResourceVmRole = null;
+
+            componentsVisible = "collapse show";
+        }
 
         return Task.CompletedTask;
     }

@@ -11,8 +11,14 @@ namespace AzNamingTool.Models
         public string Optional { get; set; }
         public string Exclude { get; set; }
         public string Property { get; set; }
+        private string _ShortName;
+        [Required()]
         [JsonPropertyName("ShortName")]
-        public string ShortName { get; set; }
+        public string ShortName
+        {
+            get { return _ShortName; }   // get method
+            set => _ShortName = value?.ToLower();   // set method
+        }
         public string Scope { get; set; }
         public string LengthMin { get; set; }
         public string LengthMax { get; set; }

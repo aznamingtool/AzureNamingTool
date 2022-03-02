@@ -53,6 +53,9 @@ namespace AzNamingTool.Services
                     return serviceResponse;
                 }
 
+                // Force lowercase on the shortname
+                item.ShortName = item.ShortName.ToLower();
+
                 // Get list of items
                 var items = await GeneralHelper.GetList<ResourceType>();
 
@@ -130,6 +133,10 @@ namespace AzNamingTool.Services
                 // Determine new item id
                 foreach (ResourceType item in items)
                 {
+
+                    // Force lowercase on the shortname
+                    item.ShortName = item.ShortName.ToLower();
+
                     item.Id = i;
                     newitems.Add(item);
                     i += 1;
@@ -145,6 +152,35 @@ namespace AzNamingTool.Services
                 serviceResponse.ResponseObject = ex;
             }
             return serviceResponse;
+        }
+
+        public static List<string> GetTypeCategories(List<ResourceType> types)
+        {
+            List<string> categories = new List<string>();
+
+            foreach (ResourceType type in types)
+            {
+
+                string category = type.Resource;
+                if (category.Contains("/"))
+                {
+                    category = category.Substring(0, category.IndexOf("/"));
+                }
+
+                if (!categories.Contains(category))
+                {
+                    categories.Add(category);
+                }
+            }
+
+            return categories;
+        }
+
+
+        public static List<ResourceType> GetFilteredResourceTypes(List<ResourceType> types, string filter)
+        {
+            List<ResourceType> filteredtypes = types.Where(x => x.Resource.StartsWith(filter)).ToList();
+            return filteredtypes;
         }
     }
 }
