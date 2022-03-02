@@ -56,82 +56,89 @@
 
     async void Save()
     {
-        if ((itemName != "") && (itemShortName != ""))
+        if ((itemName != null) && (itemShortName != null))
         {
-            if (GeneralHelper.ValidateShortName(itemShortName, type))
+            if ((itemName != "") && (itemShortName != ""))
             {
-                itemShortName = itemShortName.ToLower();
-                switch (type)
+                if (GeneralHelper.ValidateShortName(itemShortName, type))
                 {
-                    case "ResourceEnvironment":
-                        ResourceEnvironment resourceEnvironment = new ResourceEnvironment()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                    itemShortName = itemShortName.ToLower();
+                    switch (type)
+                    {
+                        case "ResourceEnvironment":
+                            ResourceEnvironment resourceEnvironment = new ResourceEnvironment()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
-                        break;
-                    case "ResourceLocation":
-                        ResourceLocation resourceLocation = new ResourceLocation()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                                };
+                            serviceResponse = await ResourceEnvironmentService.PostItem(resourceEnvironment);
+                            break;
+                        case "ResourceLocation":
+                            ResourceLocation resourceLocation = new ResourceLocation()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceLocationService.PostItem(resourceLocation);
-                        break;
-                    case "ResourceOrg":
-                        ResourceOrg resourceOrg = new ResourceOrg()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                                };
+                            serviceResponse = await ResourceLocationService.PostItem(resourceLocation);
+                            break;
+                        case "ResourceOrg":
+                            ResourceOrg resourceOrg = new ResourceOrg()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
-                        break;
-                    case "ResourceProjAppSvc":
-                        ResourceProjAppSvc resourceProjAppSvc = new ResourceProjAppSvc()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                                };
+                            serviceResponse = await ResourceOrgService.PostItem(resourceOrg);
+                            break;
+                        case "ResourceProjAppSvc":
+                            ResourceProjAppSvc resourceProjAppSvc = new ResourceProjAppSvc()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
-                        break;
-                    case "ResourceUnitDept":
-                        ResourceUnitDept resourceUnitDept = new ResourceUnitDept()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                                };
+                            serviceResponse = await ResourceProjAppSvcService.PostItem(resourceProjAppSvc);
+                            break;
+                        case "ResourceUnitDept":
+                            ResourceUnitDept resourceUnitDept = new ResourceUnitDept()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
-                        break;
-                    case "ResourceVmRole":
-                        ResourceVmRole resourceVmRole = new ResourceVmRole()
-                            {
-                                Name = itemName,
-                                ShortName = itemShortName.ToLower()
+                                };
+                            serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
+                            break;
+                        case "ResourceVmRole":
+                            ResourceVmRole resourceVmRole = new ResourceVmRole()
+                                {
+                                    Name = itemName,
+                                    ShortName = itemShortName.ToLower()
 
-                            };
-                        serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
-                        break;
-                }
+                                };
+                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            break;
+                    }
 
-                if (serviceResponse.Success)
-                {
-                    ModalInstance.CloseAsync();
-                    toastService.ShowSuccess(type.Replace("Resource", "Resource ") + " added!", "SUCCESS");
+                    if (serviceResponse.Success)
+                    {
+                        ModalInstance.CloseAsync();
+                        toastService.ShowSuccess(type.Replace("Resource", "Resource ") + " added!", "SUCCESS");
+                    }
+                    else
+                    {
+                        toastService.ShowError("There was an error adding the " + type.Replace("Resource", "Resource ") + "!", "ERROR");
+                    }
                 }
                 else
                 {
-                    toastService.ShowError("There was an error adding the " + type.Replace("Resource", "Resource ") + "!", "ERROR");
+                    toastService.ShowError("You must enter a valid short name!", "ERROR");
                 }
             }
             else
             {
-                toastService.ShowError("You must enter a valid short name!", "ERROR");
+                toastService.ShowError("You must enter a name and short name!", "ERROR");
             }
         }
         else
