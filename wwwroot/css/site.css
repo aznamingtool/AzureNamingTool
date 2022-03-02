@@ -70,7 +70,7 @@ a, .btn-link {
     z-index: 99; /* Make sure it does not overlap */
 }
 
-.text-white, .link-light, .nav-item[b-iendnmapjp] a {
+.text-white, .link-light, .nav-link {
     color: #ffffff !important;
 }
 
