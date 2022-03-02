@@ -77,3 +77,9 @@ a, .btn-link {
 .text-dark, .link-dark {
     color: #000000 !important;
 }
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
