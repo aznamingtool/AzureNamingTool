@@ -15,19 +15,20 @@
 
 ## Overview
 
-The Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined, users can use the tool to geernate aname for the desred Azure resource.
+The Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined by an administrator, users can use the tool to geernate aname for the desred Azure resource.
 
 Further documentation on the script can be found on [Microsoft's Cloud Adoption Framework GitHub repo](https://github.com/microsoft/CloudAdoptionFramework/tree/master/ready/AzNamingTool).
 
 
 # Project Structure
 
-The Azure Naming Tool is a .NET 6 Blazor applciaiton, with a RESTful API. THe UI consists of several pages to allow the configuration and generation of Auzre Resoure names. The API provides a programtic interface for the functionality. The application contains Docker support, allowing the site to be run as a stand-alone applciation, or a container. 
+The Azure Naming Tool is a .NET 6 Blazor applciaiton, with a RESTful API. The UI consists of several pages to allow the configuration and generation of Auzre Resoure names. The API provides a programatic interface for the functionality. The application contains Docker support, allowing the site to be run as a stand-alone application, or a container. 
 
 *Project Components*
-- UI
+- UI/Admin
 - API
 - JSON configuration files
+- Dockerfile
 
 
 # * Important Notes *
@@ -36,11 +37,12 @@ The following are important notes/aspects of the Azure Naming Tool:
 
 - The applciation is designed to run as a stand-alone solution, with no internet/Azure connection.
 - The applciation can be run as a .NET 6 site, or as a Docker container.
+- The site can be hosted in any envinroment,including internal or in a public/private cloud.
 - The application uses local JSON files to store the configuration of the components.
 - The applciaiton requires persistent storage. If running as a container, a volume is required to store configuration files. 
 - The application contains a *repository* folder, which contains the default component configuration JSON files. When deployed, these files are copied to the *settings* folder. 
-- THe Admin interface allows configurations to be "reset", if needed. 
-- The API requires an API Key for all executions. A default guid will be generated on first launch. This value can be updated int he Admin section. 
+- THe Admin interface allows configurations to be "reset", if needed. This process copies the configuration from the *repository* folder to the *settings* folder. 
+- The API requires an API Key for all executions. A default APIK Key (guid) will be generated on first launch. This value can be updated in the Admin section. 
 - On first launch, the application will prompt for the Admin password to be set. 
 
   ![Admin Password Prompt](https://github.com/BryanSoltis/AzNamingTool/blob/master/Screenshots/AdminPasswordPrompt.png)
@@ -75,7 +77,7 @@ This project contains a .NET Core application, with Docker support. To use, comp
 
 **NOTE**
 
-The Azure Naming Tool requires persistent storage for the configuration files when run as a container. The following processes will explain how to create this volume in your respective envinroment.  
+The Azure Naming Tool requires persistent storage for the configuration files when run as a container. The following processes will explain how to create this volume in your respective envinroment. All configuration JSON files will be stored in the volume to ensure the configuration is persisted.
 
 ### Run as a Docker image
 
@@ -118,7 +120,7 @@ Ths process will allow you to deploy the Azure Naming Tool using DOcker to your 
 
 ### Run as an Azure App Service Container
 
-Ths process will allow you to deploy the Azure Naming Tool to an Azure App Service. 
+The Azure Naming Tool requires persistent storage for the configuration files when run as a container. The following processes will explain how to create this volume for your Azure App Service Container. All configuration JSON files will be stored in the volume to ensure the configuration is persisted.
 
 **NOTE**
 
