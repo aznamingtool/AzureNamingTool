@@ -3,6 +3,7 @@
 @using AzNamingTool.Services
 @using AzNamingTool.Helpers
 @using Microsoft.AspNetCore.Html
+@inject IJSRuntime JsRuntime
 @inject IToastService toastService
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
@@ -18,7 +19,10 @@
                     @((MarkupString)message)
                 </p>
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <p>
+                    <label for="name"><strong>Name</strong></label>
+                    </p>
+                    <p>
                     @if (protectedName)
                     {
                         <input value="@itemName" disabled type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
@@ -27,12 +31,79 @@
                     {
                         <input value="@itemName" type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                     }
+                    </p>
                 </div>
 
                 <div class="form-group">
-                    <label for="shortName">Short Name</label>
+                    <p>
+                    <label for="shortName"><strong>Short Name</strong></label>
+                    </p>
+                    <p>
                     <input value="@itemShortName" type="text" class="form-control" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
+                    </p>
                 </div>
+                @if ((type == "ResourceType") && (resourceComponents != null))
+                {
+                    <div class="form-group">
+                        <p>
+                            <strong>Optional Components</strong>
+                        </p>
+                        <p>
+                            @foreach (ResourceComponent resourceComponent in resourceComponents)
+                            {
+                                if (resourceComponent.Name != "ResourceType")
+                                {
+                                    <div class="form-check">
+                                        @if (optional.ToLower().Contains(resourceComponent.Name.Replace("Resource", "").ToLower()))
+                                        {
+                                            <input class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
+                                            <label class="form-check-label" for="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                                @resourceComponent.DisplayName
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                            <label class="form-check-label" for="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                                @resourceComponent.DisplayName
+                                            </label>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <p>
+                            <strong>Excluded Components</strong>
+                        </p>
+                        <p>
+                            @foreach (ResourceComponent resourceComponent in resourceComponents)
+                            {
+                                @if (resourceComponent.Name != "ResourceType")
+                                {
+                                    <div class="form-check">
+                                        @if (exclude.ToLower().Contains(resourceComponent.Name.Replace("Resource", "").ToLower()))
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
+                                            <label class="form-check-label" for="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                                @resourceComponent.DisplayName
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <input class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                            <label class="form-check-label" for="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                                @resourceComponent.DisplayName
+                                            </label>
+                                        }
+                                    </div>
+                                }
+                            }
+                        </p>
+                    </div>
+                }
             </div>
             <div class="modal-footer">
                 <button @onclick="Save" class="btn btn-success">Update</button>
@@ -58,6 +129,10 @@
     private ServiceResponse serviceResponse = new();
     private string? itemName;
     private string? itemShortName;
+    private List<ResourceComponent> resourceComponents;
+    private string? optional;
+    private string? exclude;
+    private bool ischecked = false;
 
     protected override async void OnInitialized()
     {
@@ -92,6 +167,11 @@
                 ResourceType resourceType = (ResourceType)serviceResponse.ResponseObject;
                 itemName = resourceType.Resource;
                 itemShortName = resourceType.ShortName;
+                optional = resourceType.Optional;
+                exclude = resourceType.Exclude;
+                serviceResponse = await ResourceComponentService.GetItems(true);
+                resourceComponents = (List<ResourceComponent>)serviceResponse.ResponseObject;
+                resourceComponents = resourceComponents.OrderBy(x => x.Name).ToList();
                 break;
             case "ResourceUnitDept":
                 serviceResponse = await ResourceUnitDeptService.GetItem(id);
@@ -147,6 +227,40 @@
                         serviceResponse = await ResourceTypeService.GetItem(id);
                         ResourceType resourceType = (ResourceType)serviceResponse.ResponseObject;
                         resourceType.ShortName = itemShortName;
+                        resourceType.Optional = "";
+                        resourceType.Exclude = "";
+
+                        // Update the Optional and Exclude components
+                        foreach (ResourceComponent resourceComponent in resourceComponents)
+                        {
+                            if (resourceComponent.Name != "ResourceType")
+                            {
+                                // Optional
+                                ischecked = false;
+                                ischecked = await JsRuntime.InvokeAsync<bool>("IsElementChecked", "optional-" + resourceComponent.Name.Replace("Resource", "").ToLower());
+                                if (ischecked)
+                                {
+                                    if (resourceType.Optional != "")
+                                    {
+                                        resourceType.Optional += ",";
+                                    }
+                                    resourceType.Optional += resourceComponent.Name.Replace("Resource", "");
+                                }
+
+                                // Exclude
+                                ischecked = false;
+                                ischecked = await JsRuntime.InvokeAsync<bool>("IsElementChecked", "exclude-" + resourceComponent.Name.Replace("Resource", "").ToLower());
+                                if (ischecked)
+                                {
+                                    if (resourceType.Exclude != "")
+                                    {
+                                        resourceType.Exclude += ",";
+                                    }
+                                    resourceType.Exclude += resourceComponent.Name.Replace("Resource", "");
+                                }
+                            }
+                        }
+
                         serviceResponse = await ResourceTypeService.PostItem(resourceType);
                         break;
                     case "ResourceUnitDept":

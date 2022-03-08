@@ -39,4 +39,12 @@ function topFunction() {
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
+
+  window.IsElementChecked = (id) => {
+      console.log(id);
+      console.log(document.getElementById(id));
+      console.log(document.getElementById(id).checked);
+    return document.getElementById(id).checked;
+  };
+
 </script>
