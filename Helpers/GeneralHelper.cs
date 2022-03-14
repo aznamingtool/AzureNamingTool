@@ -181,17 +181,22 @@ namespace AzNamingTool.Helpers
 
         public static void VerifyConfiguration()
         {
-            // Get all the files in teh repository folder
-            DirectoryInfo dirRepository = new DirectoryInfo("repository");
-            foreach(FileInfo file in dirRepository.GetFiles())
+            try
             {
-                // Check if the file exists in the settings folder
-                if(!File.Exists("settings/" + file.Name))
+                // Get all the files in teh repository folder
+                DirectoryInfo dirRepository = new DirectoryInfo("repository");
+                foreach (FileInfo file in dirRepository.GetFiles())
                 {
-                    // Copy the repository file to the settings folder
-                    file.CopyTo("settings/" + file.Name);
+                    // Check if the file exists in the settings folder
+                    if (!File.Exists("settings/" + file.Name))
+                    {
+                        // Copy the repository file to the settings folder
+                        file.CopyTo("settings/" + file.Name);
+                    }
                 }
             }
+            catch(Exception)
+            { }
         }
 
         public static void VerifySecurity(StateContainer state)
