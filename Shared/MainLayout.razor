@@ -50,7 +50,7 @@
     {
         await GeneralHelper.VerifyConfiguration();
         await GeneralHelper.VerifySecurity(state);
-        // Check that the admin password is set
+        // Check that the admin password is set 
         if(!state.Password)
         {
             OpenPasswordModal();
