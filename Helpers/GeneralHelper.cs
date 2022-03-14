@@ -179,7 +179,7 @@ namespace AzNamingTool.Helpers
             }
         }
 
-        public static void VerifyConfiguration()
+        public static async Task<bool> VerifyConfiguration()
         {
             try
             {
@@ -194,55 +194,67 @@ namespace AzNamingTool.Helpers
                         file.CopyTo("settings/" + file.Name);
                     }
                 }
+                return true;
             }
             catch(Exception)
-            { }
+            {
+                return false;
+            }
         }
 
-        public static void VerifySecurity(StateContainer state)
+        public static async Task<bool> VerifySecurity(StateContainer state)
         {
-            if (!state.Verified)
+            try
             {
-                var config = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("settings/appsettings.json")
-                .Build()
-                .Get<Config>();
-
-                if (config.SALTKey == "")
+                if (!state.Verified)
                 {
-                    // Create a new SALT key 
-                    const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-                    Random random = new Random();
-                    var salt = new string(Enumerable.Repeat(chars, 16)
-                        .Select(s => s[random.Next(s.Length)]).ToArray());
+                    var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("settings/appsettings.json")
+                    .Build()
+                    .Get<Config>();
 
-                    config.SALTKey = salt.ToString();
-                    config.APIKey = EncryptString(config.APIKey, salt.ToString());
+                    if (config.SALTKey == "")
+                    {
+                        // Create a new SALT key 
+                        const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+                        Random random = new Random();
+                        var salt = new string(Enumerable.Repeat(chars, 16)
+                            .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                        config.SALTKey = salt.ToString();
+                        config.APIKey = EncryptString(config.APIKey, salt.ToString());
+
+                        if (config.AdminPassword != "")
+                        {
+                            config.AdminPassword = EncryptString(config.AdminPassword, config.SALTKey.ToString());
+                            state.Password = true;
+                        }
+                        else
+                        {
+                            state.Password = false;
+                        }
+
+                    }
 
                     if (config.AdminPassword != "")
                     {
-                        config.AdminPassword = EncryptString(config.AdminPassword, config.SALTKey.ToString());
                         state.Password = true;
                     }
                     else
                     {
                         state.Password = false;
                     }
+                    UpdateSettings(config);
 
                 }
-
-                if (config.AdminPassword != "")
-                {
-                    state.Password = true;
-                }
-                else
-                {
-                    state.Password = false;
-                }
-                UpdateSettings(config);
+                state.SetVerified(true);
+                return true;
             }
-            state.SetVerified(true);
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         public static void UpdateSettings(Config config)
