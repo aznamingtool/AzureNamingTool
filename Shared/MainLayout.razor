@@ -46,10 +46,10 @@
 
     private string? message;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        GeneralHelper.VerifyConfiguration();
-        GeneralHelper.VerifySecurity(state);
+        await GeneralHelper.VerifyConfiguration();
+        await GeneralHelper.VerifySecurity(state);
         // Check that the admin password is set
         if(!state.Password)
         {
