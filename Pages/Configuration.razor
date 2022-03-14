@@ -857,6 +857,24 @@
                                         </div>
                                         <div class="card card-body">
                                             <p>The current Resource Types.</p>
+                                            <p>
+                                                Use the filters below to jump to a specifc resource type.
+                                            </p>
+                                            <select @onchange="OnCategoryChanged" class="form-control">
+                                                <option value="">Select a resource type provider (OPTIONAL)</option>
+                                                @foreach (var category in @categories)
+                                                {
+                                                    <option value="@category">@category</option>
+                                                }
+                                            </select>
+
+                                            <select @onchange="OnTypeChanged" class="form-control">
+                                                <option value="">Select a resource type</option>
+                                                @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
+                                                {
+                                                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                                }
+                                            </select>
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
@@ -874,7 +892,7 @@
                                                     @foreach (var item in @servicesData.ResourceTypes)
                                                     {
                                                         <tr>
-                                                            <td>@item.Resource</td>
+                                                            <td>@item.Resource<a id="@item.Id"></a></td>
                                                             <td>@item.ShortName</td>
                                                             @if (admin)
                                                             {
@@ -1360,6 +1378,10 @@
     private bool dataLoaded = false;
     private bool admin;
 
+    private List<string> categories = new List<string>();
+    private string? selectedResourceTypeCategory = "";
+    private string? selectedResourceType = "";
+
     private string? newComponentConfig;
     private string? newDelimiterConfig;
     private string? newEnvironmentName;
@@ -1390,6 +1412,10 @@
         // Load the values from state
         admin = state.Admin;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+
+        // Get the list of categories
+        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
+
         dataLoaded = true;
     }
 
@@ -2480,5 +2506,16 @@
             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
             StateHasChanged();
         }
+    }
+
+    private void OnCategoryChanged(ChangeEventArgs e)
+    {
+        selectedResourceTypeCategory = e.Value.ToString();
+
+    }
+
+    private async void OnTypeChanged(ChangeEventArgs e)
+    {
+        await JsRuntime.InvokeVoidAsync("scrollIntoView", e.Value.ToString());
     }
 }
