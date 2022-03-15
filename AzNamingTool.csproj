@@ -23,6 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="repository\appsettings.Development.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="settings\blank.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
