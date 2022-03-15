@@ -860,21 +860,23 @@
                                             <p>
                                                 Use the filters below to jump to a specifc resource type.
                                             </p>
-                                            <select @onchange="OnCategoryChanged" class="form-control">
-                                                <option value="">Select a resource type provider (OPTIONAL)</option>
-                                                @foreach (var category in @categories)
-                                                {
-                                                    <option value="@category">@category</option>
-                                                }
-                                            </select>
+                                            <p>
+                                                <select @onchange="OnCategoryChanged" class="form-control">
+                                                    <option value="">Select a resource type provider (OPTIONAL)</option>
+                                                    @foreach (var category in @categories)
+                                                    {
+                                                        <option value="@category">@category</option>
+                                                    }
+                                                </select>
 
-                                            <select @onchange="OnTypeChanged" class="form-control">
-                                                <option value="">Select a resource type</option>
-                                                @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
-                                                {
-                                                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
-                                                }
-                                            </select>
+                                                <select @onchange="OnTypeChanged" class="form-control">
+                                                    <option value="">Select a resource type</option>
+                                                    @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
+                                                    {
+                                                        <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                                    }
+                                                </select>
+                                            </p>
                                             <table class="table table-striped">
                                                 <thead>
                                                     <tr>
