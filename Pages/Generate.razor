@@ -2,7 +2,6 @@
 @using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @using AzNamingTool.Services
-@using Microsoft.Extensions.Logging
 @inject ILogger<Generate> Logger
 
 <PageTitle>Azure Naming Tool - Generate</PageTitle>
@@ -185,7 +184,7 @@
                                     case "ResourceProjAppSvc":
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
-                                                Proejct/App/Service
+                                                Project/App/Service
                                                 @if (selectedResourceTypeOptional.ToLower().Contains("projappsvc"))
                                                 {
                                                     @((MarkupString)optional)
