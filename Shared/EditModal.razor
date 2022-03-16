@@ -1,10 +1,10 @@
 ﻿@using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @using AzNamingTool.Services
-@using AzNamingTool.Helpers
 @using Microsoft.AspNetCore.Html
 @inject IJSRuntime JsRuntime
 @inject IToastService toastService
+@inject ILogger<EditModal> Logger
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="Cancel"></div>
