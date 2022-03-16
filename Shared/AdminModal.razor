@@ -6,7 +6,9 @@
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
 @inject StateContainer state
+@inject ProtectedSessionStorage session 
 @inject IToastService toastService
+@inject NavigationManager NavigationManager
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="Close"></div>
@@ -107,13 +109,26 @@
            .Build()
            .Get<Config>();
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
-        admin = state.Admin;
+        //admin = state.Admin;
+        //var result = await session.GetAsync<bool>("admin");
+        //admin = (bool)result.Value;
+        //if (admin)
+        //{
+        //    currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
+        //}
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await session.GetAsync<bool>("admin");
+        admin = (bool)result.Value;
         if (admin)
         {
             currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
         }
+        StateHasChanged(); 
     }
 
     private async void AdminFormAction(string action)
@@ -121,6 +136,7 @@
         message = new ResponseMessage();
 
         bool updateConfig = false;
+        bool redirect = false;
 
         message.Header = "INFORMATION";
         message.Type = MessageTypesEnum.INFORMATION;
@@ -129,19 +145,21 @@
         {
             case "login":
                 // Check the password
-
                 if (currentpassword == GeneralHelper.DecryptString(config.AdminPassword, config.SALTKey))
                 {
                     state.SetAdmin(true);
+                    await session.SetAsync("admin", true);
                     // Load the current API Key
                     currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
                     message.Type = MessageTypesEnum.INFORMATION;
                     message.Header = "INFORMATION";
                     message.Message = "You have logged in.";
+                    redirect = true;
                 }
                 else
                 {
                     state.SetAdmin(false);
+                    await session.SetAsync("admin", false);
                     message.Type = MessageTypesEnum.ERROR;
                     message.Header = "ERROR";
                     message.Message = "Login failed";
@@ -149,9 +167,11 @@
                 break;
             case "logout":
                 state.SetAdmin(false);
+                await session.SetAsync("admin", false);
                 message.Type = MessageTypesEnum.INFORMATION;
                 message.Header = "INFORMATION";
                 message.Message = "You have logged out.";
+                redirect = true;
                 break;
             case "password":
                 bool confirmPassword = await JsRuntime.InvokeAsync<bool>("confirm", "This will change the admin password. Are you sure?");
@@ -225,6 +245,11 @@
                     toastService.ShowError(message.Message, "ERROR");
                     break;
             }
+        }
+
+        if(redirect)
+        {
+            NavigationManager.NavigateTo("/");
         }
 
         if (action == "logout")

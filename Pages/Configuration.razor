@@ -13,6 +13,7 @@
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
 @inject StateContainer state
+@inject ProtectedSessionStorage session 
 @inject IToastService toastService
 @implements IDisposable
 
@@ -1343,7 +1344,7 @@
                     <div class="collapse card card-body" id="policy">
                         <div class="card">
                             <div class="card card-header bg-default" style="font-weight:bold;">
-                                Export Azure Policy Deifinition
+                                Export Azure Policy Definition
                             </div>
                             <div class="card card-body">
                                 <p>
@@ -1412,13 +1413,28 @@
     protected override async Task OnInitializedAsync()
     {
         // Load the values from state
-        admin = state.Admin;
+        //admin = state.Admin;
+        //var result = await session.GetAsync<bool>("admin");
+        //admin = (bool)result.Value;
+        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
+
+        // Get the list of categories
+        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
+
+        dataLoaded = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await session.GetAsync<bool>("admin");
+        admin = (bool)result.Value;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
 
         // Get the list of categories
         categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
 
         dataLoaded = true;
+        StateHasChanged(); 
     }
 
 
