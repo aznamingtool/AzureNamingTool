@@ -1,6 +1,7 @@
 ﻿@using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @inject StateContainer state
+@inject ProtectedSessionStorage session
 @inject IJSRuntime JsRuntime
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -78,8 +79,16 @@
     protected override async Task OnInitializedAsync()
     {
         // Load the values from state
-        admin = state.Admin;
+        //admin = state.Admin;
+        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await session.GetAsync<bool>("admin");
+        admin = (bool)result.Value;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+        StateHasChanged(); 
     }
 
     private void ToggleNavMenu()
