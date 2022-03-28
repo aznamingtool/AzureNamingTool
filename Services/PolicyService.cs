@@ -18,7 +18,7 @@ namespace AzNamingTool.Services
                 var environments = await Helpers.GeneralHelper.GetList<ResourceEnvironment>();
                 var locations = await Helpers.GeneralHelper.GetList<ResourceLocation>();
                 var orgs = await Helpers.GeneralHelper.GetList<ResourceOrg>();
-                var vmRoles = await Helpers.GeneralHelper.GetList<ResourceVmRole>();
+                var Functions = await Helpers.GeneralHelper.GetList<ResourceFunction>();
                 var projectAppSvcs = await Helpers.GeneralHelper.GetList<ResourceProjAppSvc>();
 
                 List<String> validations = new();
@@ -48,8 +48,8 @@ namespace AzNamingTool.Services
                             case "ResourceOrgs":
                                 AddValidations(orgs, validations, delimiter, sortOrder);
                                 break;
-                            case "ResourceVmRoles":
-                                AddValidations(vmRoles, validations, delimiter, sortOrder);
+                            case "ResourceFunctions":
+                                AddValidations(Functions, validations, delimiter, sortOrder);
                                 break;
                             case "ResourceProjAppSvcs":
                                 AddValidations(projectAppSvcs, validations, delimiter, sortOrder);

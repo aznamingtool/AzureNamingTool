@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AzNamingTool.Models
 {
-    public class ResourceVmRole
+    public class ResourceFunction
     {
         public long Id { get; set; }
         [Required()]

@@ -43,9 +43,9 @@ namespace AzNamingTool.Services
                 var resourceUnitDepts = await GeneralHelper.GetList<ResourceUnitDept>();
                 configdata.ResourceUnitDepts = resourceUnitDepts.OrderBy(y => y.SortOrder).ToList();
 
-                // ResourceVmRoles
-                var resourceVmRoles = await GeneralHelper.GetList<ResourceVmRole>();
-                configdata.ResourceVmRoles = resourceVmRoles.OrderBy(y => y.SortOrder).ToList();
+                // ResourceFunctions
+                var resourceFunctions = await GeneralHelper.GetList<ResourceFunction>();
+                configdata.ResourceFunctions = resourceFunctions.OrderBy(y => y.SortOrder).ToList();
 
                 // Get the security settings
                 var config = new ConfigurationBuilder()
@@ -81,7 +81,7 @@ namespace AzNamingTool.Services
                 await GeneralHelper.WriteList<ResourceProjAppSvc>(configdata.ResourceProjAppSvcs);
                 await GeneralHelper.WriteList<ResourceType>(configdata.ResourceTypes);
                 await GeneralHelper.WriteList<ResourceUnitDept>(configdata.ResourceUnitDepts);
-                await GeneralHelper.WriteList<ResourceVmRole>(configdata.ResourceVmRoles);
+                await GeneralHelper.WriteList<ResourceFunction>(configdata.ResourceFunctions);
 
                 // Set the security settings
                 var config = new ConfigurationBuilder()

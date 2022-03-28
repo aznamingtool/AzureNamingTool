@@ -10,6 +10,6 @@
         public List<ResourceProjAppSvc>? ResourceProjAppSvcs { get; set; }
         public List<ResourceType>? ResourceTypes { get; set; }
         public List<ResourceUnitDept>? ResourceUnitDepts { get; set; }
-        public List<ResourceVmRole>? ResourceVmRoles { get; set; }
+        public List<ResourceFunction>? ResourceFunctions { get; set; }
     }
 }

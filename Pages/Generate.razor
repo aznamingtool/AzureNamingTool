@@ -225,21 +225,21 @@
                     </div>
                 </div>
                                         break;
-                                    case "ResourceVmRole":
+                                    case "ResourceFunction":
                                         <div class="card">
                                             <h5 class="card-header text-white bg-secondary">
-                                                VM Role
-                                                @if (selectedResourceTypeOptional.ToLower().Contains("vmrole"))
+                                                Function
+                                                @if (selectedResourceTypeOptional.ToLower().Contains("Function"))
                                                 {
                                                     @((MarkupString)optional)
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceVmRole)"
-                                     Value="@selectedResourceVmRole"
+                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceFunction)"
+                                     Value="@selectedResourceFunction"
                                      ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
-                                                    <option value="">Select a VM Role</option>
-                                                    @foreach (var item in @servicesData.ResourceVmRoles)
+                                                    <option value="">Select a Function</option>
+                                                    @foreach (var item in @servicesData.ResourceFunctions)
                             {
                                 <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
                             }
@@ -306,7 +306,7 @@
     private string selectedResourceTypeOptional;
     private List<string> categories = new List<string>();
     private string? selectedResourceUnitDept;
-    private string? selectedResourceVmRole;
+    private string? selectedResourceFunction;
     private bool boolFormDisabled = true;
     private string? generatedName;
     private string? message;
@@ -354,7 +354,7 @@
         resourceNameRequest.ResourceProjAppSvc = selectedResourceProjAppSvc;
         resourceNameRequest.ResourceType = Convert.ToInt32(selectedResourceType);
         resourceNameRequest.ResourceUnitDept = selectedResourceUnitDept;
-        resourceNameRequest.ResourceVmRole = selectedResourceVmRole;
+        resourceNameRequest.ResourceFunction = selectedResourceFunction;
 
         resourceNameRequestResponse = await ResourceNamingRequestService.RequestName(resourceNameRequest);
 
@@ -445,7 +445,7 @@
             selectedResourceOrg = null;
             selectedResourceProjAppSvc = null;
             selectedResourceUnitDept = null;
-            selectedResourceVmRole = null;
+            selectedResourceFunction = null;
 
             componentsVisible = "collapse show";
         }
@@ -476,7 +476,7 @@
                 selectedResourceUnitDept = value;
                 break;
             case "rvmr":
-                selectedResourceVmRole = value;
+                selectedResourceFunction = value;
                 break;
         }
 
@@ -536,8 +536,8 @@
                                     boolFormDisabled = true;
                                 }
                                 break;
-                            case "ResourceVmRole":
-                                if (selectedResourceVmRole == null)
+                            case "ResourceFunction":
+                                if (selectedResourceFunction == null)
                                 {
                                     boolFormDisabled = true;
                                 }

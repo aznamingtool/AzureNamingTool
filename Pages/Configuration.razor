@@ -1146,27 +1146,27 @@
                             </div>
                         }
                         break;
-                    case "ResourceVmRole":
-                        @if (servicesData.ResourceVmRoles != null)
+                    case "ResourceFunction":
+                        @if (servicesData.ResourceFunctions != null)
                         {
                             <div class="card">
                                 <h5 class="card-header text-white bg-secondary text-white">
-                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#vmroles" role="button" aria-expanded="false" aria-controls="vmroles">
+                                    <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#Functions" role="button" aria-expanded="false" aria-controls="Functions">
                                         @resourceComponent.DisplayName
                                     </a>
                                 </h5>
-                                <div class="collapse card card-body" id="vmroles">
+                                <div class="collapse card card-body" id="Functions">
                                     <div class="card">
                                         <div class="card card-header bg-default" style="font-weight:bold;">
-                                            Current VM Roles
+                                            Current Functions
                                         </div>
                                         <div class="card card-body">
-                                            <p>The current VM Roles.</p>
+                                            <p>The current Functions.</p>
                                             @if (admin)
                                             {
                                                 <p>
-                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"add"))" title="Add VM Role">
-                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add VM Role
+                                                    <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceFunction",0,"add"))" title="Add Function">
+                                                        <span class="oi oi-plus" aria-hidden="true"></span> Add Function
                                                     </button>
                                                 </p>
                                             }
@@ -1182,7 +1182,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in @servicesData.ResourceVmRoles)
+                                                    @foreach (var item in @servicesData.ResourceFunctions)
                                                     {
                                                         <tr>
                                                             <td>@item.Name</td>
@@ -1190,22 +1190,22 @@
                                                             @if (admin)
                                                             {
                                                                 <td>
-                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"up"))" title="Move up">
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceFunction",item.Id,"up"))" title="Move up">
                                                                         <span class="oi oi-arrow-thick-top" aria-hidden="true"></span>
                                                                     </button>
                                                                     <span> </span>
-                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"down"))" title="Move down">
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceFunction",item.Id,"down"))" title="Move down">
                                                                         <span class="oi oi-arrow-thick-bottom" aria-hidden="true"></span>
                                                                     </button>
                                                                     <span> </span>
-                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"edit"))" title="Edit">
+                                                                    <button type="button" class="btn btn-primary" @onclick="@(e => FormAction("ResourceFunction",item.Id,"edit"))" title="Edit">
                                                                         <span class="oi oi-pencil" aria-hidden="true"></span>
                                                                     </button>
 
-                                                                    @if (servicesData.ResourceVmRoles.Count > 1)
+                                                                    @if (servicesData.ResourceFunctions.Count > 1)
                                                                     {
                                                                         <span> </span>
-                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceVmRole",item.Id,"delete"))" title="Delete">
+                                                                        <button type="button" class="btn btn-danger" @onclick="@(e => FormAction("ResourceFunction",item.Id,"delete"))" title="Delete">
                                                                             <span class="oi oi-x" aria-hidden="true"></span>
                                                                         </button>
                                                                     }
@@ -1221,21 +1221,21 @@
                                     {
                                         <div class="card">
                                             <div class="card-header bg-default">
-                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#vmrolesconfig" role="button" aria-expanded="false" aria-controls="vmrolesconfig">
+                                                <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#Functionsconfig" role="button" aria-expanded="false" aria-controls="Functionsconfig">
                                                     <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                 </a>
                                             </div>
-                                            <div class="collapse card card-body" id="vmrolesconfig">
+                                            <div class="collapse card card-body" id="Functionsconfig">
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
-                                                        Export VM Role Configuration
+                                                        Export Function Configuration
                                                     </div>
                                                     <div class="card card-body">
                                                         <p>
-                                                            Click <strong>Export</strong> to export the current VM Role Configuration.
+                                                            Click <strong>Export</strong> to export the current Function Configuration.
                                                         </p>
                                                         <p>
-                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceVmRole",0,"download")) title="Export">
+                                                            <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("ResourceFunction",0,"download")) title="Export">
                                                                 <span class="oi oi-data-transfer-download" aria-hidden="true"></span> Export
                                                             </button>
                                                         </p>
@@ -1243,17 +1243,17 @@
                                                 </div>
                                                 <div class="card  w-auto">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
-                                                        Reset the VM Roles Configuration
+                                                        Reset the Functions Configuration
                                                     </div>
                                                     <div class="card card-body">
                                                         <p>
-                                                            Click <strong>Reset</strong> to reset the VM Roles Configuration back to the default values at the time of installation.
+                                                            Click <strong>Reset</strong> to reset the Functions Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
                                                             <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
                                                         </p>
                                                         <p>
-                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceVmRole",0,"reset")) title="Reset">
+                                                            <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceFunction",0,"reset")) title="Reset">
                                                                 <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
                                                             </button>
                                                         </p>
@@ -1261,17 +1261,17 @@
                                                 </div>
                                                 <div class="card">
                                                     <div class="card card-header bg-default" style="font-weight:bold;">
-                                                        Import VM Role Configuration
+                                                        Import Function Configuration
                                                     </div>
                                                     <div class="card card-body">
                                                         <p>
-                                                            Enter the new VM Roles Configuration JSON below and click <strong>Import</strong> to import the VM Roles Configuration. <strong>NOTE:</strong> This will overwrite the existing VM Roles Configuration.
+                                                            Enter the new Functions Configuration JSON below and click <strong>Import</strong> to import the Functions Configuration. <strong>NOTE:</strong> This will overwrite the existing Functions Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea title="New VM Role Config" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newVmRoleConfig",(string)ui.Value);})">@newVmRoleConfig</textarea>
+                                                            <textarea title="New Function Config" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newFunctionConfig",(string)ui.Value);})">@newFunctionConfig</textarea>
                                                         </p>
                                                         <p>
-                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceVmRole",0,"update"))" title="Import">
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceFunction",0,"update"))" title="Import">
                                                                 <span class="oi oi-data-transfer-upload" aria-hidden="true"></span> Import
                                                             </button>
                                                         </p>
@@ -1403,9 +1403,9 @@
     private string? newUnitDeptName;
     private string? newUnitDeptShortName;
     private string? newUnitDeptConfig;
-    private string? newVmRoleName;
-    private string? newVmRoleShortName;
-    private string? newVmRoleConfig;
+    private string? newFunctionName;
+    private string? newFunctionShortName;
+    private string? newFunctionConfig;
     private string? newMasterConfig;
 
     private ResponseMessage message = new();
@@ -2193,7 +2193,7 @@
                                     {
                                         message.Type = MessageTypesEnum.SUCCESS;
                                         message.Message = "Units/Depts configuration update succeeded!";
-                                        newVmRoleConfig = null;
+                                        newFunctionConfig = null;
                                     }
                                     else
                                     {
@@ -2207,117 +2207,117 @@
                     serviceResponse = await ResourceUnitDeptService.GetItems();
                     servicesData.ResourceUnitDepts = (List<ResourceUnitDept>)serviceResponse.ResponseObject;
                     break;
-                case "ResourceVmRole":
-                    ResourceVmRole resourceVmRole;
+                case "ResourceFunction":
+                    ResourceFunction resourceFunction;
                     switch (action)
                     {
                         case "up":
                             // Get the component in the list
-                            resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
-                            if (resourceVmRole.SortOrder > 1)
+                            resourceFunction = servicesData.ResourceFunctions.Find(x => x.Id == id);
+                            if (resourceFunction.SortOrder > 1)
                             {
-                                resourceVmRole.SortOrder += -1;
+                                resourceFunction.SortOrder += -1;
                             }
-                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            serviceResponse = await ResourceFunctionService.PostItem(resourceFunction);
                             if (serviceResponse.Success)
                             {
                                 message.Type = MessageTypesEnum.SUCCESS;
-                                message.Message = resourceVmRole.Name + " moved up!";
+                                message.Message = resourceFunction.Name + " moved up!";
                             }
                             else
                             {
                                 message.Type = MessageTypesEnum.ERROR;
-                                message.Message = resourceVmRole.Name + " move failed!";
+                                message.Message = resourceFunction.Name + " move failed!";
                             }
 
                             break;
                         case "down":
-                            resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
-                            if (resourceVmRole.SortOrder <= servicesData.ResourceOrgs.Count)
+                            resourceFunction = servicesData.ResourceFunctions.Find(x => x.Id == id);
+                            if (resourceFunction.SortOrder <= servicesData.ResourceOrgs.Count)
                             {
-                                resourceVmRole.SortOrder += 1;
+                                resourceFunction.SortOrder += 1;
                             }
-                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            serviceResponse = await ResourceFunctionService.PostItem(resourceFunction);
                             if (serviceResponse.Success)
                             {
                                 message.Type = MessageTypesEnum.SUCCESS;
-                                message.Message = resourceVmRole.Name + " moved down!";
+                                message.Message = resourceFunction.Name + " moved down!";
                             }
                             else
                             {
                                 message.Type = MessageTypesEnum.ERROR;
-                                message.Message = resourceVmRole.Name + " move failed!";
+                                message.Message = resourceFunction.Name + " move failed!";
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceVmRole", "Edit VM Role", "Edit the VM Role.<br /><br />Short Name must be 1-2 characters.");
+                            ShowEditModal((int)id, "ResourceFunction", "Edit Function", "Edit the Function.<br /><br />Short Name must be 1-2 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
                             if (confirm)
                             {
-                                resourceVmRole = servicesData.ResourceVmRoles.Find(x => x.Id == id);
-                                serviceResponse = await ResourceVmRoleService.DeleteItem(Convert.ToInt32(resourceVmRole.Id));
+                                resourceFunction = servicesData.ResourceFunctions.Find(x => x.Id == id);
+                                serviceResponse = await ResourceFunctionService.DeleteItem(Convert.ToInt32(resourceFunction.Id));
                                 if (serviceResponse.Success)
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = resourceVmRole.Name + " deleted!";
+                                    message.Message = resourceFunction.Name + " deleted!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = resourceVmRole.Name + " deletion failed!";
+                                    message.Message = resourceFunction.Name + " deletion failed!";
                                 }
                             }
                             break;
                         case "add":
-                            ShowAddModal((int)id, "ResourceVmRole", "Add VM Role", "<p>Add an VM Role.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-2 characters.</li></ul>");
+                            ShowAddModal((int)id, "ResourceFunction", "Add Function", "<p>Add an Function.</p><p><strong>NOTES</strong></p><ul><li>Short Name value will be converted to lower case.</li><li>Short Name must be 1-2 characters.</li></ul>");
                             break;
                         case "download":
-                            serviceResponse = await ResourceVmRoleService.GetItems();
-                            var vmroleson = serviceResponse.ResponseObject;
-                            await BlazorDownloadFileService.DownloadFileFromText("vmrolesconfig.json", JsonSerializer.Serialize(vmroleson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+                            serviceResponse = await ResourceFunctionService.GetItems();
+                            var Functionson = serviceResponse.ResponseObject;
+                            await BlazorDownloadFileService.DownloadFileFromText("Functionsconfig.json", JsonSerializer.Serialize(Functionson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current VM Roles configuration and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Functions configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
-                                if (FileSystemHelper.ResetConfiguration("resourcevmroles.json"))
+                                if (FileSystemHelper.ResetConfiguration("resourceFunctions.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "VM Roles configuration reset!";
+                                    message.Message = "Functions configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "VM Roles configuration reset failed!";
+                                    message.Message = "Functions configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
-                            if (newVmRoleConfig != null)
+                            if (newFunctionConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current VM Roles configuration and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Functions configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
-                                    serviceResponse = await ResourceVmRoleService.PostConfig(JsonSerializer.Deserialize<List<ResourceVmRole>>(newVmRoleConfig));
+                                    serviceResponse = await ResourceFunctionService.PostConfig(JsonSerializer.Deserialize<List<ResourceFunction>>(newFunctionConfig));
                                     if (serviceResponse.Success)
                                     {
                                         message.Type = MessageTypesEnum.SUCCESS;
-                                        message.Message = "VM Roles configuration update succeeded!";
-                                        newVmRoleConfig = null;
+                                        message.Message = "Functions configuration update succeeded!";
+                                        newFunctionConfig = null;
                                     }
                                     else
                                     {
                                         message.Type = MessageTypesEnum.ERROR;
-                                        message.Message = "VM Roles configuration update failed!";
+                                        message.Message = "Functions configuration update failed!";
                                     }
                                 }
                             }
                             break;
                     }
-                    serviceResponse = await ResourceVmRoleService.GetItems();
-                    servicesData.ResourceVmRoles = (List<ResourceVmRole>)serviceResponse.ResponseObject;
+                    serviceResponse = await ResourceFunctionService.GetItems();
+                    servicesData.ResourceFunctions = (List<ResourceFunction>)serviceResponse.ResponseObject;
                     break;
                 case "Master":
                     switch (action)
@@ -2457,14 +2457,14 @@
             case "newUnitDeptConfig":
                 newUnitDeptConfig = value;
                 break;
-            case "newVmRoleName":
-                newVmRoleName = value;
+            case "newFunctionName":
+                newFunctionName = value;
                 break;
-            case "newVmRoleShortName":
-                newVmRoleShortName = value;
+            case "newFunctionShortName":
+                newFunctionShortName = value;
                 break;
-            case "newVmRoleConfig":
-                newVmRoleConfig = value;
+            case "newFunctionConfig":
+                newFunctionConfig = value;
                 break;
             case "newMasterConfig":
                 newMasterConfig = value;

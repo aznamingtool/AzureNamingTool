@@ -3,7 +3,7 @@ using AzNamingTool.Models;
 
 namespace AzNamingTool.Services
 {
-    public class ResourceVmRoleService
+    public class ResourceFunctionService
     {
         private static ServiceResponse serviceResponse = new();
 
@@ -12,7 +12,7 @@ namespace AzNamingTool.Services
             try
             {
                 // Get list of items
-                var items = await GeneralHelper.GetList<ResourceVmRole>();
+                var items = await GeneralHelper.GetList<ResourceFunction>();
                 serviceResponse.ResponseObject = items.OrderBy(x => x.SortOrder).ToList();
                 serviceResponse.Success = true;
             }
@@ -29,7 +29,7 @@ namespace AzNamingTool.Services
             try
             {
                 // Get list of items
-                var data = await GeneralHelper.GetList<ResourceVmRole>();
+                var data = await GeneralHelper.GetList<ResourceFunction>();
                 var item = data.Find(x => x.Id == id);
                 serviceResponse.ResponseObject = item;
                 serviceResponse.Success = true;
@@ -42,7 +42,7 @@ namespace AzNamingTool.Services
             return serviceResponse;
         }
 
-        public static async Task<ServiceResponse> PostItem(ResourceVmRole item)
+        public static async Task<ServiceResponse> PostItem(ResourceFunction item)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace AzNamingTool.Services
                 item.ShortName = item.ShortName.ToLower();
 
                 // Get list of items
-                var items = await GeneralHelper.GetList<ResourceVmRole>();
+                var items = await GeneralHelper.GetList<ResourceFunction>();
 
                 // Set the new id
                 if (item.Id == 0)
@@ -94,7 +94,7 @@ namespace AzNamingTool.Services
                     }
 
                     // Reset the sort order of the list
-                    foreach (ResourceVmRole thisitem in items.OrderBy(x => x.SortOrder).ToList())
+                    foreach (ResourceFunction thisitem in items.OrderBy(x => x.SortOrder).ToList())
                     {
                         thisitem.SortOrder = position;
                         position += 1;
@@ -120,14 +120,14 @@ namespace AzNamingTool.Services
                 }
 
                 position = 1;
-                foreach (ResourceVmRole thisitem in items.OrderBy(x => x.SortOrder).ToList())
+                foreach (ResourceFunction thisitem in items.OrderBy(x => x.SortOrder).ToList())
                 {
                     thisitem.SortOrder = position;
                     position += 1;
                 }
 
                 // Write items to file
-                await GeneralHelper.WriteList<ResourceVmRole>(items);
+                await GeneralHelper.WriteList<ResourceFunction>(items);
                 serviceResponse.ResponseObject = "Item added!";
                 serviceResponse.Success = true;
             }
@@ -144,7 +144,7 @@ namespace AzNamingTool.Services
             try
             {
                 // Get list of items
-                var items = await GeneralHelper.GetList<ResourceVmRole>();
+                var items = await GeneralHelper.GetList<ResourceFunction>();
                 // Get the specified item
                 var item = items.Find(x => x.Id == id);
                 // Remove the item from the collection
@@ -152,14 +152,14 @@ namespace AzNamingTool.Services
 
                 // Update all the sort order values to reflect the removal
                 int position = 1;
-                foreach (ResourceVmRole thisitem in items.OrderBy(x => x.SortOrder).ToList())
+                foreach (ResourceFunction thisitem in items.OrderBy(x => x.SortOrder).ToList())
                 {
                     thisitem.SortOrder = position;
                     position += 1;
                 }
 
                 // Write items to file
-                await GeneralHelper.WriteList<ResourceVmRole>(items);
+                await GeneralHelper.WriteList<ResourceFunction>(items);
                 serviceResponse.Success = true;
             }
             catch (Exception ex)
@@ -170,16 +170,16 @@ namespace AzNamingTool.Services
             return serviceResponse;
         }
 
-        public static async Task<ServiceResponse> PostConfig(List<ResourceVmRole> items)
+        public static async Task<ServiceResponse> PostConfig(List<ResourceFunction> items)
         {
             try
             {
                 // Get list of items
-                var newitems = new List<ResourceVmRole>();
+                var newitems = new List<ResourceFunction>();
                 int i = 1;
 
                 // Determine new item id
-                foreach (ResourceVmRole item in items)
+                foreach (ResourceFunction item in items)
                 {
                     // Make sure the new item short name only contains letters/numbers
                     if (!GeneralHelper.CheckAlphanumeric(item.ShortName))
@@ -199,7 +199,7 @@ namespace AzNamingTool.Services
                 }
 
                 // Write items to file
-                await GeneralHelper.WriteList<ResourceVmRole>(newitems);
+                await GeneralHelper.WriteList<ResourceFunction>(newitems);
                 serviceResponse.Success = true;
             }
             catch (Exception ex)

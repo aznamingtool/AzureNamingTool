@@ -112,7 +112,7 @@ namespace AzNamingTool.Services
         {
             try
             {
-                string[] componentnames = new string[8] { "ResourceEnvironment", "ResourceInstance", "ResourceLocation", "ResourceOrg", "ResourceProjAppSvc", "ResourceType", "ResourceUnitDept", "ResourceVmRole" };
+                string[] componentnames = new string[8] { "ResourceEnvironment", "ResourceInstance", "ResourceLocation", "ResourceOrg", "ResourceProjAppSvc", "ResourceType", "ResourceUnitDept", "ResourceFunction" };
                 var newitems = new List<ResourceComponent>();
 
                 // Examine the current items

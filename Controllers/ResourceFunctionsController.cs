@@ -16,17 +16,17 @@ namespace AzNamingTool.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [ApiKey]
-    public class ResourceVmRolesController : ControllerBase
+    public class ResourceFunctionsController : ControllerBase
     {
         private ServiceResponse serviceResponse = new();
-        // GET: api/<ResourceVmRolesController>
+        // GET: api/<ResourceFunctionsController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             try
             {
                 // Get list of items
-                var items = await GeneralHelper.GetList<ResourceVmRole>();
+                var items = await GeneralHelper.GetList<ResourceFunction>();
 
                 return Ok(items.OrderBy(x => x.SortOrder));
             }
@@ -36,14 +36,14 @@ namespace AzNamingTool.Controllers
             }
         }
 
-        // GET api/<ResourceVmRolesController>/5
+        // GET api/<ResourceFunctionsController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 // Get list of items
-                var data = await GeneralHelper.GetList<ResourceVmRole>();
+                var data = await GeneralHelper.GetList<ResourceFunction>();
                 var item = data.Find(x => x.Id == id);
                 return Ok(item);
             }
@@ -53,13 +53,13 @@ namespace AzNamingTool.Controllers
             }
         }
 
-        // POST api/<ResourceVmRolesController>
+        // POST api/<ResourceFunctionsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ResourceVmRole item)
+        public async Task<IActionResult> Post([FromBody] ResourceFunction item)
         {
             try
             {
-                serviceResponse = await ResourceVmRoleService.PostItem(item);
+                serviceResponse = await ResourceFunctionService.PostItem(item);
                 if (serviceResponse.Success)
                 {
                     return Ok(serviceResponse.ResponseObject);
@@ -75,14 +75,14 @@ namespace AzNamingTool.Controllers
             }
         }
 
-        // POST api/<ResourceVmRolesController>
+        // POST api/<ResourceFunctionsController>
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> PostConfig([FromBody] List<ResourceVmRole> items)
+        public async Task<IActionResult> PostConfig([FromBody] List<ResourceFunction> items)
         {
             try
             {
-                serviceResponse = await ResourceVmRoleService.PostConfig(items);
+                serviceResponse = await ResourceFunctionService.PostConfig(items);
                 if (serviceResponse.Success)
                 {
                     return Ok(serviceResponse.ResponseObject);
@@ -98,13 +98,13 @@ namespace AzNamingTool.Controllers
             }
         }
 
-        // DELETE api/<ResourceVmRolesController>/5
+        // DELETE api/<ResourceFunctionsController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                serviceResponse = await ResourceVmRoleService.DeleteItem(id);
+                serviceResponse = await ResourceFunctionService.DeleteItem(id);
                 if (serviceResponse.Success)
                 {
                     return Ok(serviceResponse.ResponseObject);

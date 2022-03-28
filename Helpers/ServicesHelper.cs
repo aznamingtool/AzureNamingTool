@@ -27,8 +27,8 @@ namespace AzNamingTool.Helpers
                 servicesData.ResourceTypes = (List<ResourceType>)serviceReponse.ResponseObject;
                 serviceReponse = await ResourceUnitDeptService.GetItems();
                 servicesData.ResourceUnitDepts = (List<ResourceUnitDept>)serviceReponse.ResponseObject;
-                serviceReponse = await ResourceVmRoleService.GetItems();
-                servicesData.ResourceVmRoles = (List<ResourceVmRole>)serviceReponse.ResponseObject;
+                serviceReponse = await ResourceFunctionService.GetItems();
+                servicesData.ResourceFunctions = (List<ResourceFunction>)serviceReponse.ResponseObject;
                 return servicesData;
             }
             catch
