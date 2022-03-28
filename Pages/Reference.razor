@@ -173,13 +173,13 @@
                                                                                         @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
                                                                                     </td>
                                                                                 </tr>                                                                                break;
-                                                                            case "ResourceVmRole":
+                                                                            case "ResourceFunction":
                                                                                 <tr>
                                                                                     <td class="align-top w-25">
-                                                                                        VM Role:
+                                                                                        Function:
                                                                                     </td>
                                                                                     <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceVmRoles[0].Name (@servicesData.ResourceVmRoles[0].ShortName)
+                                                                                        @servicesData.ResourceFunctions[0].Name (@servicesData.ResourceFunctions[0].ShortName)
                                                                                     </td>
                                                                                 </tr>                                                                                break;
                                                                         }
@@ -343,8 +343,8 @@
                                 case "ResourceUnitDept":
                                     name += servicesData.ResourceUnitDepts[0].ShortName;
                                     break;
-                                case "ResourceVmRole":
-                                    name += servicesData.ResourceVmRoles[0].ShortName;
+                                case "ResourceFunction":
+                                    name += servicesData.ResourceFunctions[0].ShortName;
                                     break;
                             }
                         }

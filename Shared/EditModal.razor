@@ -179,11 +179,11 @@
                 itemName = resourceUnitDept.Name;
                 itemShortName = resourceUnitDept.ShortName;
                 break;
-            case "ResourceVmRole":
-                serviceResponse = await ResourceVmRoleService.GetItem(id);
-                ResourceVmRole resourceVmRole = (ResourceVmRole)serviceResponse.ResponseObject;
-                itemName = resourceVmRole.Name;
-                itemShortName = resourceVmRole.ShortName;
+            case "ResourceFunction":
+                serviceResponse = await ResourceFunctionService.GetItem(id);
+                ResourceFunction resourceFunction = (ResourceFunction)serviceResponse.ResponseObject;
+                itemName = resourceFunction.Name;
+                itemShortName = resourceFunction.ShortName;
                 break;
         }
     }
@@ -270,12 +270,12 @@
                         resourceUnitDept.ShortName = itemShortName;
                         serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
                         break;
-                    case "ResourceVmRole":
-                        serviceResponse = await ResourceVmRoleService.GetItem(id);
-                        ResourceVmRole resourceVmRole = (ResourceVmRole)serviceResponse.ResponseObject;
-                        resourceVmRole.Name = itemName;
-                        resourceVmRole.ShortName = itemShortName;
-                        serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                    case "ResourceFunction":
+                        serviceResponse = await ResourceFunctionService.GetItem(id);
+                        ResourceFunction resourceFunction = (ResourceFunction)serviceResponse.ResponseObject;
+                        resourceFunction.Name = itemName;
+                        resourceFunction.ShortName = itemShortName;
+                        serviceResponse = await ResourceFunctionService.PostItem(resourceFunction);
                         break;
                 }
 

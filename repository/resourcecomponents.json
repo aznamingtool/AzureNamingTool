@@ -29,8 +29,8 @@
   },
   {
     "id": 8,
-    "name": "ResourceVmRole",
-    "displayname": "VM Roles",
+    "name": "ResourceFunction",
+    "displayname": "Functions",
     "enabled": true,
     "sortOrder": 5
   },

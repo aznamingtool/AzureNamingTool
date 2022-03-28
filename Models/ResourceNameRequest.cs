@@ -13,6 +13,6 @@ namespace AzNamingTool.Models
         [Required()]
         public int ResourceType { get; set; }
         public string ResourceUnitDept { get; set; }
-        public string ResourceVmRole { get; set; }
+        public string ResourceFunction { get; set; }
     }
 }

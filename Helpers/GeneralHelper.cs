@@ -39,7 +39,7 @@ namespace AzNamingTool.Helpers
                     nameof(ResourceProjAppSvc) => await FileSystemHelper.ReadFile("resourceprojappsvcs.json"),
                     nameof(ResourceType) => await FileSystemHelper.ReadFile("resourcetypes.json"),
                     nameof(ResourceUnitDept) => await FileSystemHelper.ReadFile("resourceunitdepts.json"),
-                    nameof(ResourceVmRole) => await FileSystemHelper.ReadFile("resourcevmroles.json"),
+                    nameof(ResourceFunction) => await FileSystemHelper.ReadFile("resourceFunctions.json"),
                     nameof(ResourceDelimiter) => await FileSystemHelper.ReadFile("resourcedelimiters.json"),
                     _ => "[]",
                 };
@@ -90,8 +90,8 @@ namespace AzNamingTool.Helpers
                     case nameof(ResourceUnitDept):
                         await FileSystemHelper.WriteConfiguation(items, "resourceunitdepts.json");
                         break;
-                    case nameof(ResourceVmRole):
-                        await FileSystemHelper.WriteConfiguation(items, "resourcevmroles.json");
+                    case nameof(ResourceFunction):
+                        await FileSystemHelper.WriteConfiguation(items, "resourceFunctions.json");
                         break;
                     case nameof(ResourceDelimiter):
                         await FileSystemHelper.WriteConfiguation(items, "resourcedelimiters.json");
@@ -311,7 +311,7 @@ namespace AzNamingTool.Helpers
                         valid = true;
                     }
                     break;
-                case "ResourceVmRole":
+                case "ResourceFunction":
                     if (value.Length < 3)
                     {
                         valid = true;

@@ -110,14 +110,14 @@
                                 };
                             serviceResponse = await ResourceUnitDeptService.PostItem(resourceUnitDept);
                             break;
-                        case "ResourceVmRole":
-                            ResourceVmRole resourceVmRole = new ResourceVmRole()
+                        case "ResourceFunction":
+                            ResourceFunction ResourceFunction = new ResourceFunction()
                                 {
                                     Name = itemName,
                                     ShortName = itemShortName.ToLower()
 
                                 };
-                            serviceResponse = await ResourceVmRoleService.PostItem(resourceVmRole);
+                            serviceResponse = await ResourceFunctionService.PostItem(ResourceFunction);
                             break;
                     }
 
