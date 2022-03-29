@@ -25,11 +25,11 @@
                     <p>
                     @if (protectedName)
                     {
-                        <input value="@itemName" disabled type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
+                        <input title="Name" value="@itemName" disabled type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                     }
                     else
                     {
-                        <input value="@itemName" type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
+                        <input title="Name" value="@itemName" type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                     }
                     </p>
                 </div>
@@ -39,7 +39,7 @@
                     <label for="shortName"><strong>Short Name</strong></label>
                     </p>
                     <p>
-                    <input value="@itemShortName" type="text" class="form-control" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
+                    <input title="Short Name" value="@itemShortName" type="text" class="form-control" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
                     </p>
                 </div>
                 @if ((type == "ResourceType") && (resourceComponents != null))
@@ -56,14 +56,14 @@
                                     <div class="form-check">
                                         @if (optional.ToLower().Contains(resourceComponent.Name.Replace("Resource", "").ToLower()))
                                         {
-                                            <input class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
+                                            <input title="Optional Component" class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
                                             <label class="form-check-label" for="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                                 @resourceComponent.DisplayName
                                             </label>
                                         }
                                         else
                                         {
-                                            <input class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                            <input title="Optional Component" class="form-check-input" type="checkbox" value="" id="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                             <label class="form-check-label" for="optional-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                                 @resourceComponent.DisplayName
                                             </label>
@@ -86,14 +86,14 @@
                                     <div class="form-check">
                                         @if (exclude.ToLower().Contains(resourceComponent.Name.Replace("Resource", "").ToLower()))
                                         {
-                                            <input class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
+                                            <input title="Excluded Component" class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()" checked>
                                             <label class="form-check-label" for="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                                 @resourceComponent.DisplayName
                                             </label>
                                         }
                                         else
                                         {
-                                            <input class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
+                                            <input title="Excluded Component" class="form-check-input" type="checkbox" id="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                             <label class="form-check-label" for="exclude-@resourceComponent.Name.Replace("Resource", "").ToLower()">
                                                 @resourceComponent.DisplayName
                                             </label>
@@ -106,8 +106,8 @@
                 }
             </div>
             <div class="modal-footer">
-                <button @onclick="Save" class="btn btn-success">Update</button>
-                <button @onclick="ModalInstance.CancelAsync" class="btn btn-secondary">Cancel</button>
+                <button title="Save" @onclick="Save" class="btn btn-success">Update</button>
+                <button title="Cancel" @onclick="ModalInstance.CancelAsync" class="btn btn-secondary">Cancel</button>
             </div>
         </div>
     </div>

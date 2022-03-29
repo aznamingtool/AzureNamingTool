@@ -31,7 +31,7 @@
                 <p>
                     Use the filters below to jump to a specifc resource type.
                 </p>
-                <select @onchange="OnCategoryChanged" class="form-control">
+                <select @onchange="OnCategoryChanged" class="form-control"  aria-label="Select category">
                     <option value="">Select a resource type provider (OPTIONAL)</option>
                     @foreach (var category in @categories)
                     {
@@ -39,7 +39,7 @@
                     }
                 </select>
 
-                <select @onchange="OnTypeChanged" class="form-control">
+                <select @onchange="OnTypeChanged" class="form-control"  aria-label="Select type">
                     <option value="">Select a resource type</option>
                     @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                     {
@@ -266,6 +266,17 @@
                                                                 </td>
                                                                 <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
                                                                     @resourcetype.InvalidCharacters
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        @if (@resourcetype.Regx != "")
+                                                        {
+                                                            <tr>
+                                                                <td class="align-top w-25">
+                                                                    Regx:
+                                                                </td>
+                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                    @resourcetype.Regx
                                                                 </td>
                                                             </tr>
                                                         }

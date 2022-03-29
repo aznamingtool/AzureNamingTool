@@ -27,7 +27,7 @@
                     </p>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />
+                        <input title="Password" class="form-control mb-3" type="password" @onchange="@((ui) => { SetFormValue("login",(string)ui.Value);})" />
                     </div>
                 }
                 else
@@ -50,8 +50,8 @@
                                 <li>Be at least 8 characters</li>
                             </ul>
                             <div class="form-group">
-                                <input id="newpassword" class="form-control  mb-3" type="password" @onchange="@((ui) => { SetFormValue("password",(string)ui.Value);})" />
-                                <button type="button"  disabled="@disabled" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))" title="Save">Save</button>
+                                <input title="New Password" id="newpassword" class="form-control  mb-3" type="password" @onchange="@((ui) => { SetFormValue("password",(string)ui.Value);})" />
+                                <button title="Save Password" type="button"  disabled="@disabled" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))">Save</button>
                             </div>
 
                         </div>
@@ -65,9 +65,9 @@
                                 The current API key is displayed. Click <strong>Generate</strong> to generate a new random API Key, or update the text to the desired value.
                             </p>
                             <div class="form-group">
-                                <input id="currentapikey" class="form-control mb-3" type="text" @onchange="@((ui) => { SetFormValue("apikey",(string)ui.Value);})" value="@currentapikey" />
-                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeysave"))" title="Save">Save</button>
-                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeygenerate"))" title="Generate">Generate</button>
+                                <input title="API Key" id="currentapikey" class="form-control mb-3" type="text" @onchange="@((ui) => { SetFormValue("apikey",(string)ui.Value);})" value="@currentapikey" />
+                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeysave"))" title="Save API Key">Save</button>
+                                <button type="button" class="btn btn-success" @onclick="@(e => AdminFormAction("apikeygenerate"))" title="Generate API Key">Generate</button>
                             </div>
                         </div>
                     </div>
