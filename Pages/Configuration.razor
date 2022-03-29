@@ -84,7 +84,7 @@
                                                         }
                                                         else
                                                         {
-                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable">
+                                                            <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",item.Id,"enable"))" title="Enable" >
                                                                 <span class="oi oi-plus" aria-hidden="true"></span>
                                                             </button>
                                                         }
@@ -129,7 +129,7 @@
                                                 Click <strong>Reset</strong> to reset the Components Configuration back to the default values at the time of installation.
                                             </p>
                                             <p>
-                                                <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                             </p>
                                             <p>
                                                 <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceComponent",0,"reset")) title="Reset">
@@ -147,7 +147,7 @@
                                                 Enter the new Components Configuration JSON below and click <strong>Import</strong> to import the Components Configuration. <strong>NOTE:</strong> This will overwrite the existing Components Configuration.
                                             </p>
                                             <p>
-                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newComponentConfig",(string)ui.Value);})">@newComponentConfig</textarea>
+                                                <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newComponentConfig",(string)ui.Value);})">@newComponentConfig</textarea>
                                             </p>
                                             <p>
                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceComponent",0,"update"))" title="Import">
@@ -253,7 +253,7 @@
                                                 Enter the new Delimiters Configuration JSON below and click <strong>Import</strong> to import the Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
                                             </p>
                                             <p>
-                                                <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
+                                                <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
                                             </p>
                                             <p>
                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
@@ -379,7 +379,7 @@
                                                             Click <strong>Reset</strong> to reset the Environments Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceEnvironment",0,"reset")) title="Reset">
@@ -397,7 +397,7 @@
                                                             Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
@@ -531,7 +531,7 @@
                                                             Click <strong>Reset</strong> to reset the Locations Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceLocation",0,"reset")) title="Reset">
@@ -549,7 +549,7 @@
                                                             Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
@@ -668,7 +668,7 @@
                                                             Click <strong>Reset</strong> to reset the Orgs Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceOrg",0,"reset")) title="Reset">
@@ -689,7 +689,7 @@
                                                             <strong>NOTE: This will overwrite the existing Orgs Configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
@@ -808,7 +808,7 @@
                                                             Click <strong>Reset</strong> to reset the Project/App/Services Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceProjAppSvc",0,"reset")) title="Reset">
@@ -826,7 +826,7 @@
                                                             Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
@@ -974,7 +974,7 @@
                                                             Click <strong>Reset</strong> to reset the Resource Types Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceType",0,"reset")) title="Reset">
@@ -992,7 +992,7 @@
                                                             Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
@@ -1112,7 +1112,7 @@
                                                             Click <strong>Reset</strong> to reset the UnitsDepts Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceUnitDept",0,"reset")) title="Reset">
@@ -1130,7 +1130,7 @@
                                                             Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
                                                         </p>
                                                         <p>
-                                                            <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
+                                                            <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
@@ -1250,7 +1250,7 @@
                                                             Click <strong>Reset</strong> to reset the Functions Configuration back to the default values at the time of installation.
                                                         </p>
                                                         <p>
-                                                            <strong>NOTE: This will reset your current confgiruation and cannot be undone!</strong>
+                                                            <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
                                                         </p>
                                                         <p>
                                                             <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceFunction",0,"reset")) title="Reset">
@@ -1322,7 +1322,7 @@
                                     Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
                                 </p>
                                 <p>
-                                    <textarea class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
+                                    <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
                                 </p>
                                 <p>
                                     <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
@@ -2185,7 +2185,7 @@
                         case "update":
                             if (newUnitDeptConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Units/Depts confgiruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Units/Depts configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceUnitDeptService.PostConfig(JsonSerializer.Deserialize<List<ResourceUnitDept>>(newUnitDeptConfig));
@@ -2250,7 +2250,7 @@
                             }
                             break;
                         case "edit":
-                            ShowEditModal((int)id, "ResourceFunction", "Edit Function", "Edit the Function.<br /><br />Short Name must be 1-2 characters.");
+                            ShowEditModal((int)id, "ResourceFunction", "Edit Function", "Edit the Function.<br /><br />Short Name must be 1-10 characters.");
                             break;
                         case "delete":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
@@ -2282,7 +2282,7 @@
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Functions configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
-                                if (FileSystemHelper.ResetConfiguration("resourceFunctions.json"))
+                                if (FileSystemHelper.ResetConfiguration("resourcefunctions.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
                                     message.Message = "Functions configuration reset!";

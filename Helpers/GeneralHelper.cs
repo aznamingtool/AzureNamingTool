@@ -312,7 +312,7 @@ namespace AzNamingTool.Helpers
                     }
                     break;
                 case "ResourceFunction":
-                    if (value.Length < 3)
+                    if (value.Length < 10)
                     {
                         valid = true;
                     }

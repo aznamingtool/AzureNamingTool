@@ -59,7 +59,7 @@
                         </p>
                         <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceTypeCategory)"
                                  Value="@selectedResourceTypeCategory"
-                                 ValueChanged="@((string value) => OnCategoryChanged(value))">
+                                 ValueChanged="@((string value) => OnCategoryChanged(value))" aria-label="Select category">
                             <option value="">Select a resource type provider (OPTIONAL)</option>
                             @foreach (var category in @categories)
                         {
@@ -69,7 +69,7 @@
 
                     <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
                                  Value="@selectedResourceType"
-                                 ValueChanged="@((string value) => OnTypeChanged(value))">
+                                 ValueChanged="@((string value) => OnTypeChanged(value))"  aria-label="Select type">
                         <option value="">Select a resource type</option>
                         @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                         {
@@ -428,6 +428,10 @@
             if (currentResourceType.Exclude != "")
             {
                 namingGuidelines += "<div><strong>Excluded:</strong> " + currentResourceType.Exclude + "</div>";
+            }
+            if (currentResourceType.Regx != "")
+            {
+                namingGuidelines += "<div><strong>Regx:</strong> " + currentResourceType.Regx + "</div>";
             }
             namingGuidelines += "</div></div>";
             //namingGuidelines += "</div>";

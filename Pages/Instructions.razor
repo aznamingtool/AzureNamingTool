@@ -1,0 +1,181 @@
+﻿@page "/instructions"
+@using System.Reflection
+<div class="card bg-primary text-white mb-3">
+    <div class="card-body"><h2>Instructions</h2></div>
+</div>
+<div class="card-body">
+    <p style="font-style:italic">
+        Current App Version: @appversion
+    </p>
+    <div class="card">
+        <h5 class="card-header">
+            Overview
+        </h5>
+        <div class="card card-body">
+            This page provides instructions on how to configure and use the Azure Naming Tool.
+        </div>
+    </div>
+    <p></p>
+
+    <div class="card">
+        <h5 class="card-header">
+            Step 1 - Setting the Admin Password
+        </h5>
+        <div class="card card-body">
+            <p>
+                When the site is first installed, the application will prompt for the <strong>Admin password</strong> to be set. This password allows access to the configuration for the tool.
+            </p>
+            <p>
+                <img style="max-width:600px;" class="img-fluid" src="Screenshots/AdminPasswordPrompt.png" alt="Admin password prompt" />
+            </p>
+        </div>
+    </div>
+    <p></p>
+    <div class="card">
+        <h5 class="card-header">
+            Step 2 - View/Update the Admin configuration
+        </h5>
+        <div class="card card-body">
+            <p>
+                Click the Admin button in the top navigation to view the current configuration.
+            </p>
+            <p>
+                <img style="max-width:600px;" class="img-fluid" src="Screenshots/AdminConfiguration.png" alt="Admin configuration" />
+            </p>
+            <p>
+                <strong>New Pasword</strong>
+            </p>
+            <p>This section allows you to update the Admin password for the tool.</p>
+            <p>
+                <strong>API Key</strong>
+            </p>
+            <p>
+                The Azure Naming Tool provides a RESTful API. Each API function requires an API Key to be provided. This section provides the ability to view/update the API Key for the tool.
+            </p>
+        </div>
+    </div>
+    <p></p>
+    <div class="card">
+        <h5 class="card-header">
+            Step 3 - Configure the Tool
+        </h5>
+        <div class="card card-body">
+            <p>
+                Click the Admin link in the top navigation to login. Once logged in, navigate to the Configuration page to set the configuration for the tool.
+                The Configuration page is separated into multiple sections. Each section allows the management of the component, exporting of the configuration, and restore capability to the default state.
+            </p>
+            <p>
+                <img style="max-width:600px;" class="img-fluid" src="Screenshots/ConfigurationPage.png" alt="Configuration" />
+            </p>
+            <div class="card">
+                <h5 class="card-header">
+                    Base Configuration
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        This section provides the ability to configure the base components required for naming generation.
+                    </p>
+                    <p>
+                        <strong>
+                            Components
+                        </strong>
+                    </p>
+                    <p>
+                        This section allows the configuration of which components will be used for resource name generation. Components can be enabled/disabled, as well as sorted to the desired configuration.
+                    </p>
+                    <p>
+                        <strong>Delimiters</strong>
+                    </p>
+                    <p>
+                        The Azure Naming Tool allows for a specified delimiter to be used between components when a name is generated. This section allows the selection of the delimiter. In the event a resource type does not allow the selected delimiter, it will be removed.
+                    </p>
+                </div>
+            </div>
+            <p></p>
+            <div class="card">
+                <h5 class="card-header">
+                    Component Configuration
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        This section provides the ability to configure the individual components used in name generation. Each component provides the ability to add/edit/delete items, as well as set the desired sort order.
+                        Note: The Resource Type and Location components allow limited configuration for consistency.
+                    </p>
+                    <p>
+                        <strong>Export</strong>
+                    </p>
+                    <p>
+                        Component configuration is stored a JSON within the application. Each component configuration can be exported and stored. This is recommended for backup purposes.
+                    </p>
+                    <p>
+                        <strong>Reset</strong>
+                    </p>
+                    <p>When the tool is initially installed, a default configuration is used for each component. The Reset feature allows the default configuration to be restored.</p>
+                    <p>
+                        <strong>Import</strong>
+                    </p>
+                    <p>The tool provides the ability to import a new configuration for each component, if needed.</p>
+                    <p>
+                        <strong>General Configuration</strong>
+                    </p>
+                    <p>
+                        This section provides functionality to modify the master configuration for the tool. Administrators can export the current configuration (combining all component configuration files into a JSON file), or import a new configuration. This feature is used for backup/restore of the installation configuration.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p></p>
+    <div class="card">
+        <h5 class="card-header">
+            Step 4 - Generate Names
+        </h5>
+        <div class="card card-body">
+            <p>
+                The Generate page allows users to generate names with the selected options.
+            </p>
+            <p>
+                After selecting the desired options, click <strong>Generate</strong> to generate the resource type name. The application will attempt to valid the generated name with the naming guidelines.
+            </p>
+            <p>
+                <img style="max-width:600px;" class="img-fluid" src="Screenshots/GeneratePage.png" alt="Generate" />
+            </p>
+            <div class="card">
+                <h5 class="card-header">
+                    Delimiter
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        This section display the delimiter configured for the application.
+                    </p>
+                </div>
+            </div>
+            <p></p>
+            <div class="card">
+                <h5 class="card-header">
+                    Resource Type
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        This section allows the user to selected the desired resource type name to generate. Use the <strong>Category</strong> selector to filter the list of resource types.
+                    </p>
+                </div>
+            </div>
+            <p></p>
+            <div class="card">
+                <h5 class="card-header">
+                    Components
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        Select the desired values for the required components. Optional components may be ommitted.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? appversion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+    }

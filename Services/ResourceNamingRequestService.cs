@@ -137,7 +137,7 @@ namespace AzNamingTool.Services
                     name = name.Replace(request.ResourceDelimiter, "");
 
                     Match match2 = regx.Match(name);
-                    if (!match.Success)
+                    if (!match2.Success)
                     {
                         sbMessage.Append("Resource name generation failed!");
                         sbMessage.Append(Environment.NewLine);
