@@ -12,39 +12,44 @@
 <script src="_content/Blazored.Modal/blazored.modal.js"></script>
 <script>
 
-    //Get the button:
-scrollToTop = document.getElementById("btnScrollToTop");
+        //Get the button:
+    scrollToTop = document.getElementById("btnScrollToTop");
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
 
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    scrollToTop.style.display = "block";
-  } else {
-    scrollToTop.style.display = "none";
-  }
-}
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        scrollToTop.style.display = "block";
+      } else {
+        scrollToTop.style.display = "none";
+      }
+    }
 
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-}
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
 
 
-    function scrollIntoView(elementId) {
-  var elem = document.getElementById(elementId);
-  if (elem) {
-      elem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
+        function scrollIntoView(id) {
+            const element = document.getElementById(id);
+            var headerOffset = 70;
+            var elementPosition = element.getBoundingClientRect().top;
+            var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-  window.IsElementChecked = (id) => {
-      console.log(id);
-      console.log(document.getElementById(id));
-      console.log(document.getElementById(id).checked);
-    return document.getElementById(id).checked;
-  };
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        }
+
+      window.IsElementChecked = (id) => {
+          console.log(id);
+          console.log(document.getElementById(id));
+          console.log(document.getElementById(id).checked);
+        return document.getElementById(id).checked;
+      };
 
 </script>

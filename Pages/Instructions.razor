@@ -1,5 +1,6 @@
 ﻿@page "/instructions"
 @using System.Reflection
+
 <div class="card bg-primary text-white mb-3">
     <div class="card-body"><h2>Instructions</h2></div>
 </div>
@@ -8,7 +9,7 @@
         Current App Version: @appversion
     </p>
     <div class="card">
-        <h5 class="card-header">
+        <h5 class="card-header" id="overview">
             Overview
         </h5>
         <div class="card card-body">
@@ -18,8 +19,8 @@
     <p></p>
 
     <div class="card">
-        <h5 class="card-header">
-            Step 1 - Setting the Admin Password
+        <h5 class="card-header" id="step1">
+            Step 1 - Setting the Admin password
         </h5>
         <div class="card card-body">
             <p>
@@ -32,7 +33,7 @@
     </div>
     <p></p>
     <div class="card">
-        <h5 class="card-header">
+        <h5 class="card-header" id="step2">
             Step 2 - View/Update the Admin configuration
         </h5>
         <div class="card card-body">
@@ -56,8 +57,8 @@
     </div>
     <p></p>
     <div class="card">
-        <h5 class="card-header">
-            Step 3 - Configure the Tool
+        <h5 class="card-header" id="step3">
+            Step 3 - Configure the tool
         </h5>
         <div class="card card-body">
             <p>
@@ -127,8 +128,8 @@
     </div>
     <p></p>
     <div class="card">
-        <h5 class="card-header">
-            Step 4 - Generate Names
+        <h5 class="card-header" id="step4">
+            Step 4 - Generate names
         </h5>
         <div class="card card-body">
             <p>
@@ -175,7 +176,7 @@
         </div>
     </div>
 </div>
-
+<AnchorNavigation />
 @code {
     private string? appversion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
     }

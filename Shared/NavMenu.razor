@@ -69,6 +69,31 @@
                 </div>
             </div>
         }
+        @if (PageType.ToString() == "AzNamingTool.Pages.Instructions")
+        {
+            <div class="card bg-transparent">
+                <div class="card card-header bg-default text-white" style="font-weight:bold;">
+                    Jump To
+                </div>
+                <div class="card bg-transparent py-3">
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("overview"))' @onclick:preventDefault href="">Overview</a>
+                    </div>
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step1"))' @onclick:preventDefault href="">Step 1</a>
+                    </div>
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step2"))' @onclick:preventDefault href="">Step 2</a>
+                    </div>
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step3"))' @onclick:preventDefault href="">Step 3</a>
+                    </div>
+                    <div class="px-4">
+                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step4"))' @onclick:preventDefault href="">Step 4</a>
+                    </div>
+                </div>
+            </div>
+        }
     </nav>
 </div>
 
@@ -94,7 +119,7 @@
         var result = await session.GetAsync<bool>("admin");
         admin = (bool)result.Value;
         servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
-        StateHasChanged(); 
+        StateHasChanged();
     }
 
     private void ToggleNavMenu()
