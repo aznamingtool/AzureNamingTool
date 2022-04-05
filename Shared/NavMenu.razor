@@ -47,12 +47,12 @@
                 <div class="card card-header bg-default text-white" style="font-weight:bold;">
                     Jump To
                 </div>
-                <div class="card bg-transparent py-3">
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
+                <div class="card bg-transparent">
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
                     </div>
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link"  @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
                     </div>
                     @if (servicesData.ResourceComponents != null)
                     {
@@ -60,8 +60,8 @@
                         {
                             @if (resourceComponent.Name != "ResourceInstance")
                             {
-                                <div class="px-4">
-                                    <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick(resourceComponent.Name))' @onclick:preventDefault href="">@(resourceComponent.DisplayName)</a>
+                                <div class="nav-item px-3">
+                                    <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick(resourceComponent.Name))' @onclick:preventDefault href="">@(resourceComponent.DisplayName)</a>
                                 </div>
                             }
                         }
@@ -75,21 +75,21 @@
                 <div class="card card-header bg-default text-white" style="font-weight:bold;">
                     Jump To
                 </div>
-                <div class="card bg-transparent py-3">
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("overview"))' @onclick:preventDefault href="">Overview</a>
+                <div class="card bg-transparent">
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("overview"))' @onclick:preventDefault href="">Overview</a>
                     </div>
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step1"))' @onclick:preventDefault href="">Step 1 - Admin Password</a>
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("step1"))' @onclick:preventDefault href="">Step 1 - Admin Password</a>
                     </div>
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step2"))' @onclick:preventDefault href="">Step 2 - Admin Config</a>
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("step2"))' @onclick:preventDefault href="">Step 2 - Admin Config</a>
                     </div>
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step3"))' @onclick:preventDefault href="">Step 3 - Tool Config</a>
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("step3"))' @onclick:preventDefault href="">Step 3 - Tool Config</a>
                     </div>
-                    <div class="px-4">
-                        <a class="text-decoration-none text-white" style="line-height:3em" @onclick='(() => OnConfigNavClick("step4"))' @onclick:preventDefault href="">Step 4 - Generate</a>
+                    <div class="nav-item px-3">
+                        <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("step4"))' @onclick:preventDefault href="">Step 4 - Generate</a>
                     </div>
                 </div>
             </div>
