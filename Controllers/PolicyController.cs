@@ -19,33 +19,33 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<PolicyController>
-        [HttpGet]
-        [Route("[action]")]
-        public async Task<IActionResult> GetPolicyDefinition()
-        {
-            try
-            {
-                serviceResponse = await PolicyService.GetPolicy();
-                //MemoryStream stream = serviceResponse.ResponseObject;
-                if (serviceResponse.Success)
-                {
-                    var stream = new MemoryStream();
-                    var writer = new StreamWriter(stream);
-                    writer.Write(serviceResponse.ResponseObject);
-                    writer.Flush();
-                    stream.Position = 0;
+        //[HttpGet]
+        //[Route("[action]")]
+        //public async Task<IActionResult> GetPolicyDefinition()
+        //{
+        //    try
+        //    {
+        //        serviceResponse = await PolicyService.GetPolicy();
+        //        //MemoryStream stream = serviceResponse.ResponseObject;
+        //        if (serviceResponse.Success)
+        //        {
+        //            var stream = new MemoryStream();
+        //            var writer = new StreamWriter(stream);
+        //            writer.Write(serviceResponse.ResponseObject);
+        //            writer.Flush();
+        //            stream.Position = 0;
 
-                    return File(stream,"application/json" , "namePolicyDefinition.json");
-                }
-                else
-                {
-                    return BadRequest(serviceResponse.ResponseObject);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
+        //            return File(stream,"application/json" , "namePolicyDefinition.json");
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(serviceResponse.ResponseObject);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
     }
 }
