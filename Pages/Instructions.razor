@@ -1,13 +1,9 @@
 ﻿@page "/instructions"
-@using System.Reflection
 
 <div class="card bg-primary text-white mb-3">
     <div class="card-body"><h3>Instructions</h3></div>
 </div>
 <div class="card-body">
-    <p style="font-style:italic">
-        Current App Version: @appversion
-    </p>
     <div class="card">
         <h5 class="card-header" id="overview">
             Overview
@@ -38,7 +34,7 @@
         </h5>
         <div class="card card-body">
             <p>
-                Click the Admin button in the top navigation to view the current configuration.
+                Click the <strong>Admin</strong> button in the top navigation to view the current configuration.
             </p>
             <p>
                 <img style="width:600px;" class="img-fluid" src="Screenshots/AdminConfiguration.png" alt="Admin configuration" />
@@ -46,12 +42,12 @@
             <p>
                 <strong>New Pasword</strong>
             </p>
-            <p>This section allows you to update the Admin password for the tool.</p>
+            <p>This section allows you to update the <strong>Admin password</strong> for the tool.</p>
             <p>
                 <strong>API Key</strong>
             </p>
             <p>
-                The Azure Naming Tool provides a RESTful API. Each API function requires an API Key to be provided. This section provides the ability to view/update the API Key for the tool.
+                The Azure Naming Tool provides a RESTful API. Each API function requires an <strong>API Key</strong> to be provided. This section provides the ability to view/update the API Key for the tool.
             </p>
         </div>
     </div>
@@ -62,7 +58,7 @@
         </h5>
         <div class="card card-body">
             <p>
-                Click the Admin link in the top navigation to login. Once logged in, navigate to the Configuration page to set the configuration for the tool.
+                Click the <strong>Admin </strong> link in the top navigation to login. Once logged in, navigate to the <strong>Configuration</strong> page to set the configuration for the tool.
                 The Configuration page is separated into multiple sections. Each section allows the management of the component, exporting of the configuration, and restore capability to the default state.
             </p>
             <p>
@@ -74,7 +70,7 @@
                 </h5>
                 <div class="card card-body">
                     <p>
-                        This section provides the ability to configure the base components required for naming generation.
+                        This section provides the ability to configure the base components required for resource name generation.
                     </p>
                     <p>
                         <strong>
@@ -106,22 +102,38 @@
                         <strong>Export</strong>
                     </p>
                     <p>
-                        Component configuration is stored a JSON within the application. Each component configuration can be exported and stored. This is recommended for backup purposes.
+                        Component configuration is stored as a JSON file within the application. Each component configuration file can be exported and stored for backup purposes. It is recommended to export all configuration files when updating the Azure Naming Tool codebase.
                     </p>
                     <p>
                         <strong>Reset</strong>
                     </p>
-                    <p>When the tool is initially installed, a default configuration is used for each component. The Reset feature allows the default configuration to be restored.</p>
+                    <p>When the tool is installed, a default configuration is used for each component. The Reset feature allows the default configuration to be restored for the component.</p>
                     <p>
                         <strong>Import</strong>
                     </p>
                     <p>The tool provides the ability to import a new configuration for each component, if needed.</p>
-                    <p>
-                        <strong>General Configuration</strong>
-                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header">
+                    General Configuration
+                </h5>
+                <div class="card card-body">
                     <p>
                         This section provides functionality to modify the master configuration for the tool. Administrators can export the current configuration (combining all component configuration files into a JSON file), or import a new configuration. This feature is used for backup/restore of the installation configuration.
+                        </p>
+                    <p>
+                        <strong>Master Configuration</strong>
                     </p>
+                    <p>
+                        This section allows the user to import/export a complete configuration for the Azure Naming Tool Application. All component configuration files are combined into a single JSON file. This is especially helpful when backing up/restoring the applciaiton. 
+                    </p>
+                    @*<p>
+                        <strong>Policy</strong>
+                    </p>
+                    <p>
+                        This section allows for the creation of an Azure Policy file. The configured components are converted to an Azure Policy Definition file to enforce the configuration with your subscription. 
+                    </p>*@
                 </div>
             </div>
         </div>
@@ -133,7 +145,7 @@
         </h5>
         <div class="card card-body">
             <p>
-                The Generate page allows users to generate names with the selected options.
+                The <strong>Generate</strong> page allows users to generate names with the selected options.
             </p>
             <p>
                 After selecting the desired options, click <strong>Generate</strong> to generate the resource type name. The application will attempt to valid the generated name with the naming guidelines.
@@ -177,6 +189,3 @@
     </div>
 </div>
 <AnchorNavigation />
-@code {
-    private string? appversion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-    }

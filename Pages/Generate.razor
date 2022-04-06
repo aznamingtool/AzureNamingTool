@@ -59,7 +59,7 @@
                         <p>
                             Use the filters below to jump to a specifc resource type.
                         </p>
-                        <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceTypeCategory)"
+                        <InputSelect title="Resource Category" class="form-control" ValueExpression="@(()=>selectedResourceTypeCategory)"
                                  Value="@selectedResourceTypeCategory"
                                  ValueChanged="@((string value) => OnCategoryChanged(value))" aria-label="Select category">
                             <option value="">Select a resource type provider (OPTIONAL)</option>
@@ -69,7 +69,7 @@
                         }
                     </InputSelect>
 
-                    <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceType)"
+                    <InputSelect  title="Resource Type" class="form-control" ValueExpression="@(()=>selectedResourceType)"
                                  Value="@selectedResourceType"
                                  ValueChanged="@((string value) => OnTypeChanged(value))"  aria-label="Select type">
                         <option value="">Select a resource type</option>
@@ -89,7 +89,7 @@
                     @if (componentsVisible == "collapse")
                     {
                         <div class="mt-3">
-                            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#components">Show/Hide Components</button>
+                            <button type="button" title="Show/Hide Components" class="btn btn-primary" data-toggle="collapse" data-target="#components">Show/Hide Components</button>
                         </div>
                     }
 
@@ -111,7 +111,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
                                      Value="@selectedResourceEnvironment"
                                      ValueChanged="@((string value) => OnComponentChanged("re",value))">
                                                     <option value="">Select an environment</option>
@@ -133,7 +133,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputText class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
+                                                <InputText title="@resourceComponent.DisplayName" class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
                                    Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                    ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
                                             </div>
@@ -149,7 +149,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
                                      Value="@selectedResourceLocation"
                                      ValueChanged="@((string value) => OnComponentChanged("rl",value))">
                                                     <option value="">Select a location</option>
@@ -171,7 +171,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
                                      Value="@selectedResourceOrg"
                                      ValueChanged="@((string value) => OnComponentChanged("ro",value))">
                                                     <option value="">Select an org</option>
@@ -193,7 +193,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
                                      Value="@selectedResourceProjAppSvc"
                                      ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
                                                     <option value="">Select a project/app/service</option>
@@ -215,7 +215,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
                                      Value="@selectedResourceUnitDept"
                                      ValueChanged="@((string value) => OnComponentChanged("rud",value))">
                                                     <option value="">Select a unit/dept</option>
@@ -237,7 +237,7 @@
                                                 }
                                             </h5>
                                             <div class="card card-body">
-                                                <InputSelect class="form-control" ValueExpression="@(()=>selectedResourceFunction)"
+                                                <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceFunction)"
                                      Value="@selectedResourceFunction"
                                      ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
                                                     <option value="">Select a Function</option>
@@ -254,7 +254,7 @@
                         }
                         <div class="mb-3">
                             <br />
-                            <button class="btn btn-success" type="submit" disabled=@boolFormDisabled>
+                            <button class="btn btn-success" type="submit" title="Generate" disabled=@boolFormDisabled>
                                 <span class="oi oi-loop-circular" aria-hidden="true"></span> Generate
                             </button>
                         </div>
