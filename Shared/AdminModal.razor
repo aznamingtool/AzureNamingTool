@@ -225,7 +225,7 @@
             base.StateHasChanged();
         });
 
-        admin = state.Admin;
+        //admin = state.Admin;
 
         await OnAdminChange.InvokeAsync(admin);
 
@@ -250,7 +250,7 @@
 
         if(redirect)
         {
-            NavigationManager.NavigateTo("/");
+            //NavigationManager.NavigateTo("/");
         }
 
         if (action == "logout")
