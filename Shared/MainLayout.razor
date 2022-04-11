@@ -40,17 +40,17 @@
     public bool PasswordModalOpen { get; set; }
     public Type PageType { get; set; }
 
-     protected override void OnParametersSet()
+    protected override void OnParametersSet()
     {    
-       PageType = (this.Body.Target as RouteView)?.RouteData.PageType;
+        PageType = (this.Body.Target as RouteView)?.RouteData.PageType;
     }
 
     private string? message;
 
     protected override async void OnInitialized()
-    {
-        await GeneralHelper.VerifyConfiguration();
-        await GeneralHelper.VerifySecurity(state);
+    {       
+        GeneralHelper.VerifyConfiguration();
+        GeneralHelper.VerifySecurity(state);
         // Check that the admin password is set 
         if(!state.Password)
         {

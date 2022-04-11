@@ -179,7 +179,7 @@ namespace AzNamingTool.Helpers
             }
         }
 
-        public static async Task<bool> VerifyConfiguration()
+        public static void VerifyConfiguration()
         {
             try
             {
@@ -188,21 +188,19 @@ namespace AzNamingTool.Helpers
                 foreach (FileInfo file in dirRepository.GetFiles())
                 {
                     // Check if the file exists in the settings folder
-                    if (!File.Exists("settings/" + file.Name))
+                    if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + file.Name)))
                     {
                         // Copy the repository file to the settings folder
-                        file.CopyTo("settings/" + file.Name);
+                        file.CopyTo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + file.Name));
                     }
                 }
-                return true;
             }
             catch(Exception)
             {
-                return false;
             }
         }
 
-        public static async Task<bool> VerifySecurity(StateContainer state)
+        public static void VerifySecurity(StateContainer state)
         {
             try
             {
@@ -249,11 +247,9 @@ namespace AzNamingTool.Helpers
 
                 }
                 state.SetVerified(true);
-                return true;
             }
             catch(Exception)
             {
-                return false;
             }
         }
 
