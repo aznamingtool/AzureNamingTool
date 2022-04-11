@@ -105,7 +105,7 @@
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
     [Parameter]
-    public Type PageType { get; set; }
+    public Type? PageType { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
