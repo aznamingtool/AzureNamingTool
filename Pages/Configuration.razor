@@ -7,7 +7,6 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Text.Json
 @using System.Text.Json.Serialization
-@using Shared
 @using System.Text
 @inject ILogger<Configuration> Logger
 @inject IJSRuntime JsRuntime
@@ -1536,25 +1535,25 @@
                             await BlazorDownloadFileService.DownloadFileFromText("componentsconfig.json", JsonSerializer.Serialize(componentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Components configruation and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Components configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
                                 if (FileSystemHelper.ResetConfiguration("resourcecomponents.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Components configruation reset!";
+                                    message.Message = "Components configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Components configruation reset failed!";
+                                    message.Message = "Components configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
                             if (newTypeConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Components configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Components configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceComponentService.PostConfig(JsonSerializer.Deserialize<List<ResourceComponent>>(newTypeConfig));
@@ -1618,7 +1617,7 @@
                         case "update":
                             if (newDelimiterConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Delimiters configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Delimiters configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceDelimiterService.PostConfig(JsonSerializer.Deserialize<List<ResourceDelimiter>>(newDelimiterConfig));
@@ -1710,25 +1709,25 @@
                             await BlazorDownloadFileService.DownloadFileFromText("environmentsconfig.json", JsonSerializer.Serialize(environmentjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Environments configruation and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Environments configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
                                 if (FileSystemHelper.ResetConfiguration("resourceenvironments.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Environments configruation reset!";
+                                    message.Message = "Environments configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Environments configruation reset failed!";
+                                    message.Message = "Environments configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
                             if (newEnvironmentConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Environments configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Environments configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceEnvironmentService.PostConfig(JsonSerializer.Deserialize<List<ResourceEnvironment>>(newEnvironmentConfig));
@@ -1781,25 +1780,25 @@
                             await BlazorDownloadFileService.DownloadFileFromText("locationsconfig.json", JsonSerializer.Serialize(locationjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Locations configruation and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Locations configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
                                 if (FileSystemHelper.ResetConfiguration("resourcelocations.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Locations configruation reset!";
+                                    message.Message = "Locations configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Locations configruation reset failed!";
+                                    message.Message = "Locations configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
                             if (newLocationConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Locations configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Locations configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceLocationService.PostConfig(JsonSerializer.Deserialize<List<ResourceLocation>>(newLocationConfig));
@@ -1892,25 +1891,25 @@
                             await BlazorDownloadFileService.DownloadFileFromText("orgsconfig.json", JsonSerializer.Serialize(orgjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Orgs configruation and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Orgs configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
                                 if (FileSystemHelper.ResetConfiguration("resourceorgs.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Orgs configruation reset!";
+                                    message.Message = "Orgs configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Orgs configruation reset failed!";
+                                    message.Message = "Orgs configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
                             if (newOrgConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Orgs configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Orgs configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceOrgService.PostConfig(JsonSerializer.Deserialize<List<ResourceOrg>>(newOrgConfig));
@@ -2003,25 +2002,25 @@
                             await BlazorDownloadFileService.DownloadFileFromText("projappsvcsconfig.json", JsonSerializer.Serialize(projappsvcjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
-                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Projects/Apps/Services configruation and cannot be undone!\n\nAre you sure?");
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Projects/Apps/Services configuration and cannot be undone!\n\nAre you sure?");
                             if (confirm)
                             {
                                 if (FileSystemHelper.ResetConfiguration("resourceprojappsvcs.json"))
                                 {
                                     message.Type = MessageTypesEnum.SUCCESS;
-                                    message.Message = "Projects/Apps/Services configruation reset!";
+                                    message.Message = "Projects/Apps/Services configuration reset!";
                                 }
                                 else
                                 {
                                     message.Type = MessageTypesEnum.ERROR;
-                                    message.Message = "Projects/Apps/Services configruation reset failed!";
+                                    message.Message = "Projects/Apps/Services configuration reset failed!";
                                 }
                             }
                             break;
                         case "update":
                             if (newProjAppSvcConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Proejcts/Apps/Services configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Proejcts/Apps/Services configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceProjAppSvcService.PostConfig(JsonSerializer.Deserialize<List<ResourceProjAppSvc>>(newProjAppSvcConfig));
@@ -2074,7 +2073,7 @@
                         case "update":
                             if (newTypeConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Types configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Types configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ResourceTypeService.PostConfig(JsonSerializer.Deserialize<List<ResourceType>>(newTypeConfig));
@@ -2330,7 +2329,7 @@
                         case "update":
                             if (newMasterConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Master configruation and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Master configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
                                     serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newMasterConfig));
