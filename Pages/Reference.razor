@@ -9,294 +9,302 @@
 @inject IJSRuntime JsRuntime
 @inject ILogger<Reference> Logger
 
-<div class="card bg-primary text-white mb-3">
-    <div class="card-body"><h3>Reference</h3></div>
-</div>
-<div class="card-body">
-    <p>This component shows an example of a generated name using the selected components for each resource type.</p>
+<div class="card">
+    <div class="card-body">
+        <h1>Reference</h1>
+        <div class="mb-4">This component shows an example of a generated name using the selected components for each resource type.</div>
 
-    @if (servicesData.ResourceTypes == null)
-    {
-        <div class="spinner-border" role="status">
-            <span class="sr-only"></span>
-        </div>
-    }
-    else
-    {
-        <div class="card" style="margin-bottom:10px;">
-            <h5 class="card-header text-white bg-secondary">
-                Jump To
-            </h5>
-            <div class="card card-body">
-                <p>
-                    Use the filters below to jump to a specifc resource type.
-                </p>
-                <select @onchange="OnCategoryChanged" class="form-control"  aria-label="Select category">
-                    <option value="">Select a resource type provider (OPTIONAL)</option>
-                    @foreach (var category in @categories)
-                    {
-                        <option value="@category">@category</option>
-                    }
-                </select>
-
-                <select @onchange="OnTypeChanged" class="form-control"  aria-label="Select type">
-                    <option value="">Select a resource type</option>
-                    @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
-                    {
-                        <option value="@type.Id">@type.Resource (@type.ShortName)</option>
-                    }
-                </select>
+        @if (servicesData.ResourceTypes == null)
+        {
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
             </div>
-        </div>
-        <table class="table table-responsive table-striped w-100">
-            <tbody>
-                @foreach (var resourcetype in servicesData.ResourceTypes)
-                {
-                    <tr>
-                        <td>
-                            <table class="table table-responsive">
-                                <tbody>
-                                    <tr class="bg-secondary">
-                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">
-                                            <h5 class="text-white bg-secondary" style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">@resourcetype.Resource</h5>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
-                                            @if (filteredscopes.Contains(resourcetype.Scope))
-                                            {
-                                                <table class="table table-success w-100" style="margin-bottom:0;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <strong>Example:  @GenerateName(resourcetype, resourcetype.ShortName, resourcetype.StaticValues)001</strong><a id="@resourcetype.Id"></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            }
-                                            else
-                                            {
-                                                <table class="table table-warning w-100" style="margin-bottom:0;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <strong>This resource has a lower-level scope and does not require a unique name.</strong><a id="@resourcetype.Id"></a>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            }
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            @if (resourcetype.StaticValues == "")
-                                            {
-                                                <table class="table table-striped w-100">
-                                                    <tbody>
-                                                        @if (filteredscopes.Contains(resourcetype.Scope))
-                                                        {
+        }
+        else
+        {
+            <div class="card" style="margin-bottom:10px;">
+                <h5 class="card-header text-white bg-secondary">
+                    Jump To
+                </h5>
+                <div class="card card-body">
+                    <p>
+                        Use the filters below to jump to a specifc resource type.
+                    </p>
+                    <select @onchange="OnCategoryChanged" class="form-control" aria-label="Select category">
+                        <option value="">Select a resource type provider (OPTIONAL)</option>
+                        @foreach (var category in @categories)
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </select>
+
+                    <select @onchange="OnTypeChanged" class="form-control" aria-label="Select type">
+                        <option value="">Select a resource type</option>
+                        @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
+                        {
+                            <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <table class="table table-responsive table-striped w-100">
+                <tbody>
+                    @foreach (var resourcetype in servicesData.ResourceTypes)
+                    {
+                        <tr>
+                            <td>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr class="bg-secondary">
+                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">
+                                                <h5 class="text-white bg-secondary" style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;">@resourcetype.Resource</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;font-style:italic;">
+                                                @if (filteredscopes.Contains(resourcetype.Scope))
+                                                {
+                                                    <table class="table table-success w-100" style="margin-bottom:0;">
+                                                        <tbody>
                                                             <tr>
-                                                                <td colspan="2" class="table-secondary">
-                                                                    <strong>Components</strong>
+                                                                <td>
+                                                                    <strong>Example:  @GenerateName(resourcetype, resourcetype.ShortName, resourcetype.StaticValues)001</strong><a id="@resourcetype.Id"></a>
                                                                 </td>
                                                             </tr>
-                                                            @foreach (var resourceComponent in servicesData.ResourceComponents)
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                else
+                                                {
+                                                    <table class="table table-warning w-100" style="margin-bottom:0;">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <strong>This resource has a lower-level scope and does not require a unique name.</strong><a id="@resourcetype.Id"></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                @if (resourcetype.StaticValues == "")
+                                                {
+                                                    <table class="table table-striped w-100">
+                                                        <tbody>
+                                                            @if (filteredscopes.Contains(resourcetype.Scope))
                                                             {
-                                                                if (!resourcetype.Exclude.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
+                                                                <tr>
+                                                                    <td colspan="2" class="table-secondary">
+                                                                        <strong>Components</strong>
+                                                                    </td>
+                                                                </tr>
+                                                                @foreach (var resourceComponent in servicesData.ResourceComponents)
                                                                 {
-                                                                    if (!resourcetype.Optional.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
+                                                                    if (!resourcetype.Exclude.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
                                                                     {
-                                                                        switch (resourceComponent.Name)
+                                                                        if (!resourcetype.Optional.ToLower().Contains(resourceComponent.Name.ToLower().Replace("resource", "")))
                                                                         {
-                                                                            case "ResourceEnvironment":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Environment:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceInstance":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Instance:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        001
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceLocation":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Location:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceOrg":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Org:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceProjAppSvc":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        ProjAppSvc:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceType":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Type:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @resourcetype.Resource (@resourcetype.ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceUnitDept":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Unit/Dept:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
-                                                                            case "ResourceFunction":
-                                                                                <tr>
-                                                                                    <td class="align-top w-25">
-                                                                                        Function:
-                                                                                    </td>
-                                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                                        @servicesData.ResourceFunctions[0].Name (@servicesData.ResourceFunctions[0].ShortName)
-                                                                                    </td>
-                                                                                </tr>                                                                                break;
+                                                                            switch (resourceComponent.Name)
+                                                                            {
+                                                                                case "ResourceEnvironment":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Environment:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceEnvironments[0].Name (@servicesData.ResourceEnvironments[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceInstance":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Instance:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            001
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceLocation":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Location:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceLocations[0].Name (@servicesData.ResourceLocations[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceOrg":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Org:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceOrgs[0].Name (@servicesData.ResourceOrgs[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceProjAppSvc":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            ProjAppSvc:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceProjAppSvcs[0].Name (@servicesData.ResourceProjAppSvcs[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceType":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Type:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @resourcetype.Resource (@resourcetype.ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceUnitDept":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Unit/Dept:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceUnitDepts[0].Name (@servicesData.ResourceUnitDepts[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                                case "ResourceFunction":
+                                                                                    <tr>
+                                                                                        <td class="align-top w-25">
+                                                                                            Function:
+                                                                                        </td>
+                                                                                        <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                                            @servicesData.ResourceFunctions[0].Name (@servicesData.ResourceFunctions[0].ShortName)
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    break;
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
                                                             }
-                                                        }
-                                                        <tr>
-                                                            <td colspan="2" class="table-secondary">
-                                                                <strong>Naming Guidelines</strong>
-                                                            </td>
-                                                        </tr>
-                                                        @if (@resourcetype.Optional != "")
-                                                        {
                                                             <tr>
-                                                                <td class="align-top w-25">
-                                                                    Optional Components:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.Optional
+                                                                <td colspan="2" class="table-secondary">
+                                                                    <strong>Naming Guidelines</strong>
                                                                 </td>
                                                             </tr>
-                                                        }
-                                                        @if (@resourcetype.Exclude != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Excluded Components:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.Exclude
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if (@resourcetype.ShortName != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Short Name:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.ShortName
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if (@resourcetype.Scope != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Scope:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.Scope
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if ((@resourcetype.LengthMin != "") && (@resourcetype.LengthMax != ""))
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Length:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.LengthMin - @resourcetype.LengthMax characters
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if (@resourcetype.ValidText != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Valid Characters:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.ValidText
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if (@resourcetype.InvalidCharacters != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Invalid Characters:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.InvalidCharacters
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        @if (@resourcetype.Regx != "")
-                                                        {
-                                                            <tr>
-                                                                <td class="align-top w-25">
-                                                                    Regx:
-                                                                </td>
-                                                                <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
-                                                                    @resourcetype.Regx
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            }
-                                            else
-                                            {
-                                                <span>This resource type has a unique naming pattern and must be manually named.</span>
-                                            }
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
+                                                            @if (@resourcetype.Optional != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Optional Components:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.Optional
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.Exclude != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Excluded Components:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.Exclude
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.ShortName != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Short Name:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.ShortName
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.Scope != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Scope:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.Scope
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if ((@resourcetype.LengthMin != "") && (@resourcetype.LengthMax != ""))
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Length:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.LengthMin - @resourcetype.LengthMax characters
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.ValidText != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Valid Characters:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.ValidText
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.InvalidCharacters != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Invalid Characters:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.InvalidCharacters
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            @if (@resourcetype.Regx != "")
+                                                            {
+                                                                <tr>
+                                                                    <td class="align-top w-25">
+                                                                        Regx:
+                                                                    </td>
+                                                                    <td style="word-wrap:anywhere;overflow-wrap:anywhere;white-space: normal;" class="align-top">
+                                                                        @resourcetype.Regx
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                }
+                                                else
+                                                {
+                                                    <span>This resource type has a unique naming pattern and must be manually named.</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 </div>
 
 

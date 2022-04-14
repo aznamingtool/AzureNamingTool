@@ -70,7 +70,7 @@ a, .btn-link {
     z-index: 99; /* Make sure it does not overlap */
 }
 
-.text-white, .link-light, .nav-link {
+.text-white, .link-light, .nav-link, .nav-item {
     color: #ffffff !important;
 }
 
@@ -82,4 +82,13 @@ a, .btn-link {
     position: sticky;
     top: 0;
     z-index: 9999;
+}
+
+.nav-item a.active, .nav-item a:hover, .nav-link a.active, .nav-link a:hover {
+    background-color: rgba(0,0,0,0.15) !important;
+    color: white;
+}
+
+.bg-navcolor {
+    background-color: #004494;
 }
