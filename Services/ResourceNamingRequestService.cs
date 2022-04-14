@@ -174,9 +174,18 @@ namespace AzNamingTool.Services
                 // Check max length
                 if (name.Length > int.Parse(resourceType.LengthMax))
                 {
-                    sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
-                    sbMessage.Append(Environment.NewLine);
-                    valid = false;
+                    // Strip the delimiter in case that is causing the issue
+                    name = name.Replace(request.ResourceDelimiter, "");
+                    if (name.Length > int.Parse(resourceType.LengthMax))
+                    {
+                        sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
+                        sbMessage.Append(Environment.NewLine);
+                        valid = false;
+                    }
+                    else
+                    {
+                        sbMessage.Append("Generated name with the selected delimiter is more than the maximum length for the selected resource type. The delimiter has been removed.");
+                    }
                 }
 
                 // Check invalid characters
