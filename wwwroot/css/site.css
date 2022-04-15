@@ -78,11 +78,6 @@ a, .btn-link {
     color: #000000 !important;
 }
 
-.sidebar {
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-}
 
 .nav-item a.active, .nav-item a:hover, .nav-link a.active, .nav-link a:hover {
     background-color: rgba(0,0,0,0.15) !important;
