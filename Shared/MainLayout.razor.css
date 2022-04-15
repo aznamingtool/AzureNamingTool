@@ -53,9 +53,10 @@ main {
 
     .sidebar {
         width: 250px;
-        height: 100vh;
+        min-height: 100vh;
         position: sticky;
         top: 0;
+        z-index: 9999;
     }
 
     .top-row {
