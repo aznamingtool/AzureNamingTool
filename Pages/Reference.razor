@@ -12,7 +12,7 @@
 <div class="card">
     <div class="card-body">
         <h1>Reference</h1>
-        <div class="mb-4">This component shows an example of a generated name using the selected components for each resource type.</div>
+        <div class="mb-4">This page provides an example name for each resource type using the defined configuration.</div>
 
         @if (servicesData.ResourceTypes == null)
         {
@@ -42,7 +42,14 @@
                         <option value="">Select a resource type</option>
                         @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                         {
-                            <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                            @if (type.Property != "")
+                            {
+                                <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
+                            }
+                            else
+                            {
+                                <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                            }
                         }
                     </select>
                 </div>
