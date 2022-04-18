@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-body">
         <h1>Generate</h1>
-        <div class="mb-4">This component generates a name for the selected resource type.</div>
+        <div class="mb-4">This page generates a name for the selected resource type.</div>
         <p>
             <strong>Instructions</strong>
             <ol>
@@ -73,7 +73,14 @@
                             <option value="">Select a resource type</option>
                             @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                             {
-                                <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                @if (type.Property != "")
+                                {
+                                    <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
+                                }
+                                else
+                                {
+                                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                }
                             }
                         </InputSelect>
 
