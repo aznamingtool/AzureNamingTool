@@ -4,6 +4,8 @@ using BlazorDownloadFile;
 using Blazored.Toast;
 using Microsoft.OpenApi.Models;
 using Blazored.Modal;
+using Swashbuckle.AspNetCore.Swagger;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +21,16 @@ builder.Services.AddSingleton<StateContainer>();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AzNamingToolAPI", Version = "v1" });
     c.OperationFilter<CustomHeaderSwaggerAttribute>();
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v2",
+        Title = "Azure Naming Tool API",
+        Description = "An ASP.NET Core Web API for managing the Azure Naming tool configuration. All API requests require the configured API Key (found in the site Admin configuration)."
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 
 builder.Services.AddCors(options =>

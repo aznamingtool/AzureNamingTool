@@ -23,6 +23,11 @@ namespace AzNamingTool.Controllers
     public class ResourceNamingRequestsController : ControllerBase
     {
         // POST api/<ResourceNamingRequestsController>
+        /// <summary>
+        /// This function will generate a resoure type name for specifed component values. 
+        /// </summary>
+        /// <param name="request">json - Resource Name Request data</param>
+        /// <returns>string - Name generation response</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> RequestName([FromBody] ResourceNameRequest request)

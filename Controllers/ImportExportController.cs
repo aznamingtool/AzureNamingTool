@@ -20,6 +20,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ImportExportController>
+        /// <summary>
+        /// This function will export the current configuration (all components) as a single JSON file. 
+        /// </summary>
+        /// <returns>json - JSON configuration file</returns>
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> ExportConfiguration()
@@ -43,6 +47,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ImportExportController>
+        /// <summary>
+        /// This function will import the provided configuration data (all components). This will overwrite the existing ocngiruation. 
+        /// </summary>
+        /// <param name="configdata">json - Tool configuration File</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> ImportConfiguration([FromBody] ConfigurationData configdata)

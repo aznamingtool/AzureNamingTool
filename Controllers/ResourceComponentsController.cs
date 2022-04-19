@@ -19,6 +19,11 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<resourcecomponentsController>
+        /// <summary>
+        /// This function will return the components data.
+        /// </summary>
+        /// <param name="admin">bool - All/Only-enabled components flag</param>
+        /// <returns>json - Current components data</returns>
         [HttpGet]
         public async Task<IActionResult> Get(bool admin = false)
         {
@@ -41,6 +46,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceComponentsController>
+        /// <summary>
+        /// This function will create/update the specified component data.
+        /// </summary>
+        /// <param name="item">json - Component data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceComponent item)
         {
@@ -63,6 +73,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceEnvironmentsController>
+        /// <summary>
+        /// This function will update all components data.
+        /// </summary>
+        /// <param name="items">json - All components configuration data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceComponent> items)

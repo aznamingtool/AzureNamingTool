@@ -21,6 +21,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceTypesController>
+        /// <summary>
+        /// This function will return the resource types data. 
+        /// </summary>
+        /// <returns>json - Current resource types data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,6 +48,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceTypesController>/5
+        /// <summary>
+        /// This function will return the specifed resource type data.
+        /// </summary>
+        /// <param name="id">int - Resource Type id</param>
+        /// <returns>json - Resource Type data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -89,6 +98,11 @@ namespace AzNamingTool.Controllers
         //}
 
         // POST api/<ResourceTypesController>
+        /// <summary>
+        /// This function will update all resource types data,
+        /// </summary>
+        /// <param name="items">json - All resource types data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceType> items)
