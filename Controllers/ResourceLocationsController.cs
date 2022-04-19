@@ -20,6 +20,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceLocationsController>
+        /// <summary>
+        /// This function will return the locations data. 
+        /// </summary>
+        /// <returns>json - Current locations data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -42,6 +46,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceLocationsController>/5
+        /// <summary>
+        /// This function will return the specifed location data.
+        /// </summary>
+        /// <param name="id">int - Location id</param>
+        /// <returns>json - Location data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -86,6 +95,11 @@ namespace AzNamingTool.Controllers
         //}
 
         // POST api/<ResourceLocationsController>
+        /// <summary>
+        /// This function will update all locations data.
+        /// </summary>
+        /// <param name="items">json - All locations data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceLocation> items)

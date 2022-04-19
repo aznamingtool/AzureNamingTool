@@ -20,6 +20,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceUnitDeptsController>
+        /// <summary>
+        /// This function will return the units/depts data. 
+        /// </summary>
+        /// <returns>json - Current units/depts data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -43,6 +47,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceUnitDeptsController>/5
+        /// <summary>
+        /// This function will return the specifed unit/dept data.
+        /// </summary>
+        /// <param name="id">int - Unit/Dept id</param>
+        /// <returns>json - Unit/Dept data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -66,6 +75,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceUnitDeptsController>
+        /// <summary>
+        /// This function will create/update the specified unit/dept data.
+        /// </summary>
+        /// <param name="item">json - Unit/Dept data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceUnitDept item)
         {
@@ -88,6 +102,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceUnitDeptsController>
+        /// <summary>
+        /// This function will update all units/depts data,
+        /// </summary>
+        /// <param name="items">json - All units/depts data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceUnitDept> items)
@@ -111,6 +130,11 @@ namespace AzNamingTool.Controllers
         }
 
         // DELETE api/<ResourceUnitDeptsController>/5
+        /// <summary>
+        /// This function will delete the specifed unit/dept data.
+        /// </summary>
+        /// <param name="id">int - Unit/Dept id</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -21,6 +21,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceOrgsController>
+        /// <summary>
+        /// This function will return the orgs data. 
+        /// </summary>
+        /// <returns>json - Current orgs data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -44,6 +48,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceOrgsController>/5
+        /// <summary>
+        /// This function will return the specifed org data.
+        /// </summary>
+        /// <param name="id">int - Org id</param>
+        /// <returns>json - Org data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -67,6 +76,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceOrgsController>
+        /// <summary>
+        /// This function will create/update the specified org data.
+        /// </summary>
+        /// <param name="item">json - Org data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceOrg item)
         {
@@ -89,6 +103,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceOrgsController>
+        /// <summary>
+        /// This function will update all orgs data.
+        /// </summary>
+        /// <param name="items">json - All orgs data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceOrg> items)
@@ -112,6 +131,11 @@ namespace AzNamingTool.Controllers
         }
 
         // DELETE api/<ResourceOrgsController>/5
+        /// <summary>
+        /// This function will delete the specifed org data.
+        /// </summary>
+        /// <param name="id">int - Org id</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

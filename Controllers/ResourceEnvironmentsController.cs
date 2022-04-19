@@ -20,6 +20,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceEnvironmentsController>
+        /// <summary>
+        /// This function will return the environments data. 
+        /// </summary>
+        /// <returns>json - Current environments data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -42,6 +46,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceEnvironmentsController>/5
+        /// <summary>
+        /// This function will return the specifed environment data.
+        /// </summary>
+        /// <param name="id">int - Environment id</param>
+        /// <returns>json - Environment data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -64,6 +73,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceEnvironmentsController>
+        /// <summary>
+        /// This function will create/update the specified environment data.
+        /// </summary>
+        /// <param name="item">json - Environment data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceEnvironment item)
         {
@@ -86,6 +100,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceEnvironmentsController>
+        /// <summary>
+        /// This function will update all environments data,
+        /// </summary>
+        /// <param name="items">json - All environments data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceEnvironment> items)
@@ -109,6 +128,11 @@ namespace AzNamingTool.Controllers
         }
 
         // DELETE api/<ResourceEnvironmentsController>/5
+        /// <summary>
+        /// This function will delete the specifed environment data.
+        /// </summary>
+        /// <param name="id">int - Environment id</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

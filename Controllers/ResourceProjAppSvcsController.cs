@@ -21,6 +21,10 @@ namespace AzNamingTool.Controllers
     {
         private ServiceResponse serviceResponse = new();
         // GET: api/<ResourceProjAppSvcsController>
+        /// <summary>
+        /// This function will return the projects/apps/services data. 
+        /// </summary>
+        /// <returns>json - Current projects/apps/servicse data</returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -43,6 +47,11 @@ namespace AzNamingTool.Controllers
         }
 
         // GET api/<ResourceProjAppSvcsController>/5
+        /// <summary>
+        /// This function will return the specifed project/app/service data.
+        /// </summary>
+        /// <param name="id">int - Project/App/Service id</param>
+        /// <returns>json - Project/App/Service data</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -66,6 +75,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceProjAppSvcsController>
+        /// <summary>
+        /// This function will create/update the specified project/app/service data.
+        /// </summary>
+        /// <param name="item">json - Project/App/Service data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ResourceProjAppSvc item)
         {
@@ -88,6 +102,11 @@ namespace AzNamingTool.Controllers
         }
 
         // POST api/<ResourceProjAppSvcsController>
+        /// <summary>
+        /// This function will update all projects/apps/services data,
+        /// </summary>
+        /// <param name="items">json - All projects/apps/services data</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> PostConfig([FromBody] List<ResourceProjAppSvc> items)
@@ -111,6 +130,11 @@ namespace AzNamingTool.Controllers
         }
 
         // DELETE api/<ResourceProjAppSvcsController>/5
+        /// <summary>
+        /// This function will delete the specifed project/app/service data.
+        /// </summary>
+        /// <param name="id">int - Project/App?service id</param>
+        /// <returns>bool - PASS/FAIL</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
