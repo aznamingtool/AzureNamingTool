@@ -48,7 +48,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ImportExportController>
         /// <summary>
-        /// This function will import the provided configuration data (all components). This will overwrite the existing ocngiruation. 
+        /// This function will import the provided configuration data (all components). This will overwrite the existing configuration. 
         /// </summary>
         /// <param name="configdata">json - Tool configuration File</param>
         /// <returns>bool - PASS/FAIL</returns>
