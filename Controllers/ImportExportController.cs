@@ -21,7 +21,7 @@ namespace AzNamingTool.Controllers
         private ServiceResponse serviceResponse = new();
         // GET: api/<ImportExportController>
         /// <summary>
-        /// This function will export the current configuration (all components) as a single JSON file. 
+        /// This function will export the current configuration data (all components) as a single JSON file. 
         /// </summary>
         /// <returns>json - JSON configuration file</returns>
         [HttpGet]
@@ -48,7 +48,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ImportExportController>
         /// <summary>
-        /// This function will import the provided configuration data (all components). This will overwrite the existing configuration. 
+        /// This function will import the provided configuration data (all components). This will overwrite the existing configuration data. 
         /// </summary>
         /// <param name="configdata">json - Tool configuration File</param>
         /// <returns>bool - PASS/FAIL</returns>
