@@ -63,6 +63,10 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+.blazored-toast-container{
+    z-index:99999 !important;
+}
+
 #btnScrollToTop {
     position: fixed; /* Fixed/sticky position */
     bottom: 20px; /* Place the button at the bottom of the page */
