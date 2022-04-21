@@ -15,12 +15,18 @@
 @inject ProtectedSessionStorage session
 @inject IToastService toastService
 @implements IDisposable
+@inject NavigationManager NavigationManager
 
 <PageTitle>Azure Naming Tool - Configuration</PageTitle>
 <div class="card">
     <div class="card-body">
         <h1>Configuration</h1>
         <div class="mb-3">This page contains the inputs to customize the Azure Naming Tool configuration.</div>
+        <div class="mb-3">
+            <button class="btn btn-primary" title="Instructions" @onclick="@(e => OnInstructionsClick())">
+                View Instructions
+            </button>
+        </div>
 
         @if (!dataLoaded)
         {
@@ -1305,21 +1311,21 @@
                     <h4>General Configuration</h4>
                     <div class="card">
                         <h5 class="card-header text-white bg-secondary text-white">
-                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#master" role="button" aria-expanded="false" aria-controls="master">
-                                Master Configuration
+                            <a class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#global" role="button" aria-expanded="false" aria-controls="global">
+                                Global Configuration
                             </a>
                         </h5>
-                        <div class="collapse card card-body" id="master">
+                        <div class="collapse card card-body" id="global">
                             <div class="card w-auto">
                                 <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Export the current Master Configuration
+                                    Export the current Global Configuration
                                 </div>
                                 <div class="card card-body">
                                     <p>
-                                        Click <strong>Export</strong> to export the current Master Configuration. This includes all component, settings, and admin passwords/API keys.
+                                        Click <strong>Export</strong> to export the current Global Configuration. This includes all component, settings, and admin passwords/API keys.
                                     </p>
                                     <p>
-                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Master",0,"download")) title="Export">
+                                        <button type="button" class="btn btn-primary" @onclick=@(e => FormAction("Global",0,"download")) title="Export">
                                             <span class="oi oi-data-transfer-download" aria-hidden="true"></span> Export
                                         </button>
                                     </p>
@@ -1327,17 +1333,17 @@
                             </div>
                             <div class="card">
                                 <div class="card card-header bg-default" style="font-weight:bold;">
-                                    Import Master Configuration
+                                    Import Global Configuration
                                 </div>
                                 <div class="card card-body">
                                     <p>
-                                        Enter the new Master Configuration JSON below and click <strong>Import</strong> to import the Master Configuration. <strong>NOTE:</strong> This will overwrite all existing Configurations.
+                                        Enter the new Global Configuration JSON below and click <strong>Import</strong> to import the Global Configuration. <strong>NOTE:</strong> This will overwrite all existing configurations.
                                     </p>
                                     <p>
-                                        <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newMasterConfig",(string)ui.Value);})" />
+                                        <textarea title="Configuration" class="form-control" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newGlobalConfig",(string)ui.Value);})" />
                                     </p>
                                     <p>
-                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Master",0,"update"))" title="Import">
+                                        <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Global",0,"update"))" title="Import">
                                             <span class="oi oi-data-transfer-upload" aria-hidden="true"></span> Import
                                         </button>
                                     </p>
@@ -1419,7 +1425,7 @@
     private string? newFunctionName;
     private string? newFunctionShortName;
     private string? newFunctionConfig;
-    private string? newMasterConfig;
+    private string? newGlobalConfig;
 
     private ResponseMessage message = new();
 
@@ -2332,31 +2338,31 @@
                     serviceResponse = await ResourceUnitDeptService.GetItems();
                     servicesData.ResourceUnitDepts = (List<ResourceUnitDept>)serviceResponse.ResponseObject;
                     break;
-                case "Master":
+                case "Global":
                     switch (action)
                     {
                         case "download":
                             serviceResponse = await ImportExportService.ExportConfig();
-                            var masterjson = serviceResponse.ResponseObject;
-                            await BlazorDownloadFileService.DownloadFileFromText("masterconfig.json", JsonSerializer.Serialize(masterjson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+                            var globaljson = serviceResponse.ResponseObject;
+                            await BlazorDownloadFileService.DownloadFileFromText("globalconfig.json", JsonSerializer.Serialize(globaljson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "update":
-                            if (newMasterConfig != null)
+                            if (newGlobalConfig != null)
                             {
-                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Master configuration and cannot be undone!\n\nAre you sure?");
+                                confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will update your current Global configuration and cannot be undone!\n\nAre you sure?");
                                 if (confirm)
                                 {
-                                    serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newMasterConfig));
+                                    serviceResponse = await ImportExportService.PostConfig(JsonSerializer.Deserialize<ConfigurationData>(newGlobalConfig));
                                     if (serviceResponse.Success)
                                     {
                                         message.Type = MessageTypesEnum.SUCCESS;
-                                        message.Message = "Master config update succeeded!";
-                                        newMasterConfig = null;
+                                        message.Message = "Global config update succeeded!";
+                                        newGlobalConfig = null;
                                     }
                                     else
                                     {
                                         message.Type = MessageTypesEnum.ERROR;
-                                        message.Message = "Master config update failed!";
+                                        message.Message = "Global config update failed!";
                                     }
                                 }
                             }
@@ -2479,8 +2485,8 @@
             case "newFunctionConfig":
                 newFunctionConfig = value;
                 break;
-            case "newMasterConfig":
-                newMasterConfig = value;
+            case "newGlobalConfig":
+                newGlobalConfig = value;
                 break;
         }
     }
@@ -2548,5 +2554,10 @@
     private async void OnTypeChanged(ChangeEventArgs e)
     {
         await JsRuntime.InvokeVoidAsync("scrollIntoView", e.Value.ToString());
+    }
+
+    private async Task OnInstructionsClick()
+    {
+        NavigationManager.NavigateTo("/instructions");
     }
 }
