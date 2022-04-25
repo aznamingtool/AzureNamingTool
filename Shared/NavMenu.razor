@@ -38,7 +38,12 @@
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="generate">
-                <span class="oi oi-plus" aria-hidden="true"></span> Generate
+                <span class="oi oi-check" aria-hidden="true"></span> Generate
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="log">
+                <span class="oi oi-list" aria-hidden="true"></span> Log
             </NavLink>
         </div>
         @if (PageType != null)
@@ -54,7 +59,7 @@
                             <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("ResourceComponent"))' @onclick:preventDefault href="">Components</a>
                         </div>
                         <div class="nav-item px-3">
-                            <a class="text-decoration-none nav-link"  @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
+                            <a class="text-decoration-none nav-link" @onclick='(() => OnConfigNavClick("ResourceDelimiter"))' @onclick:preventDefault href="">Delimiters</a>
                         </div>
                         @if (servicesData.ResourceComponents != null)
                         {
@@ -109,16 +114,25 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Load the values from state
-        //admin = state.Admin;
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         var result = await session.GetAsync<bool>("admin");
-        admin = (bool)result.Value;
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+        if (firstRender)
+        {
+            admin = (bool)result.Value;
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+        }
+        else
+        {
+
+            if ((admin != (bool)result.Value) || (servicesData == null))
+            {
+                admin = (bool)result.Value;
+                servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+            }
+        }
         StateHasChanged();
     }
 
