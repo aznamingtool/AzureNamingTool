@@ -2,6 +2,8 @@
 using AzNamingTool.Models;
 using Microsoft.AspNetCore.Components;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace AzNamingTool.Services
@@ -17,7 +19,8 @@ namespace AzNamingTool.Services
             {
                 bool valid = true;
                 bool ignoredelimeter = false;
-                Dictionary<string, string> dictComponents = new();
+                //Dictionary<string, string> dictComponents = new();
+                List<Tuple<string, string>> lstComponents = new();
 
                 // Get the specified resource type
                 var resourceTypes = await GeneralHelper.GetList<ResourceType>();
@@ -95,7 +98,8 @@ namespace AzNamingTool.Services
                                 name += prop.ToLower();
 
                                 // Add property to aray for indivudal component validation
-                                dictComponents.Add(component.Name, prop);
+                                //dictComponents.Add(component.Name, prop);
+                                lstComponents.Add(new Tuple<string, string>(component.Name, prop));
                             }
                             else
                             {
@@ -153,9 +157,9 @@ namespace AzNamingTool.Services
 
                 // VALIDATTION
                 // Check the Resource Instance value to ensure it's only nmumeric
-                if (dictComponents.FirstOrDefault(x => x.Key == "ResourceInstance").Value != null)
+                if (lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2 != null)
                 {
-                    if (!GeneralHelper.CheckNumeric(dictComponents.FirstOrDefault(x => x.Key == "ResourceInstance").Value))
+                    if (!GeneralHelper.CheckNumeric(lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2))
                     {
                         sbMessage.Append("Resource Instance must be a numeric value.");
                         sbMessage.Append(Environment.NewLine);
@@ -263,6 +267,13 @@ namespace AzNamingTool.Services
 
                 if (valid)
                 {
+                    ResourceNameRequestLog namreRequest = new ResourceNameRequestLog()
+                    {
+                        CreatedOn = DateTime.Now,
+                        ResourceName = name.ToLower(),
+                        Components = lstComponents
+                    };
+                    LogNameRequest(namreRequest);
                     response.Success = true;
                     response.ResourceName = name.ToLower();
                     response.Message = sbMessage.ToString();
@@ -279,6 +290,65 @@ namespace AzNamingTool.Services
             {
                 response.Message = ex.Message;
                 return response;
+            }
+        }
+
+        public static async Task<List<ResourceNameRequestLog>> GetNameRequestLog()
+        {
+            List<ResourceNameRequestLog> lstNameRequests = new();
+            try
+            {
+                string data = await FileSystemHelper.ReadFile("resourcenamerequests.json");
+                var items = new List<ResourceNameRequestLog>();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                };
+                lstNameRequests = JsonSerializer.Deserialize<List<ResourceNameRequestLog>>(data, options).OrderByDescending(x => x.CreatedOn).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return lstNameRequests;
+        }
+
+        public static async void LogNameRequest(ResourceNameRequestLog lstNameRequest)
+        {
+            try
+            {
+                // Log the created name
+                var lstNameRequests = new List<ResourceNameRequestLog>();
+                lstNameRequests = await GetNameRequestLog();
+
+                if (lstNameRequests.Count > 0)
+                {
+                    lstNameRequest.Id = lstNameRequests.Max(x => x.Id) + 1;
+                }
+                else
+                {
+                    lstNameRequest.Id = 1;
+                }
+
+                lstNameRequests.Add(lstNameRequest);
+                var jsonNameRequest = JsonSerializer.Serialize(lstNameRequests);
+                await FileSystemHelper.WriteFile("resourcenamerequests.json", jsonNameRequest);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public static async Task PurgeNameRequestLog()
+        {
+            try
+            {
+                await FileSystemHelper.WriteFile("resourcenamerequests.json", "[]");
+            }
+            catch (Exception)
+            {
+
             }
         }
     }

@@ -15,28 +15,28 @@ namespace AzNamingTool.Helpers
         public static async Task<string> ReadFile(string fileName)
         {
             await CheckFile(fileName);
-            string data = await File.ReadAllTextAsync("settings/" + fileName);
+            string data = await File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + fileName));
             return data;
         }
 
         public static async Task WriteFile(string fileName, string content)
         {
             await CheckFile(fileName);
-            File.WriteAllText("settings/" + fileName, content);
+            File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + fileName), content);
         }
 
         public static async Task CheckFile(string fileName)
         {
-            if (!File.Exists("settings/" + fileName))
+            if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + fileName)))
             {
-                var file = File.Create("settings/" + fileName);
+                var file = File.Create(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + fileName));
                 file.Close();
 
                 for (int numTries = 0; numTries < 10; numTries++)
                 {
                     try
                     {
-                        await File.WriteAllTextAsync("settings/" + fileName, "[]");
+                        await File.WriteAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + fileName), "[]");
                         return;
                     }
                     catch (IOException)
@@ -94,7 +94,7 @@ namespace AzNamingTool.Helpers
                     if(file.Name == filename)
                     { 
                         // Copy the repository file to the settings folder
-                        file.CopyTo("settings/" + file.Name, true);
+                        file.CopyTo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings/" + file.Name), true);
                         result = true;
                         break;
                     }

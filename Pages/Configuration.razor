@@ -248,6 +248,24 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <div class="card  w-auto">
+                                            <div class="card card-header bg-default" style="font-weight:bold;">
+                                                Reset the Delimiters Configuration
+                                            </div>
+                                            <div class="card card-body">
+                                                <p>
+                                                    Click <strong>Reset</strong> to reset the Delimiters Configuration back to the default values at the time of installation.
+                                                </p>
+                                                <p>
+                                                    <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
+                                                </p>
+                                                <p>
+                                                    <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("ResourceDelimiter",0,"reset")) title="Reset">
+                                                        <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
                                         <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Import Delimiters Configuration
@@ -1651,6 +1669,22 @@
                                         message.Type = MessageTypesEnum.ERROR;
                                         message.Message = "Resource Delimiters config update failed!";
                                     }
+                                }
+                            }
+                            break;
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Delimiters configuration and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
+                            {
+                                if (FileSystemHelper.ResetConfiguration("resourcedelimiters.json"))
+                                {
+                                    message.Type = MessageTypesEnum.SUCCESS;
+                                    message.Message = "Delimiters configuration reset!";
+                                }
+                                else
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                    message.Message = "Delimiters configuration reset failed!";
                                 }
                             }
                             break;
