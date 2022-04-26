@@ -123,16 +123,16 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceEnvironment)"
-                                         Value="@selectedResourceEnvironment"
-                                         ValueChanged="@((string value) => OnComponentChanged("re",value))">
+                                                        Value="@selectedResourceEnvironment"
+                                                        ValueChanged="@((string value) => OnComponentChanged("re",value))">
                                                         <option value="">Select an environment</option>
                                                         @foreach (var item in @servicesData.ResourceEnvironments)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                            <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                         case "ResourceInstance":
                                             <div class="card">
@@ -145,8 +145,8 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputText title="@resourceComponent.DisplayName" class="form-control" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
-                                       Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
-                                       ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
+                                                        Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                                        ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
                                                 </div>
                                             </div>
                                             break;
@@ -161,16 +161,16 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceLocation)"
-                                         Value="@selectedResourceLocation"
-                                         ValueChanged="@((string value) => OnComponentChanged("rl",value))">
+                                                        Value="@selectedResourceLocation"
+                                                        ValueChanged="@((string value) => OnComponentChanged("rl",value))">
                                                         <option value="">Select a location</option>
                                                         @foreach (var item in @servicesData.ResourceLocations)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                            <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                         case "ResourceOrg":
                                             <div class="card">
@@ -183,16 +183,16 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceOrg)"
-                                         Value="@selectedResourceOrg"
-                                         ValueChanged="@((string value) => OnComponentChanged("ro",value))">
+                                                        Value="@selectedResourceOrg"
+                                                        ValueChanged="@((string value) => OnComponentChanged("ro",value))">
                                                         <option value="">Select an org</option>
                                                         @foreach (var item in @servicesData.ResourceOrgs)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                            <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                         case "ResourceProjAppSvc":
                                             <div class="card">
@@ -205,16 +205,16 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceProjAppSvc)"
-                                         Value="@selectedResourceProjAppSvc"
-                                         ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
+                                                        Value="@selectedResourceProjAppSvc"
+                                                        ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
                                                         <option value="">Select a project/app/service</option>
                                                         @foreach (var item in @servicesData.ResourceProjAppSvcs)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                        <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                         case "ResourceUnitDept":
                                             <div class="card">
@@ -227,38 +227,38 @@
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceUnitDept)"
-                                         Value="@selectedResourceUnitDept"
-                                         ValueChanged="@((string value) => OnComponentChanged("rud",value))">
+                                                        Value="@selectedResourceUnitDept"
+                                                        ValueChanged="@((string value) => OnComponentChanged("rud",value))">
                                                         <option value="">Select a unit/dept</option>
                                                         @foreach (var item in @servicesData.ResourceUnitDepts)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                            <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                         case "ResourceFunction":
                                             <div class="card">
                                                 <h5 class="card-header text-white bg-secondary">
                                                     Function
-                                                    @if (selectedResourceTypeOptional.ToLower().Contains("Function"))
+                                                    @if (selectedResourceTypeOptional.ToLower().Contains("function"))
                                                     {
                                                         @((MarkupString)optional)
                                                     }
                                                 </h5>
                                                 <div class="card card-body">
                                                     <InputSelect title="@resourceComponent.DisplayName" class="form-control" ValueExpression="@(()=>selectedResourceFunction)"
-                                         Value="@selectedResourceFunction"
-                                         ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
+                                                        Value="@selectedResourceFunction"
+                                                        ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
                                                         <option value="">Select a Function</option>
                                                         @foreach (var item in @servicesData.ResourceFunctions)
-                                {
-                                    <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
-                            </InputSelect>
-                        </div>
-                    </div>
+                                                        {
+                                                            <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
+                                                        }
+                                                    </InputSelect>
+                                                </div>
+                                            </div>
                                             break;
                                     }
                                 }

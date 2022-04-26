@@ -91,7 +91,7 @@ namespace AzNamingTool.Helpers
                         await FileSystemHelper.WriteConfiguation(items, "resourceunitdepts.json");
                         break;
                     case nameof(ResourceFunction):
-                        await FileSystemHelper.WriteConfiguation(items, "resourceFunctions.json");
+                        await FileSystemHelper.WriteConfiguation(items, "resourcefunctions.json");
                         break;
                     case nameof(ResourceDelimiter):
                         await FileSystemHelper.WriteConfiguation(items, "resourcedelimiters.json");
