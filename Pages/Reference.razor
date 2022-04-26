@@ -332,18 +332,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
             servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
             resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
 
             // Get the list of categories
             categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
-        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
     }
 
     protected string GenerateName(ResourceType type, string shortName, string staticvalues)
