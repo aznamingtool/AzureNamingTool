@@ -30,6 +30,7 @@
     <Content Remove="settings\resourceunitdepts.json" />
     <Content Remove="settings\resourcevmroles.json" />
     <Content Remove="settings\resoureceunitdepts.json" />
+    <Content Remove="Shared\Admin.razor" />
   </ItemGroup>
 
   <ItemGroup>

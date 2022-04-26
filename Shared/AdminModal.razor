@@ -6,7 +6,7 @@
 @inject IJSRuntime JsRuntime
 @inject IConfiguration _config
 @inject StateContainer state
-@inject ProtectedSessionStorage session 
+@inject ProtectedSessionStorage session
 @inject IToastService toastService
 @inject NavigationManager NavigationManager
 
@@ -50,7 +50,7 @@
                             </ul>
                             <div class="form-group">
                                 <input title="New Password" id="newpassword" class="form-control  mb-3" type="password" @onchange="@((ui) => { SetFormValue("password",(string)ui.Value);})" />
-                                <button title="Save Password" type="button"  disabled="@disabled" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))">Save</button>
+                                <button title="Save Password" type="button" disabled="@disabled" class="btn btn-success" @onclick="@(e => AdminFormAction("password"))">Save</button>
                             </div>
 
                         </div>
@@ -128,7 +128,7 @@
         {
             currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
         }
-        StateHasChanged(); 
+        StateHasChanged();
     }
 
     private async void AdminFormAction(string action)
@@ -154,7 +154,6 @@
                     message.Type = MessageTypesEnum.INFORMATION;
                     message.Header = "INFORMATION";
                     message.Message = "Admin logged in.";
-                    redirect = true;
                 }
                 else
                 {
@@ -224,8 +223,6 @@
             base.StateHasChanged();
         });
 
-        //admin = state.Admin;
-
         await OnAdminChange.InvokeAsync(admin);
 
         if (message.Message != null)
@@ -237,7 +234,7 @@
                     GeneralHelper.LogAdminMessage(message.Type.ToString(), message.Message);
                     break;
                 case MessageTypesEnum.SUCCESS:
-                    toastService.ShowSuccess(message.Message, "SUCCESS");                    
+                    toastService.ShowSuccess(message.Message, "SUCCESS");
                     GeneralHelper.LogAdminMessage(message.Type.ToString(), message.Message);
                     break;
                 case MessageTypesEnum.WARNING:
@@ -246,18 +243,14 @@
                 case MessageTypesEnum.ERROR:
                     toastService.ShowError(message.Message, "ERROR");
                     break;
-            }           
+            }
         }
 
-        if(redirect)
+        if (redirect)
         {
-            //NavigationManager.NavigateTo("/");
+            ModalInstance.CloseAsync();
         }
 
-        if (action == "logout")
-        {
-            Close();
-        }
     }
 
     private void SetFormValue(string type, string value)
@@ -267,7 +260,7 @@
             case "login":
                 currentpassword = value;
                 break;
-            case "password":            
+            case "password":
                 newpassword = value;
                 // Validate the password complexity
                 if (GeneralHelper.ValidatePassword(newpassword))
