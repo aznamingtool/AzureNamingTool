@@ -35,8 +35,8 @@ The Azure Naming Tool is a .NET 6 Blazor application, with a RESTful API. The UI
 
 The following are important notes/aspects of the Azure Naming Tool:
 
-- The applciation is designed to run as a stand-alone solution, with no internet/Azure connection.
-- The applciation can be run as a .NET 6 site, or as a Docker container.
+- The application is designed to run as a stand-alone solution, with no internet/Azure connection.
+- The application can be run as a .NET 6 site, or as a Docker container.
 - The site can be hosted in any envinroment,including internal or in a public/private cloud.
 - The application uses local JSON files to store the configuration of the components.
 - The applciaiton requires persistent storage. If running as a container, a volume is required to store configuration files. 
