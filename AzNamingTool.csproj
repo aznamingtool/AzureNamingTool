@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
 	<Version>2.0.0</Version>
@@ -22,7 +22,8 @@
     <Content Remove="settings\resourceenvironments.json" />
     <Content Remove="settings\resourcefunctions.json" />
     <Content Remove="settings\resourcelocations.json" />
-    <Content Remove="settings\resourcenamerequests.json" />
+    <Content Remove="settings\generatednames.json" />
+	<Content Remove="settings\adminlog.json" />
     <Content Remove="settings\resourceorgs.json" />
     <Content Remove="settings\resourceprojappsvcs.json" />
     <Content Remove="settings\resourcetypes.json" />

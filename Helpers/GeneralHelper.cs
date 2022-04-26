@@ -317,5 +317,201 @@ namespace AzNamingTool.Helpers
 
             return valid;
         }
+
+        public static Tuple<bool,StringBuilder> ValidateGeneratedName(ResourceType resourceType, string name, string delimiter)
+        {
+            try
+            {
+                bool valid = true;
+                StringBuilder sbMessage = new();
+                // Check regex
+                // Validate the name against the resource type regex
+                Regex regx = new(resourceType.Regx);
+                Match match = regx.Match(name);
+                if (!match.Success)
+                {
+                    // Strip the delimiter in case that is causing the issue
+                    name = name.Replace(delimiter, "");
+
+                    Match match2 = regx.Match(name);
+                    if (!match2.Success)
+                    {
+                        sbMessage.Append("Resource name generation failed!");
+                        sbMessage.Append(Environment.NewLine);
+                        sbMessage.Append("Please review the Resource Type Naming Guidelines.");
+                        sbMessage.Append(Environment.NewLine);
+                        valid = false;
+                    }
+                    else
+                    {
+                        sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
+                    }
+                }
+
+                // Check min length
+                if (name.Length < int.Parse(resourceType.LengthMin))
+                {
+                    sbMessage.Append("Generated name is less than the minimum length for the selected resource type.");
+                    sbMessage.Append(Environment.NewLine);
+                    valid = false;
+                }
+
+                // Check max length
+                if (name.Length > int.Parse(resourceType.LengthMax))
+                {
+                    // Strip the delimiter in case that is causing the issue
+                    name = name.Replace(delimiter, "");
+                    if (name.Length > int.Parse(resourceType.LengthMax))
+                    {
+                        sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
+                        sbMessage.Append(Environment.NewLine);
+                        valid = false;
+                    }
+                    else
+                    {
+                        sbMessage.Append("Generated name with the selected delimiter is more than the maximum length for the selected resource type. The delimiter has been removed.");
+                    }
+                }
+
+                // Check invalid characters
+                if (resourceType.InvalidCharacters != "")
+                {
+                    // Loop through each character
+                    foreach (char c in resourceType.InvalidCharacters)
+                    {
+                        // Check if the name contains the character
+                        if (name.Contains(c))
+                        {
+                            sbMessage.Append("Name cannot contain the following character: " + c);
+                            sbMessage.Append(Environment.NewLine);
+                            valid = false;
+                        }
+                    }
+                }
+
+                // Check start character
+                if (resourceType.InvalidCharactersStart != "")
+                {
+                    // Loop through each character
+                    foreach (char c in resourceType.InvalidCharactersStart)
+                    {
+                        // Check if the name contains the character
+                        if (name.StartsWith(c))
+                        {
+                            sbMessage.Append("Name cannot start with the following character: " + c);
+                            sbMessage.Append(Environment.NewLine);
+                            valid = false;
+                        }
+                    }
+                }
+
+                // Check start character
+                if (resourceType.InvalidCharactersEnd != "")
+                {
+                    // Loop through each character
+                    foreach (char c in resourceType.InvalidCharactersEnd)
+                    {
+                        // Check if the name contains the character
+                        if (name.EndsWith(c))
+                        {
+                            sbMessage.Append("Name cannot end with the following character: " + c);
+                            sbMessage.Append(Environment.NewLine);
+                            valid = false;
+                        }
+                    }
+                }
+
+                // Check consecutive character
+                if (resourceType.InvalidCharactersConsecutive != "")
+                {
+                    // Loop through each character
+                    foreach (char c in resourceType.InvalidCharactersConsecutive)
+                    {
+                        // Check if the name contains the character
+                        char current = name[0];
+                        for (int i = 1; i < name.Length; i++)
+                        {
+                            char next = name[i];
+                            if ((current == next) && (current == c))
+                            {
+                                sbMessage.Append("Name cannot contain the following consecutive character: " + next);
+                                sbMessage.Append(Environment.NewLine);
+                                valid = false;
+                                break;
+                            }
+                            current = next;
+                        }
+                    }
+                }
+                return new Tuple<bool, StringBuilder>(valid, sbMessage);
+            }
+            catch(Exception)
+            {
+                return new Tuple<bool, StringBuilder>(false, new StringBuilder("There was a problem validating the name."));
+            }            
+        }
+
+        public static async Task<List<AdminLogMessage>> GetAdminLog()
+        {
+            List<AdminLogMessage> lstAdminLogMessages = new();
+            try
+            {
+                string data = await FileSystemHelper.ReadFile("adminlog.json");
+                var items = new List<AdminLogMessage>();
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    PropertyNameCaseInsensitive = true
+                };
+                lstAdminLogMessages = JsonSerializer.Deserialize<List<AdminLogMessage>>(data, options).OrderByDescending(x => x.CreatedOn).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return lstAdminLogMessages;
+        }
+
+        public static async void LogAdminMessage(string title, string message)
+        {
+            try
+            {
+                AdminLogMessage adminmessage = new AdminLogMessage()
+                {
+                    Id = 1,
+                    CreatedOn = DateTime.Now,
+                    Title = title,
+                    Message = message
+                };
+
+                // Log the created name
+                var lstAdminLogMessages = new List<AdminLogMessage>();
+                lstAdminLogMessages = await GetAdminLog();
+
+                if (lstAdminLogMessages.Count > 0)
+                {
+                    adminmessage.Id = lstAdminLogMessages.Max(x => x.Id) + 1;
+                }
+
+                lstAdminLogMessages.Add(adminmessage);
+                var jsonAdminLogMessages = JsonSerializer.Serialize(lstAdminLogMessages);
+                await FileSystemHelper.WriteFile("adminlog.json", jsonAdminLogMessages);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public static async Task PurgeAdminLog()
+        {
+            try
+            {
+                await FileSystemHelper.WriteFile("adminlog.json", "[]");
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     }
 }
