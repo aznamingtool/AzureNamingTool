@@ -39,7 +39,7 @@ The following are important notes/aspects of the Azure Naming Tool:
 - The application can be run as a .NET 6 site, or as a Docker container.
 - The site can be hosted in any envinroment,including internal or in a public/private cloud.
 - The application uses local JSON files to store the configuration of the components.
-- The applciaiton requires persistent storage. If running as a container, a volume is required to store configuration files. 
+- The application requires persistent storage. If running as a container, a volume is required to store configuration files. 
 - The application contains a *repository* folder, which contains the default component configuration JSON files. When deployed, these files are copied to the *settings* folder. 
 - THe Admin interface allows configurations to be "reset", if needed. This process copies the configuration from the *repository* folder to the *settings* folder. 
 - The API requires an API Key for all executions. A default APIK Key (guid) will be generated on first launch. This value can be updated in the Admin section. 
