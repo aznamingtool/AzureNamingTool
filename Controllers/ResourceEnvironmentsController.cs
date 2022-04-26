@@ -101,7 +101,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ResourceEnvironmentsController>
         /// <summary>
-        /// This function will update all environments data,
+        /// This function will update all environments data.
         /// </summary>
         /// <param name="items">json - All environments data</param>
         /// <returns>bool - PASS/FAIL</returns>
