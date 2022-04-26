@@ -1410,8 +1410,7 @@
 </div>
 
 
-@code {
-    [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+@code {    [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
     [CascadingParameter] public IModalService Modal { get; set; }
 
     private ServicesData servicesData = new();
@@ -1449,7 +1448,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Load the values from state
+@*        // Load the values from state
         //admin = state.Admin;
         //var result = await session.GetAsync<bool>("admin");
         //admin = (bool)result.Value;
@@ -1458,20 +1457,23 @@
         // Get the list of categories
         categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
 
-        dataLoaded = true;
+        dataLoaded = true;*@
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var result = await session.GetAsync<bool>("admin");
-        admin = (bool)result.Value;
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
+        if (firstRender)
+        {
+            var result = await session.GetAsync<bool>("admin");
+            admin = (bool)result.Value;
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
 
-        // Get the list of categories
-        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
+            // Get the list of categories
+            categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
 
-        dataLoaded = true;
-        StateHasChanged();
+            dataLoaded = true;
+            StateHasChanged();
+        }
     }
 
 

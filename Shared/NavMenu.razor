@@ -41,21 +41,18 @@
                 <span class="oi oi-check" aria-hidden="true"></span> Generate
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="generatednameslog">
-                <span class="oi oi-list" aria-hidden="true"></span> Generated Names Log
-            </NavLink>
-        </div>
-        @if (admin)
-        {
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="adminlog">
-                <span class="oi oi-lock-locked" aria-hidden="true"></span> Admin Log
-            </NavLink>
-        </div>
-        }
+
         @if (PageType != null)
         {
+            @if ((PageType.ToString() == "AzNamingTool.Pages.Generate") || (PageType.ToString() == "AzNamingTool.Pages.GeneratedNamesLog"))
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="generatednameslog">
+                        <span class="oi oi-list" aria-hidden="true"></span> Generated Names Log
+                    </NavLink>
+                </div>
+            }
+
             @if (PageType.ToString() == "AzNamingTool.Pages.Configuration")
             {
                 <div class="card bg-transparent">
@@ -106,6 +103,14 @@
                     </div>
                 </div>
             }
+        }
+        @if (admin)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="adminlog">
+                    <span class="oi oi-lock-locked" aria-hidden="true"></span> Admin Log
+                </NavLink>
+            </div>
         }
     </nav>
 </div>

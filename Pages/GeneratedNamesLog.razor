@@ -108,12 +108,13 @@
     private async Task OnPurgeLogClick()
     {
         bool confirm = false;
-        confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        confirm = await JsRuntime.InvokeAsync<bool>("confirm", "This will purge the Generated Names log. Are you sure?");
         if (confirm)
         {
             await ResourceNamingRequestService.PurgeGeneratedNames();
-            toastService.ShowSuccess("Log purged!", "SUCCESS");
-            lstNameRequests.Clear();
+            toastService.ShowSuccess("Generated Log purged!", "SUCCESS");
+            GeneralHelper.LogAdminMessage("GENERATED NAMES LOG", "Generated Names log purged.");
+            lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
             StateHasChanged();
         }
     }

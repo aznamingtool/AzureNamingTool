@@ -15,9 +15,9 @@
         <h1>Reference</h1>
         <div class="mb-3">This page provides an example name for each resource type using the defined configuration.</div>
         <div class="mb-3">
-                <button class="btn btn-primary" title="Instructions" @onclick="@(e => OnInstructionsClick())">
-                    View Instructions
-                </button>
+            <button class="btn btn-primary" title="Instructions" @onclick="@(e => OnInstructionsClick())">
+                View Instructions
+            </button>
         </div>
 
         @if (servicesData.ResourceTypes == null)
@@ -332,11 +332,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
-        resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
+    }
 
-        // Get the list of categories
-        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
+            resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
+
+            // Get the list of categories
+            categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
+        }
     }
 
     protected string GenerateName(ResourceType type, string shortName, string staticvalues)
@@ -363,6 +370,9 @@
                                 case "ResourceEnvironment":
                                     name += servicesData.ResourceEnvironments[0].ShortName;
                                     break;
+                                case "ResourceFunction":
+                                    name += servicesData.ResourceFunctions[0].ShortName;
+                                    break;
                                 case "ResourceLocation":
                                     name += servicesData.ResourceLocations[0].ShortName;
                                     break;
@@ -374,9 +384,6 @@
                                     break;
                                 case "ResourceUnitDept":
                                     name += servicesData.ResourceUnitDepts[0].ShortName;
-                                    break;
-                                case "ResourceFunction":
-                                    name += servicesData.ResourceFunctions[0].ShortName;
                                     break;
                             }
                         }

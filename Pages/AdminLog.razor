@@ -84,9 +84,16 @@
     List<AdminLogMessage> lstAdminLogMessages = new();
     protected override async Task OnInitializedAsync()
     {
-        lstAdminLogMessages = await GeneralHelper.GetAdminLog();
-        dataLoaded = true;
-        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            lstAdminLogMessages = await GeneralHelper.GetAdminLog();
+            dataLoaded = true;
+            StateHasChanged();
+        }
     }
 
     private async Task OnInstructionsClick()
@@ -103,12 +110,14 @@
     private async Task OnPurgeLogClick()
     {
         bool confirm = false;
-        confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        confirm = await JsRuntime.InvokeAsync<bool>("confirm", "This will purge the Admin Log. Are you sure?");
         if (confirm)
         {
             await GeneralHelper.PurgeAdminLog();
-            toastService.ShowSuccess("Log purged!", "SUCCESS");
-            lstAdminLogMessages.Clear();
+            toastService.ShowSuccess("Admin Log purged!", "SUCCESS");
+            GeneralHelper.LogAdminMessage("ADMIN LOG", "Admin Log log purged.");
+            lstAdminLogMessages = await GeneralHelper.GetAdminLog();
+            dataLoaded = true;
             StateHasChanged();
         }
     }
