@@ -76,7 +76,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<resourcedelimitersController>
         /// <summary>
-        /// This function will update all delimiters data,
+        /// This function will update all delimiters data.
         /// </summary>
         /// <param name="items">json - All delimiters data</param>
         /// <returns>bool - PASS/FAIL</returns>

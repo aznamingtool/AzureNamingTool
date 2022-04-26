@@ -103,7 +103,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ResourceProjAppSvcsController>
         /// <summary>
-        /// This function will update all projects/apps/services data,
+        /// This function will update all projects/apps/services data.
         /// </summary>
         /// <param name="items">json - All projects/apps/services data</param>
         /// <returns>bool - PASS/FAIL</returns>

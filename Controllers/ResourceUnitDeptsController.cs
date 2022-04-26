@@ -103,7 +103,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ResourceUnitDeptsController>
         /// <summary>
-        /// This function will update all units/depts data,
+        /// This function will update all units/depts data.
         /// </summary>
         /// <param name="items">json - All units/depts data</param>
         /// <returns>bool - PASS/FAIL</returns>

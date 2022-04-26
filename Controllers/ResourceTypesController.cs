@@ -99,7 +99,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ResourceTypesController>
         /// <summary>
-        /// This function will update all resource types data,
+        /// This function will update all resource types data.
         /// </summary>
         /// <param name="items">json - All resource types data</param>
         /// <returns>bool - PASS/FAIL</returns>

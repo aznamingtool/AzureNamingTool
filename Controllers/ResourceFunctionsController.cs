@@ -91,7 +91,7 @@ namespace AzNamingTool.Controllers
 
         // POST api/<ResourceFunctionsController>
         /// <summary>
-        /// This function will update all functions data,
+        /// This function will update all functions data.
         /// </summary>
         /// <param name="items">json - All functions data</param>
         /// <returns>bool - PASS/FAIL</returns>
