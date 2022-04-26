@@ -39,7 +39,7 @@ namespace AzNamingTool.Helpers
                     nameof(ResourceProjAppSvc) => await FileSystemHelper.ReadFile("resourceprojappsvcs.json"),
                     nameof(ResourceType) => await FileSystemHelper.ReadFile("resourcetypes.json"),
                     nameof(ResourceUnitDept) => await FileSystemHelper.ReadFile("resourceunitdepts.json"),
-                    nameof(ResourceFunction) => await FileSystemHelper.ReadFile("resourceFunctions.json"),
+                    nameof(ResourceFunction) => await FileSystemHelper.ReadFile("resourcefunctions.json"),
                     nameof(ResourceDelimiter) => await FileSystemHelper.ReadFile("resourcedelimiters.json"),
                     _ => "[]",
                 };

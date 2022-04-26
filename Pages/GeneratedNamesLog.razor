@@ -34,11 +34,17 @@
             <div class="mb-3">
                 @if (lstNameRequests.Count > 0)
                 {
-                    <div class="mb-3">
-                        <button class="btn btn-danger" title="Purge Generated Names Log" @onclick="@(e => OnPurgeLogClick())">
-                            Purge Generated Names Log
-                        </button>
-                    </div>
+                    @if (admin)
+                    {
+                        <div class="mb-3">
+                            <button class="btn btn-primary" title="Export Generated Names Log" @onclick="@(e => OnExportLogClick())">
+                                Export Generated Names Log
+                            </button>
+                            <button class="btn btn-danger" title="Purge Generated Names Log" @onclick="@(e => OnPurgeLogClick())">
+                                Purge Generated Names Log
+                            </button>
+                        </div>
+                    }
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -85,14 +91,27 @@
 
 @code {
 
+    private bool admin;
     private bool dataLoaded = false;
     List<GeneratedName> lstNameRequests = new();
     protected override async Task OnInitializedAsync()
     {
+        var result = await session.GetAsync<bool>("admin");
+        admin = (bool)result.Value;
         lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
         dataLoaded = true;
         StateHasChanged();
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var result = await session.GetAsync<bool>("admin");
+        admin = (bool)result.Value;
+        lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
+        dataLoaded = true;
+        StateHasChanged();
+    }
+
 
     private async Task OnInstructionsClick()
     {
@@ -117,5 +136,10 @@
             lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
             StateHasChanged();
         }
+    }
+
+    private async Task OnExportLogClick()
+    {
+        await JsRuntime.InvokeVoidAsync("htmlToCSV", "generatednameslog.csv");
     }
 }
