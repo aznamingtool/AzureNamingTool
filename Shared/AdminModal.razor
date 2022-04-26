@@ -153,7 +153,7 @@
                     currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
                     message.Type = MessageTypesEnum.INFORMATION;
                     message.Header = "INFORMATION";
-                    message.Message = "You have logged in.";
+                    message.Message = "Admin logged in.";
                     redirect = true;
                 }
                 else
@@ -170,7 +170,7 @@
                 await session.SetAsync("admin", false);
                 message.Type = MessageTypesEnum.INFORMATION;
                 message.Header = "INFORMATION";
-                message.Message = "You have logged out.";
+                message.Message = "Admin logged out.";
                 redirect = true;
                 break;
             case "password":
@@ -234,9 +234,11 @@
             {
                 case MessageTypesEnum.INFORMATION:
                     toastService.ShowInfo(message.Message, "INFORMATION");
+                    GeneralHelper.LogAdminMessage(message.Type.ToString(), message.Message);
                     break;
                 case MessageTypesEnum.SUCCESS:
-                    toastService.ShowSuccess(message.Message, "SUCCESS");
+                    toastService.ShowSuccess(message.Message, "SUCCESS");                    
+                    GeneralHelper.LogAdminMessage(message.Type.ToString(), message.Message);
                     break;
                 case MessageTypesEnum.WARNING:
                     toastService.ShowWarning(message.Message, "WARNING");
@@ -244,7 +246,7 @@
                 case MessageTypesEnum.ERROR:
                     toastService.ShowError(message.Message, "ERROR");
                     break;
-            }
+            }           
         }
 
         if(redirect)

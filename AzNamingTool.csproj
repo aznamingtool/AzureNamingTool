@@ -22,7 +22,7 @@
     <Content Remove="settings\resourceenvironments.json" />
     <Content Remove="settings\resourcefunctions.json" />
     <Content Remove="settings\resourcelocations.json" />
-    <Content Remove="settings\resourcenamerequests.json" />
+    <Content Remove="settings\generatednames.json" />
     <Content Remove="settings\resourceorgs.json" />
     <Content Remove="settings\resourceprojappsvcs.json" />
     <Content Remove="settings\resourcetypes.json" />

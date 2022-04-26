@@ -1,6 +1,6 @@
 ﻿namespace AzNamingTool.Models
 {
-    public class ResourceNameRequestLog
+    public class GeneratedName
     {
         public long Id { get; set; }
         public DateTime CreatedOn { get; set; }

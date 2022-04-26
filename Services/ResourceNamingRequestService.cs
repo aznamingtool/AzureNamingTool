@@ -19,7 +19,6 @@ namespace AzNamingTool.Services
             {
                 bool valid = true;
                 bool ignoredelimeter = false;
-                //Dictionary<string, string> dictComponents = new();
                 List<Tuple<string, string>> lstComponents = new();
 
                 // Get the specified resource type
@@ -139,31 +138,6 @@ namespace AzNamingTool.Services
                     return response;
                 }
 
-                // Check regex
-                // Validate the name against the resource type regex
-                Regex regx = new(resourceType.Regx);
-                Match match = regx.Match(name);
-                if (!match.Success)
-                {
-                    // Strip the delimiter in case that is causing the issue
-                    name = name.Replace(request.ResourceDelimiter.Delimiter, "");
-
-                    Match match2 = regx.Match(name);
-                    if (!match2.Success)
-                    {
-                        sbMessage.Append("Resource name generation failed!");
-                        sbMessage.Append(Environment.NewLine);
-                        sbMessage.Append("Please review the Resource Type Naming Guidelines.");
-                        sbMessage.Append(Environment.NewLine);
-                        valid = false;
-                    }
-                    else
-                    {
-                        sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
-                    }
-                }
-
-                // VALIDATTION
                 // Check the Resource Instance value to ensure it's only nmumeric
                 if (lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2 != null)
                 {
@@ -175,111 +149,26 @@ namespace AzNamingTool.Services
                     }
                 }
 
-                // Check min length
-                if (name.Length < int.Parse(resourceType.LengthMin))
+                // Validate the generated name for the resource type
+                // CALL VALIDATION FUNCTION
+                Tuple<bool,StringBuilder> namevalidation = GeneralHelper.ValidateGeneratedName(resourceType, name, request.ResourceDelimiter.Delimiter);
+
+                valid = (bool)namevalidation.Item1;
+                if((StringBuilder)namevalidation.Item2 != null)
                 {
-                    sbMessage.Append("Generated name is less than the minimum length for the selected resource type.");
-                    sbMessage.Append(Environment.NewLine);
-                    valid = false;
+                    sbMessage.Append((StringBuilder)namevalidation.Item2);
                 }
 
-                // Check max length
-                if (name.Length > int.Parse(resourceType.LengthMax))
-                {
-                    // Strip the delimiter in case that is causing the issue
-                    name = name.Replace(request.ResourceDelimiter.Delimiter, "");
-                    if (name.Length > int.Parse(resourceType.LengthMax))
-                    {
-                        sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
-                        sbMessage.Append(Environment.NewLine);
-                        valid = false;
-                    }
-                    else
-                    {
-                        sbMessage.Append("Generated name with the selected delimiter is more than the maximum length for the selected resource type. The delimiter has been removed.");
-                    }
-                }
-
-                // Check invalid characters
-                if (resourceType.InvalidCharacters != "")
-                {
-                    // Loop through each character
-                    foreach (char c in resourceType.InvalidCharacters)
-                    {
-                        // Check if the name contains the character
-                        if (name.Contains(c))
-                        {
-                            sbMessage.Append("Name cannot contain the following character: " + c);
-                            sbMessage.Append(Environment.NewLine);
-                            valid = false;
-                        }
-                    }
-                }
-
-                // Check start character
-                if (resourceType.InvalidCharactersStart != "")
-                {
-                    // Loop through each character
-                    foreach (char c in resourceType.InvalidCharactersStart)
-                    {
-                        // Check if the name contains the character
-                        if (name.StartsWith(c))
-                        {
-                            sbMessage.Append("Name cannot start with the following character: " + c);
-                            sbMessage.Append(Environment.NewLine);
-                            valid = false;
-                        }
-                    }
-                }
-
-                // Check start character
-                if (resourceType.InvalidCharactersEnd != "")
-                {
-                    // Loop through each character
-                    foreach (char c in resourceType.InvalidCharactersEnd)
-                    {
-                        // Check if the name contains the character
-                        if (name.EndsWith(c))
-                        {
-                            sbMessage.Append("Name cannot end with the following character: " + c);
-                            sbMessage.Append(Environment.NewLine);
-                            valid = false;
-                        }
-                    }
-                }
-
-                // Check consecutive character
-                if (resourceType.InvalidCharactersConsecutive != "")
-                {
-                    // Loop through each character
-                    foreach (char c in resourceType.InvalidCharactersConsecutive)
-                    {
-                        // Check if the name contains the character
-                        char current = name[0];
-                        for (int i = 1; i < name.Length; i++)
-                        {
-                            char next = name[i];
-                            if ((current == next) && (current == c))
-                            {
-                                sbMessage.Append("Name cannot contain the following consecutive character: " + next);
-                                sbMessage.Append(Environment.NewLine);
-                                valid = false;
-                                break;
-                            }
-                            current = next;
-                        }
-                    }
-                }
 
                 if (valid)
                 {
-                    ResourceNameRequestLog namreRequest = new ResourceNameRequestLog()
+                    GeneratedName generatedName = new GeneratedName()
                     {
                         CreatedOn = DateTime.Now,
                         ResourceName = name.ToLower(),
                         Components = lstComponents
                     };
-                    LogNameRequest(namreRequest);
+                    LogGeneratedName(generatedName);
                     response.Success = true;
                     response.ResourceName = name.ToLower();
                     response.Message = sbMessage.ToString();
@@ -299,58 +188,58 @@ namespace AzNamingTool.Services
             }
         }
 
-        public static async Task<List<ResourceNameRequestLog>> GetNameRequestLog()
+        public static async Task<List<GeneratedName>> GetGeneratedNames()
         {
-            List<ResourceNameRequestLog> lstNameRequests = new();
+            List<GeneratedName> lstGeneratedNames = new();
             try
             {
-                string data = await FileSystemHelper.ReadFile("resourcenamerequests.json");
-                var items = new List<ResourceNameRequestLog>();
+                string data = await FileSystemHelper.ReadFile("generatednames.json");
+                var items = new List<GeneratedName>();
                 var options = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     PropertyNameCaseInsensitive = true
                 };
-                lstNameRequests = JsonSerializer.Deserialize<List<ResourceNameRequestLog>>(data, options).OrderByDescending(x => x.CreatedOn).ToList();
+                lstGeneratedNames = JsonSerializer.Deserialize<List<GeneratedName>>(data, options).OrderByDescending(x => x.CreatedOn).ToList();
             }
             catch (Exception)
             {
 
             }
-            return lstNameRequests;
+            return lstGeneratedNames;
         }
 
-        public static async void LogNameRequest(ResourceNameRequestLog lstNameRequest)
+        public static async void LogGeneratedName(GeneratedName lstGeneratedName)
         {
             try
             {
                 // Log the created name
-                var lstNameRequests = new List<ResourceNameRequestLog>();
-                lstNameRequests = await GetNameRequestLog();
+                var lstGeneratedNames = new List<GeneratedName>();
+                lstGeneratedNames = await GetGeneratedNames();
 
-                if (lstNameRequests.Count > 0)
+                if (lstGeneratedNames.Count > 0)
                 {
-                    lstNameRequest.Id = lstNameRequests.Max(x => x.Id) + 1;
+                    lstGeneratedName.Id = lstGeneratedNames.Max(x => x.Id) + 1;
                 }
                 else
                 {
-                    lstNameRequest.Id = 1;
+                    lstGeneratedName.Id = 1;
                 }
 
-                lstNameRequests.Add(lstNameRequest);
-                var jsonNameRequest = JsonSerializer.Serialize(lstNameRequests);
-                await FileSystemHelper.WriteFile("resourcenamerequests.json", jsonNameRequest);
+                lstGeneratedNames.Add(lstGeneratedName);
+                var jsonGeneratedNames = JsonSerializer.Serialize(lstGeneratedNames);
+                await FileSystemHelper.WriteFile("generatednames.json", jsonGeneratedNames);
             }
             catch (Exception)
             {
 
             }
         }
-        public static async Task PurgeNameRequestLog()
+        public static async Task PurgeGeneratedNames()
         {
             try
             {
-                await FileSystemHelper.WriteFile("resourcenamerequests.json", "[]");
+                await FileSystemHelper.WriteFile("generatednames.json", "[]");
             }
             catch (Exception)
             {

@@ -1,4 +1,4 @@
-﻿@page "/log"
+﻿@page "/generatednameslog"
 @using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @using AzNamingTool.Services
@@ -17,7 +17,7 @@
 @implements IDisposable
 @inject NavigationManager NavigationManager
 
-<PageTitle>Azure Naming Tool - Log</PageTitle>
+<PageTitle>Azure Naming Tool - Generated Names Log</PageTitle>
 <div class="card">
     <div class="card-body">
         <h1>Log</h1>
@@ -35,8 +35,8 @@
                 @if (lstNameRequests.Count > 0)
                 {
                     <div class="mb-3">
-                        <button class="btn btn-danger" title="Purge Log" @onclick="@(e => OnPurgeLogClick())">
-                            Purge Log
+                        <button class="btn btn-danger" title="Purge Generated Names Log" @onclick="@(e => OnPurgeLogClick())">
+                            Purge Generated Names Log
                         </button>
                     </div>
                     <div class="table-responsive">
@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (ResourceNameRequestLog nameRequest in lstNameRequests)
+                                @foreach (GeneratedName nameRequest in lstNameRequests)
                                 {
                                     <tr>
                                         <td class="align-top">
@@ -75,7 +75,7 @@
                 else
                 {
                     <p style="font-style:italic">
-                        There are no generated names to display.
+                        There are no log items to display.
                     </p>
                 }
             </div>
@@ -86,10 +86,10 @@
 @code {
 
     private bool dataLoaded = false;
-    List<ResourceNameRequestLog> lstNameRequests = new();
+    List<GeneratedName> lstNameRequests = new();
     protected override async Task OnInitializedAsync()
     {
-        lstNameRequests = await ResourceNamingRequestService.GetNameRequestLog();
+        lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
         dataLoaded = true;
         StateHasChanged();
     }
@@ -111,7 +111,7 @@
         confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
         if (confirm)
         {
-            await ResourceNamingRequestService.PurgeNameRequestLog();
+            await ResourceNamingRequestService.PurgeGeneratedNames();
             toastService.ShowSuccess("Log purged!", "SUCCESS");
             lstNameRequests.Clear();
             StateHasChanged();
