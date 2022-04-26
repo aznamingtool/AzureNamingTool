@@ -22,7 +22,7 @@ Further documentation on the script can be found on [Microsoft's Cloud Adoption
 
 # Project Structure
 
-The Azure Naming Tool is a .NET 6 Blazor applciaiton, with a RESTful API. The UI consists of several pages to allow the configuration and generation of Auzre Resoure names. The API provides a programatic interface for the functionality. The application contains Docker support, allowing the site to be run as a stand-alone application, or a container. 
+The Azure Naming Tool is a .NET 6 Blazor application, with a RESTful API. The UI consists of several pages to allow the configuration and generation of Auzre Resoure names. The API provides a programatic interface for the functionality. The application contains Docker support, allowing the site to be run as a stand-alone application, or a container. 
 
 *Project Components*
 - UI/Admin
