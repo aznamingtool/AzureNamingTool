@@ -938,7 +938,7 @@
                                                                     <td>
                                                                         @if (item.Optional != "")
                                                                         {
-                                                                            @foreach (ResourceComponent component in @servicesData.ResourceComponents)
+                                                                            @foreach (ResourceComponent component in @servicesData.ResourceComponents.Where(y => y.Enabled).ToList())
                                                                             {
                                                                                 if (component.Name != "ResourceType")
                                                                                 {
@@ -1410,7 +1410,8 @@
 </div>
 
 
-@code {    [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+@code {
+    [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
     [CascadingParameter] public IModalService Modal { get; set; }
 
     private ServicesData servicesData = new();
@@ -1448,16 +1449,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-@*        // Load the values from state
-        //admin = state.Admin;
-        //var result = await session.GetAsync<bool>("admin");
-        //admin = (bool)result.Value;
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, false);
-
-        // Get the list of categories
-        categories = ResourceTypeService.GetTypeCategories(servicesData.ResourceTypes);
-
-        dataLoaded = true;*@
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -1476,16 +1467,9 @@
         }
     }
 
-
     public void Dispose()
     {
         StateHasChanged();
-    }
-
-    private async Task AdminChanged()
-    {
-        admin = state.Admin;
-        servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
     }
 
     private async Task FormAction(string type, long id, string action)

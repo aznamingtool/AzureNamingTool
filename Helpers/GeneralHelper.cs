@@ -19,7 +19,7 @@ namespace AzNamingTool.Helpers
             {
                 return SourceData.GetType().GetProperty(propName).GetValue(SourceData, null);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return null;
             }
@@ -55,7 +55,7 @@ namespace AzNamingTool.Helpers
                     items = JsonSerializer.Deserialize<List<T>>(data, options);
                 }
 
-                return  items;
+                return items;
             }
             catch
             {
@@ -195,7 +195,7 @@ namespace AzNamingTool.Helpers
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
         }
@@ -248,7 +248,7 @@ namespace AzNamingTool.Helpers
                 }
                 state.SetVerified(true);
             }
-            catch(Exception)
+            catch (Exception)
             {
             }
         }
@@ -318,7 +318,7 @@ namespace AzNamingTool.Helpers
             return valid;
         }
 
-        public static Tuple<bool,StringBuilder> ValidateGeneratedName(ResourceType resourceType, string name, string delimiter)
+        public static Tuple<bool, string, StringBuilder> ValidateGeneratedName(ResourceType resourceType, string name, string delimiter)
         {
             try
             {
@@ -443,12 +443,12 @@ namespace AzNamingTool.Helpers
                         }
                     }
                 }
-                return new Tuple<bool, StringBuilder>(valid, sbMessage);
+                return new Tuple<bool, string, StringBuilder>(valid, name, sbMessage);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                return new Tuple<bool, StringBuilder>(false, new StringBuilder("There was a problem validating the name."));
-            }            
+                return new Tuple<bool, string, StringBuilder>(false, name, new StringBuilder("There was a problem validating the name."));
+            }
         }
 
         public static async Task<List<AdminLogMessage>> GetAdminLog()

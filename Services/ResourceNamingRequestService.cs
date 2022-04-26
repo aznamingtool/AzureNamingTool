@@ -151,12 +151,13 @@ namespace AzNamingTool.Services
 
                 // Validate the generated name for the resource type
                 // CALL VALIDATION FUNCTION
-                Tuple<bool,StringBuilder> namevalidation = GeneralHelper.ValidateGeneratedName(resourceType, name, request.ResourceDelimiter.Delimiter);
+                Tuple<bool,string, StringBuilder> namevalidation = GeneralHelper.ValidateGeneratedName(resourceType, name, request.ResourceDelimiter.Delimiter);
 
                 valid = (bool)namevalidation.Item1;
-                if((StringBuilder)namevalidation.Item2 != null)
+                name = (string)namevalidation.Item2;
+                if((StringBuilder)namevalidation.Item3 != null)
                 {
-                    sbMessage.Append((StringBuilder)namevalidation.Item2);
+                    sbMessage.Append((StringBuilder)namevalidation.Item3);
                 }
 
 

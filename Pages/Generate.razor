@@ -420,9 +420,11 @@
             //namingGuidelines += "</a>";
             namingGuidelines += "<div id=\"guidelines\" class=\"card bg-default mt-3\">";
             namingGuidelines += "<h5 class=\"card-header\">";
+            namingGuidelines += "<a id=\"NamingGuidlines\" class=\"link-dark text-decoration-none\" data-toggle=\"collapse\"  href=\"#namingguidelines\" role=\"button\" aria-expanded=\"false\" aria-controls=\"namingguidelines\">";
             namingGuidelines += "Naming Guidelines";
+            namingGuidelines += "</a>";
             namingGuidelines += "</h5>";
-            namingGuidelines += "<div class=\"card-body \">";
+            namingGuidelines += "<div class=\"collapse card card-body\"  id=\"namingguidelines\">";
             if (currentResourceType.LengthMin != "")
             {
                 namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
