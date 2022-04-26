@@ -1187,11 +1187,11 @@
                             {
                                 <div class="card">
                                     <h5 class="card-header text-white bg-secondary text-white">
-                                        <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#Functions" role="button" aria-expanded="false" aria-controls="Functions">
+                                        <a id="@resourceComponent.Name" class="link-light text-decoration-none" data-toggle="collapse" style="display:block;" href="#functions" role="button" aria-expanded="false" aria-controls="functions">
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body" id="Functions">
+                                    <div class="collapse card card-body" id="functions">
                                         <div class="card">
                                             <div class="card card-header bg-default" style="font-weight:bold;">
                                                 Current Functions
@@ -1257,11 +1257,11 @@
                                         {
                                             <div class="card">
                                                 <div class="card-header bg-default">
-                                                    <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#Functionsconfig" role="button" aria-expanded="false" aria-controls="Functionsconfig">
+                                                    <a class="text-decoration-none text-dark" data-toggle="collapse" style="display:block;font-weight:bold;" href="#functionsconfig" role="button" aria-expanded="false" aria-controls="functionsconfig">
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body" id="Functionsconfig">
+                                                <div class="collapse card card-body" id="functionsconfig">
                                                     <div class="card  w-auto">
                                                         <div class="card card-header bg-default" style="font-weight:bold;">
                                                             Export Function Configuration
@@ -1857,8 +1857,8 @@
                             break;
                         case "download":
                             serviceResponse = await ResourceFunctionService.GetItems();
-                            var Functionson = serviceResponse.ResponseObject;
-                            await BlazorDownloadFileService.DownloadFileFromText("Functionsconfig.json", JsonSerializer.Serialize(Functionson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+                            var functionjon = serviceResponse.ResponseObject;
+                            await BlazorDownloadFileService.DownloadFileFromText("functionsconfig.json", JsonSerializer.Serialize(functionjon).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
                             break;
                         case "reset":
                             confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current Functions configuration and cannot be undone!\n\nAre you sure?");
