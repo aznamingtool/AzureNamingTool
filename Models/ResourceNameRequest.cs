@@ -4,15 +4,14 @@ namespace AzNamingTool.Models
 {
     public class ResourceNameRequest
     {
-        public string ResourceDelimiter { get; set; }
-        public string ResourceEnvironment { get; set; }
+        public ResourceDelimiter ResourceDelimiter { get; set; }
+        public ResourceEnvironment ResourceEnvironment { get; set; }
+        public ResourceFunction ResourceFunction { get; set; }
         public string ResourceInstance { get; set; }
-        public string ResourceLocation { get; set; }
-        public string ResourceOrg { get; set; }
-        public string ResourceProjAppSvc { get; set; }
-        [Required()]
-        public int ResourceType { get; set; }
-        public string ResourceUnitDept { get; set; }
-        public string ResourceFunction { get; set; }
+        public ResourceLocation ResourceLocation { get; set; }
+        public ResourceOrg ResourceOrg { get; set; }
+        public ResourceProjAppSvc ResourceProjAppSvc { get; set; }
+        public ResourceType ResourceType { get; set; }
+        public ResourceUnitDept ResourceUnitDept { get; set; }
     }
 }

@@ -23,8 +23,9 @@ namespace AzNamingTool.Services
                 List<Tuple<string, string>> lstComponents = new();
 
                 // Get the specified resource type
-                var resourceTypes = await GeneralHelper.GetList<ResourceType>();
-                var resourceType = resourceTypes.Find(x => x.Id == request.ResourceType);
+                //var resourceTypes = await GeneralHelper.GetList<ResourceType>();
+                //var resourceType = resourceTypes.Find(x => x.Id == request.ResourceType);
+                var resourceType = request.ResourceType;
 
                 // Check static value
                 if (resourceType.StaticValues != "")
@@ -51,63 +52,70 @@ namespace AzNamingTool.Services
                 foreach (var component in currentResourceComponents)
                 {
                     // Check if the component is excluded for the Resource Type
-                    if (!resourceType.Exclude.ToLower().Contains(component.Name.Replace("Resource", "").ToLower(), StringComparison.CurrentCulture))
+                    if (!resourceType.Exclude.ToLower().Contains(component.Name.ToLower().Replace("resource", ""), StringComparison.CurrentCulture))
                     {
                         // Attempt to retrieve value from JSON body
                         var prop = GeneralHelper.GetPropertyValue(d, component.Name);
-                        // Check if the property is the resource type
-                        if (component.Name == "ResourceType")
-                        {
-                            prop = resourceType.ShortName.ToLower();
-                        }
+                        string value = null;
+
                         // Add property value to name, if exists
                         if (prop != null)
                         {
-                            if (prop != "")
+                            if (component.Name == "ResourceInstance")
                             {
-                                // Check if the delimeter is already ignored
-                                if (!ignoredelimeter)
+                                value = prop;
+                            }
+                            else
+                            {
+                                value = prop.GetType().GetProperty("ShortName").GetValue(prop, null).ToLower();
+                            }
+
+                            // Check if the delimeter is already ignored
+                            if (!ignoredelimeter)
+                            {
+                                // Check if delimeter is an invalid character
+                                if (resourceType.InvalidCharacters != "")
                                 {
-                                    // Check if delimeter is an invalid character
-                                    if (resourceType.InvalidCharacters != "")
+                                    if (!resourceType.InvalidCharacters.Contains(request.ResourceDelimiter.Delimiter))
                                     {
-                                        if (!resourceType.InvalidCharacters.Contains(request.ResourceDelimiter))
+                                        if (name != "")
                                         {
-                                            if (name != "")
-                                            {
-                                                name += request.ResourceDelimiter;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            // Add message about delimeter not applied
-                                            sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
-                                            ignoredelimeter = true;
+                                            name += request.ResourceDelimiter.Delimiter;
                                         }
                                     }
                                     else
                                     {
-                                        // Deliemeter is valid so add it
-                                        if (name != "")
-                                        {
-                                            name += request.ResourceDelimiter;
-                                        }
+                                        // Add message about delimeter not applied
+                                        sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
+                                        ignoredelimeter = true;
                                     }
                                 }
-                                // Add the delimeter to the string, if needed
-                                name += prop.ToLower();
+                                else
+                                {
+                                    // Deliemeter is valid so add it
+                                    if (name != "")
+                                    {
+                                        name += request.ResourceDelimiter.Delimiter;
+                                    }
+                                }
+                            }
 
-                                // Add property to aray for indivudal component validation
-                                //dictComponents.Add(component.Name, prop);
-                                lstComponents.Add(new Tuple<string, string>(component.Name, prop));
+                            name += value;
+
+                            // Add property to aray for indivudal component validation
+                            if (component.Name == "ResourceType")
+                            {
+                                lstComponents.Add(new Tuple<string, string>(component.Name, prop.Resource + " (" + value + ")"));
                             }
                             else
                             {
-                                // Check if the prop is optional
-                                if (!resourceType.Optional.ToLower().Contains(component.Name.ToLower().Replace("resource", "")))
+                                if (component.Name == "ResourceInstance")
                                 {
-                                    valid = false;
-                                    break;
+                                    lstComponents.Add(new Tuple<string, string>(component.Name, prop));
+                                }
+                                else
+                                {
+                                    lstComponents.Add(new Tuple<string, string>(component.Name, prop.Name + " (" + value + ")"));
                                 }
                             }
                         }
@@ -138,7 +146,7 @@ namespace AzNamingTool.Services
                 if (!match.Success)
                 {
                     // Strip the delimiter in case that is causing the issue
-                    name = name.Replace(request.ResourceDelimiter, "");
+                    name = name.Replace(request.ResourceDelimiter.Delimiter, "");
 
                     Match match2 = regx.Match(name);
                     if (!match2.Success)
@@ -179,7 +187,7 @@ namespace AzNamingTool.Services
                 if (name.Length > int.Parse(resourceType.LengthMax))
                 {
                     // Strip the delimiter in case that is causing the issue
-                    name = name.Replace(request.ResourceDelimiter, "");
+                    name = name.Replace(request.ResourceDelimiter.Delimiter, "");
                     if (name.Length > int.Parse(resourceType.LengthMax))
                     {
                         sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
@@ -251,16 +259,14 @@ namespace AzNamingTool.Services
                         for (int i = 1; i < name.Length; i++)
                         {
                             char next = name[i];
-                            if (resourceType.InvalidCharactersConsecutive.Contains(next))
+                            if ((current == next) && (current == c))
                             {
-                                if (next <= current)
-                                {
-                                    sbMessage.Append("Name cannot contain the following consecutive character: " + next);
-                                    sbMessage.Append(Environment.NewLine);
-                                    valid = false;
-                                }
-                                current = next;
+                                sbMessage.Append("Name cannot contain the following consecutive character: " + next);
+                                sbMessage.Append(Environment.NewLine);
+                                valid = false;
+                                break;
                             }
+                            current = next;
                         }
                     }
                 }
