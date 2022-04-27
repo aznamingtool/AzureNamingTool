@@ -96,20 +96,18 @@
     List<GeneratedName> lstNameRequests = new();
     protected override async Task OnInitializedAsync()
     {
-        var result = await session.GetAsync<bool>("admin");
-        admin = (bool)result.Value;
-        lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
-        dataLoaded = true;
-        StateHasChanged();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var result = await session.GetAsync<bool>("admin");
-        admin = (bool)result.Value;
-        lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
-        dataLoaded = true;
-        StateHasChanged();
+        if (firstRender)
+        {
+            var result = await session.GetAsync<bool>("admin");
+            admin = (bool)result.Value;
+            lstNameRequests = await ResourceNamingRequestService.GetGeneratedNames();
+            dataLoaded = true;
+            StateHasChanged();
+        }
     }
 
 
