@@ -2413,6 +2413,7 @@
         }
         catch (Exception ex)
         {
+            GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             message.Type = MessageTypesEnum.ERROR;
             message.Message = "There was a problem with the request.";
         }

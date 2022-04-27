@@ -18,6 +18,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.Success = false;
                 serviceResponse.ResponseObject = ex;
             }
@@ -35,6 +36,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.Success = false;
                 serviceResponse.ResponseObject = ex;
             }
@@ -93,6 +95,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.ResponseObject = ex;
                 serviceResponse.Success = false;
             }
@@ -116,6 +119,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.ResponseObject = ex;
                 serviceResponse.Success = false;
             }
@@ -148,6 +152,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.Success = false;
                 serviceResponse.ResponseObject = ex;
             }

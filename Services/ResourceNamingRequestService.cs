@@ -184,6 +184,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 response.Message = ex.Message;
                 return response;
             }
@@ -203,9 +204,9 @@ namespace AzNamingTool.Services
                 };
                 lstGeneratedNames = JsonSerializer.Deserialize<List<GeneratedName>>(data, options).OrderByDescending(x => x.CreatedOn).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             }
             return lstGeneratedNames;
         }
@@ -231,9 +232,9 @@ namespace AzNamingTool.Services
                 var jsonGeneratedNames = JsonSerializer.Serialize(lstGeneratedNames);
                 await FileSystemHelper.WriteFile("generatednames.json", jsonGeneratedNames);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             }
         }
         public static async Task PurgeGeneratedNames()
@@ -242,9 +243,9 @@ namespace AzNamingTool.Services
             {
                 await FileSystemHelper.WriteFile("generatednames.json", "[]");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             }
         }
     }
