@@ -1,6 +1,6 @@
-<img src="https://github.com/BryanSoltis/AzNamingTool/blob/master/wwwroot/images/AzureNamingToolLogo.png" alt="Azure Naming Tool" title="Azure Naming Tool" height="150"/>
-
 # Azure Naming Tool
+
+<img src="https://github.com/BryanSoltis/AzNamingTool/blob/master/wwwroot/images/AzureNamingToolLogo.png" alt="Azure Naming Tool" title="Azure Naming Tool" height="150"/>
 
 [Overview](#overview)
 
