@@ -62,6 +62,7 @@ namespace AzNamingTool.Helpers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return ex;
             }
         }

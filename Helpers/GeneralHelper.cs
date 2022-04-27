@@ -19,8 +19,9 @@ namespace AzNamingTool.Helpers
             {
                 return SourceData.GetType().GetProperty(propName).GetValue(SourceData, null);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return null;
             }
         }
@@ -195,8 +196,9 @@ namespace AzNamingTool.Helpers
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             }
         }
 
@@ -248,8 +250,9 @@ namespace AzNamingTool.Helpers
                 }
                 state.SetVerified(true);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
             }
         }
 
@@ -445,8 +448,9 @@ namespace AzNamingTool.Helpers
                 }
                 return new Tuple<bool, string, StringBuilder>(valid, name, sbMessage);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return new Tuple<bool, string, StringBuilder>(false, name, new StringBuilder("There was a problem validating the name."));
             }
         }
@@ -467,7 +471,6 @@ namespace AzNamingTool.Helpers
             }
             catch (Exception)
             {
-
             }
             return lstAdminLogMessages;
         }

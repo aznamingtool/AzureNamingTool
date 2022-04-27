@@ -36,6 +36,7 @@ namespace AzNamingTool.Controllers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -58,6 +59,7 @@ namespace AzNamingTool.Controllers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -85,6 +87,7 @@ namespace AzNamingTool.Controllers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -113,6 +116,7 @@ namespace AzNamingTool.Controllers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return BadRequest(ex);
             }
         }
@@ -140,6 +144,7 @@ namespace AzNamingTool.Controllers
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 return BadRequest(ex);
             }
         }

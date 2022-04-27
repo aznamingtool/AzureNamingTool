@@ -1,4 +1,5 @@
-﻿using AzNamingTool.Models;
+﻿using AzNamingTool.Helpers;
+using AzNamingTool.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AzNamingTool.Services
@@ -70,6 +71,7 @@ namespace AzNamingTool.Services
             }
             catch (Exception ex)
             {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
                 serviceResponse.Success = false;
                 serviceResponse.ResponseObject = ex;
             }
