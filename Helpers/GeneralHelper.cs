@@ -348,6 +348,7 @@ namespace AzNamingTool.Helpers
                     else
                     {
                         sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
+                        sbMessage.Append(Environment.NewLine);
                     }
                 }
 
@@ -375,6 +376,7 @@ namespace AzNamingTool.Helpers
                     else
                     {
                         sbMessage.Append("Generated name with the selected delimiter is more than the maximum length for the selected resource type. The delimiter has been removed.");
+                        sbMessage.Append(Environment.NewLine);
                     }
                 }
 

@@ -86,6 +86,7 @@ namespace AzNamingTool.Services
                                     {
                                         // Add message about delimeter not applied
                                         sbMessage.Append("The specified delimiter is not allowed for this resource type and has been removed.");
+                                        sbMessage.Append(Environment.NewLine);
                                         ignoredelimeter = true;
                                     }
                                 }
