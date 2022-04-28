@@ -291,9 +291,11 @@
                                         {
                                             <div>
                                                 <strong>Message: </strong>
-                                                <label>
-                                                    @message
-                                                </label>
+                                                <br />
+                                                    @foreach (var sub in message.Split('\n'))
+                                                    {
+                                                        @sub<br/>
+                                                    }
                                             </div>
                                         }
                                     }
