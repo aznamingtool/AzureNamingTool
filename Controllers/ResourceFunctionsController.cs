@@ -30,9 +30,17 @@ namespace AzNamingTool.Controllers
             try
             {
                 // Get list of items
-                var items = await GeneralHelper.GetList<ResourceFunction>();
+                serviceResponse = await ResourceFunctionService.GetItems();
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
 
-                return Ok(items.OrderBy(x => x.SortOrder));
+
             }
             catch (Exception ex)
             {
@@ -52,10 +60,15 @@ namespace AzNamingTool.Controllers
         {
             try
             {
-                // Get list of items
-                var data = await GeneralHelper.GetList<ResourceFunction>();
-                var item = data.Find(x => x.Id == id);
-                return Ok(item);
+                serviceResponse = await ResourceFunctionService.GetItem(id);
+                if (serviceResponse.Success)
+                {
+                    return Ok(serviceResponse.ResponseObject);
+                }
+                else
+                {
+                    return BadRequest(serviceResponse.ResponseObject);
+                }
             }
             catch (Exception ex)
             {
