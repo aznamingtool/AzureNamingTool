@@ -368,7 +368,7 @@ namespace AzNamingTool.Helpers
                     {
                         sbMessage.Append("Generated name is more than the maximum length for the selected resource type.");
                         sbMessage.Append(Environment.NewLine);
-                        sbMessage.Append("Please contact your admin to update the required components for this resource type.");
+                        sbMessage.Append("Please remove any optional components or contact your admin to update the required components for this resource type.");
                         sbMessage.Append(Environment.NewLine);
                         valid = false;
                     }
