@@ -16,36 +16,40 @@ namespace AzNamingTool.Services
                 ConfigurationData configdata = new();
                 // Get the current data
                 //ResourceComponents
-                var resourceComponents = await GeneralHelper.GetList<ResourceComponent>();
-                configdata.ResourceComponents = resourceComponents.OrderBy(y => y.SortOrder).ToList();
+                serviceResponse = await ResourceComponentService.GetItems(true);
+                configdata.ResourceComponents = serviceResponse.ResponseObject;
+
+                //ResourceDelimiters
+                serviceResponse = await ResourceDelimiterService.GetItems(true);
+                configdata.ResourceDelimiters = serviceResponse.ResponseObject;
 
                 //ResourceEnvironments
-                var resourceEnvironments = await GeneralHelper.GetList<ResourceEnvironment>();
-                configdata.ResourceEnvironments = resourceEnvironments.OrderBy(y => y.SortOrder).ToList();
-
-                // ResourceLocations
-                var resourceLocations = await GeneralHelper.GetList<ResourceLocation>();
-                configdata.ResourceLocations = resourceLocations.ToList();
-
-                // ResourceOrgs
-                var resourceOrgs = await GeneralHelper.GetList<ResourceOrg>();
-                configdata.ResourceOrgs = resourceOrgs.OrderBy(y => y.SortOrder).ToList();
-
-                // ResourceProjAppSvc
-                var resourceProjAppSvcs = await GeneralHelper.GetList<ResourceProjAppSvc>();
-                configdata.ResourceProjAppSvcs = resourceProjAppSvcs.OrderBy(y => y.SortOrder).ToList();
-
-                // ResourceTypes
-                var resourceTypes = await GeneralHelper.GetList<ResourceType>();
-                configdata.ResourceTypes = resourceTypes.ToList();
-
-                // ResourceUnitDepts
-                var resourceUnitDepts = await GeneralHelper.GetList<ResourceUnitDept>();
-                configdata.ResourceUnitDepts = resourceUnitDepts.OrderBy(y => y.SortOrder).ToList();
+                serviceResponse = await ResourceEnvironmentService.GetItems();
+                configdata.ResourceEnvironments = serviceResponse.ResponseObject;
 
                 // ResourceFunctions
-                var resourceFunctions = await GeneralHelper.GetList<ResourceFunction>();
-                configdata.ResourceFunctions = resourceFunctions.OrderBy(y => y.SortOrder).ToList();
+                serviceResponse = await ResourceFunctionService.GetItems();
+                configdata.ResourceFunctions = serviceResponse.ResponseObject;
+
+                // ResourceLocations
+                serviceResponse = await ResourceLocationService.GetItems();
+                configdata.ResourceLocations = serviceResponse.ResponseObject;
+
+                // ResourceOrgs
+                serviceResponse = await ResourceOrgService.GetItems();
+                configdata.ResourceOrgs = serviceResponse.ResponseObject;
+
+                // ResourceProjAppSvc
+                serviceResponse = await ResourceProjAppSvcService.GetItems();
+                configdata.ResourceProjAppSvcs = serviceResponse.ResponseObject;
+
+                // ResourceTypes
+                serviceResponse = await ResourceTypeService.GetItems();
+                configdata.ResourceTypes = serviceResponse.ResponseObject;
+
+                // ResourceUnitDepts
+                serviceResponse = await ResourceUnitDeptService.GetItems();
+                configdata.ResourceUnitDepts = serviceResponse.ResponseObject;
 
                 // Get the security settings
                 var config = new ConfigurationBuilder()
@@ -75,14 +79,15 @@ namespace AzNamingTool.Services
             try
             {
                 // Write all the configurations
-                await GeneralHelper.WriteList<ResourceComponent>(configdata.ResourceComponents);
-                await GeneralHelper.WriteList<ResourceEnvironment>(configdata.ResourceEnvironments);
-                await GeneralHelper.WriteList<ResourceLocation>(configdata.ResourceLocations);
-                await GeneralHelper.WriteList<ResourceOrg>(configdata.ResourceOrgs);
-                await GeneralHelper.WriteList<ResourceProjAppSvc>(configdata.ResourceProjAppSvcs);
-                await GeneralHelper.WriteList<ResourceType>(configdata.ResourceTypes);
-                await GeneralHelper.WriteList<ResourceUnitDept>(configdata.ResourceUnitDepts);
-                await GeneralHelper.WriteList<ResourceFunction>(configdata.ResourceFunctions);
+                await ResourceComponentService.PostConfig(configdata.ResourceComponents);
+                await ResourceDelimiterService.PostConfig(configdata.ResourceDelimiters);
+                await ResourceEnvironmentService.PostConfig(configdata.ResourceEnvironments);
+                await ResourceFunctionService.PostConfig(configdata.ResourceFunctions);
+                await ResourceLocationService.PostConfig(configdata.ResourceLocations);
+                await ResourceOrgService.PostConfig(configdata.ResourceOrgs);
+                await ResourceProjAppSvcService.PostConfig(configdata.ResourceProjAppSvcs);
+                await ResourceTypeService.PostConfig(configdata.ResourceTypes);
+                await ResourceUnitDeptService.PostConfig(configdata.ResourceUnitDepts);
 
                 // Set the security settings
                 var config = new ConfigurationBuilder()

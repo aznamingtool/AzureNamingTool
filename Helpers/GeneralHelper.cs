@@ -339,9 +339,7 @@ namespace AzNamingTool.Helpers
                     Match match2 = regx.Match(name);
                     if (!match2.Success)
                     {
-                        sbMessage.Append("Regex failed!");
-                        sbMessage.Append(Environment.NewLine);
-                        sbMessage.Append("Please review the Resource Type Naming Guidelines.");
+                        sbMessage.Append("Regex failed - Please review the Resource Type Naming Guidelines.");
                         sbMessage.Append(Environment.NewLine);
                         valid = false;
                     }
