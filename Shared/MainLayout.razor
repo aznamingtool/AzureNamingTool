@@ -10,13 +10,13 @@
 
 <PageTitle>Azure Naming Tool</PageTitle>
 <BlazoredToasts Position="ToastPosition.BottomRight" ShowProgressBar="true" Timeout="3" />
-<div class="page">
+<div class="page @state.AppTheme">
     <div class="sidebar">
         <NavMenu PageType="@PageType" />
     </div>
 
     <main>
-        <div class="top-row px-4 auth">
+        <div class="top-row px-4 auth" style="background-color:#708090;">
                 <button type="button" class="btn btn-success" @onclick="@(e => ShowAdminModal())" title="Admin">Admin</button>
                 @*<button type="button" class="btn btn-danger" @onclick="@(e => MagicReset())" title="Magic reset">Magic Reset</button>*@
         </div>

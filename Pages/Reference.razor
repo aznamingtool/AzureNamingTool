@@ -1,7 +1,4 @@
 ﻿@page "/reference"
-
-<PageTitle>Azure Naming Tool - Reference</PageTitle>
-
 @using AzNamingTool.Helpers
 @using AzNamingTool.Models
 @using AzNamingTool.Services
@@ -9,8 +6,11 @@
 @inject IJSRuntime JsRuntime
 @inject ILogger<Reference> Logger
 @inject NavigationManager NavigationManager
+@inject StateContainer state
 
-<div class="card">
+<PageTitle>Azure Naming Tool - Reference</PageTitle>
+
+<div class="card @state.AppTheme">
     <div class="card-body">
         <h1>Reference</h1>
         <div class="mb-3">This page provides an example name for each resource type using the defined configuration.</div>
@@ -32,11 +32,11 @@
                 <h5 class="card-header text-white bg-secondary">
                     Jump To
                 </h5>
-                <div class="card card-body">
+                <div class="card card-body @state.AppTheme">
                     <p>
                         Use the filters below to jump to a specifc resource type.
                     </p>
-                    <select @onchange="OnCategoryChanged" class="form-control" aria-label="Select category">
+                    <select @onchange="OnCategoryChanged" class="form-control @state.AppTheme" aria-label="Select category">
                         <option value="">Select a resource type provider (OPTIONAL)</option>
                         @foreach (var category in @categories)
                         {
@@ -44,7 +44,7 @@
                         }
                     </select>
 
-                    <select @onchange="OnTypeChanged" class="form-control" aria-label="Select type">
+                    <select @onchange="OnTypeChanged" class="form-control @state.AppTheme" aria-label="Select type">
                         <option value="">Select a resource type</option>
                         @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                         {
@@ -60,7 +60,7 @@
                     </select>
                 </div>
             </div>
-            <table class="table table-responsive table-striped w-100">
+            <table class="table table-responsive  @state.AppTheme w-100">
                 <tbody>
                     @foreach (var resourcetype in servicesData.ResourceTypes)
                     {
@@ -105,7 +105,7 @@
                                             <td>
                                                 @if (resourcetype.StaticValues == "")
                                                 {
-                                                    <table class="table table-striped w-100">
+                                                    <table class="table @state.AppTheme w-100">
                                                         <tbody>
                                                             @if (filteredscopes.Contains(resourcetype.Scope))
                                                             {

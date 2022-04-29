@@ -5,12 +5,13 @@
 @inject IJSRuntime JsRuntime
 @inject IToastService toastService
 @inject ILogger<EditModal> Logger
+@inject StateContainer state
 
 <div class="modal fade show d-block" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="Cancel"></div>
     <div class="modal-dialog" style="z-index: 1050">
         <!-- Pop it above the backdrop -->
-        <div class="modal-content">
+        <div class="modal-content @state.AppTheme">
             <div class="modal-header bg-navcolor text-white">
                 <h3 class="modal-title">@title</h3>
             </div>
@@ -25,11 +26,11 @@
                     <p>
                         @if (protectedName)
                         {
-                            <input title="Name" value="@itemName" disabled type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
+                            <input title="Name" value="@itemName" disabled type="text" class="form-control @state.AppTheme" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                         }
                         else
                         {
-                            <input title="Name" value="@itemName" type="text" class="form-control" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
+                            <input title="Name" value="@itemName" type="text" class="form-control @state.AppTheme" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                         }
                     </p>
                 </div>
@@ -39,7 +40,7 @@
                         <label for="shortName"><strong>Short Name</strong></label>
                     </p>
                     <p>
-                        <input title="Short Name" value="@itemShortName" type="text" class="form-control" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
+                        <input title="Short Name" value="@itemShortName" type="text" class="form-control @state.AppTheme" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
                     </p>
                 </div>
                 @if ((type == "ResourceType") && (resourceComponents != null))

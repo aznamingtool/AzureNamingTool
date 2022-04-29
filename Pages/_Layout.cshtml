@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Web
+@using AzNamingTool.Helpers
+@inject StateContainer state
 @namespace AzNamingTool.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
@@ -21,7 +23,7 @@
     </script>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
-<body>
+<body class="@state.AppTheme">
     <ErrorBoundary>
     @RenderBody()
         </ErrorBoundary>
