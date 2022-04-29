@@ -1,11 +1,13 @@
 ﻿@page "/"
 @using System.Reflection
+@using AzNamingTool.Helpers
 @inject ILogger<Index> Logger
 @inject NavigationManager NavigationManager
+@inject StateContainer state
 
 <PageTitle>Azure Naming Tool - Home</PageTitle>
 
-<div class="card">
+<div class="card @state.AppTheme">
     <div class="card-body">
         <p>
             <img src="images/AzureNamingToolLogo.png" height="160px;" alt="Azure Naming Tool" />
@@ -43,6 +45,11 @@
 </div>
 @code {
     private string? appversion = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+    private string? apptheme;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {  
+    }
 
     private async Task OnInstructionsClick()
     {

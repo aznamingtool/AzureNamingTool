@@ -45,6 +45,7 @@ namespace AzNamingTool.Helpers
                 Type type = config.GetType();
                 System.Reflection.PropertyInfo propertyInfo = type.GetProperty(key);
                 propertyInfo.SetValue(config, value, null);
+                UpdateSettings(config);
             }
             catch (Exception ex)
             {
@@ -246,10 +247,9 @@ namespace AzNamingTool.Helpers
         {
             try
             {
+                var config = GetConfigurationData();
                 if (!state.Verified)
                 {
-                    var config = GetConfigurationData();
-
                     if (config.SALTKey == "")
                     {
                         // Create a new SALT key 
@@ -270,7 +270,6 @@ namespace AzNamingTool.Helpers
                         {
                             state.Password = false;
                         }
-
                     }
 
                     if (config.AdminPassword != "")
@@ -285,6 +284,9 @@ namespace AzNamingTool.Helpers
 
                 }
                 state.SetVerified(true);
+
+                // Set the site theme
+                state.SetAppTheme(config.AppTheme);
             }
             catch (Exception ex)
             {
@@ -311,6 +313,7 @@ namespace AzNamingTool.Helpers
             state.SetVerified(false);
             state.SetAdmin(false);
             state.SetPassword(false);
+            state.SetAppTheme("bg-default");
         }
 
         public static bool ValidateShortName(string value, string type)

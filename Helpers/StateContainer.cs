@@ -7,6 +7,7 @@ namespace AzNamingTool.Helpers
         private bool? _verified;
         private bool? _admin;
         private bool? _password;
+        private string _apptheme;
 
         public bool Verified
         {
@@ -53,6 +54,24 @@ namespace AzNamingTool.Helpers
         public void SetPassword(bool password)
         {
             _password = password;
+            NotifyStateChanged();
+        }
+
+
+        public string AppTheme
+        {
+            get => _apptheme ?? "bg-default text-black";
+            set
+            {
+                _apptheme = value;
+                NotifyStateChanged();
+            }
+        }
+
+
+        public void SetAppTheme(string value)
+        {
+            _apptheme = value;
             NotifyStateChanged();
         }
 

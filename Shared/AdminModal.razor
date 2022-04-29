@@ -14,7 +14,7 @@
     <div class="modal-backdrop fade show" @onclick="Close"></div>
     <div class="modal-dialog" style="z-index: 1050">
         <!-- Pop it above the backdrop -->
-        <div class="modal-content">
+        <div class="modal-content  @state.AppTheme">
             <div class="modal-header bg-navcolor text-white">
                 <h3 class="modal-title">Admin</h3>
             </div>
@@ -34,31 +34,31 @@
                     <p>
                         This form allows you to set the Admin password, API key, and configuration for the Azure Naming Tool.
                     </p>
-                    @*<div class="card mb-3">
-                        <h5 class="card-header">
+                    <div class="card mb-3">
+                        <h5 class="card-header @state.AppTheme">
                             Theme
                         </h5>
-                        <div class="card card-body">
+                        <div class="card card-body @state.AppTheme">
                             <p>
                                 Select a theme for the site.
                             </p>
                             <div class="form-group">
                                 <label>
-                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-default")" @onchange="() => OnThemeChanged(false)" /> Light
+                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-default text-black")" @onchange="() => OnThemeChanged(false)" /> Light
                                 </label>
                                 <label>
-                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-dark")" @onchange="() => OnThemeChanged(true)" /> Dark
+                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-dark text-white")" @onchange="() => OnThemeChanged(true)" /> Dark
                                 </label>
                             </div>
 
                         </div>
-                    </div>*@
+                    </div>
 
                     <div class="card mb-3">
-                        <h5 class="card-header">
+                        <h5 class="card-header @state.AppTheme">
                             New Password
                         </h5>
-                        <div class="card card-body">
+                        <div class="card card-body @state.AppTheme">
                             <p>
                                 Enter a new password for the site.
                             </p>
@@ -76,10 +76,10 @@
                         </div>
                     </div>
                     <div class="card">
-                        <h5 class="card-header">
+                        <h5 class="card-header @state.AppTheme">
                             API Key
                         </h5>
-                        <div class="card card-body">
+                        <div class="card card-body @state.AppTheme">
                             <p>
                                 The current API key is displayed. Click <strong>Generate</strong> to generate a new random API Key, or update the text to the desired value.
                             </p>
@@ -310,12 +310,13 @@
 
     private async void OnThemeChanged(bool dark)
     {
-        string value = "bg-default";
+        string value = "bg-default text-black";
         if(dark)
         {
-            value = "bg-dark";
+            value = "bg-dark text-white";
         }
-        GeneralHelper.SetAppSetting("AppTheme", value);        
+        GeneralHelper.SetAppSetting("AppTheme", value);
+        state.AppTheme = value;
         StateHasChanged();
     }
 }
