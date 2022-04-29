@@ -37,10 +37,9 @@ namespace AzNamingTool.Services
                 }
 
                 // Get the components
-                var resourceComponents = await GeneralHelper.GetList<ResourceComponent>();
-
-                // Get the requried components
-                var currentResourceComponents = resourceComponents.Where(x => x.Enabled).OrderBy(y => y.SortOrder);
+                ServiceResponse serviceresponse = new();
+                serviceresponse = await ResourceComponentService.GetItems(false);
+                var currentResourceComponents = serviceresponse.ResponseObject;
                 dynamic d = request;
 
                 string name = "";
@@ -140,13 +139,16 @@ namespace AzNamingTool.Services
                 }
 
                 // Check the Resource Instance value to ensure it's only nmumeric
-                if (lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2 != null)
+                if (lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance") != null)
                 {
-                    if (!GeneralHelper.CheckNumeric(lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2))
+                    if (lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2 != null)
                     {
-                        sbMessage.Append("Resource Instance must be a numeric value.");
-                        sbMessage.Append(Environment.NewLine);
-                        valid = false;
+                        if (!GeneralHelper.CheckNumeric(lstComponents.FirstOrDefault(x => x.Item1 == "ResourceInstance").Item2))
+                        {
+                            sbMessage.Append("Resource Instance must be a numeric value.");
+                            sbMessage.Append(Environment.NewLine);
+                            valid = false;
+                        }
                     }
                 }
 

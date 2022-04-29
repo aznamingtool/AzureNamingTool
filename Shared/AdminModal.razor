@@ -32,8 +32,28 @@
                 else
                 {
                     <p>
-                        This form allows you to set the Admin password and API key for the Azure Naming Tool.
+                        This form allows you to set the Admin password, API key, and configuration for the Azure Naming Tool.
                     </p>
+                    @*<div class="card mb-3">
+                        <h5 class="card-header">
+                            Theme
+                        </h5>
+                        <div class="card card-body">
+                            <p>
+                                Select a theme for the site.
+                            </p>
+                            <div class="form-group">
+                                <label>
+                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-default")" @onchange="() => OnThemeChanged(false)" /> Light
+                                </label>
+                                <label>
+                                    <input type="radio" name="apptheme" checked="@(apptheme == "bg-dark")" @onchange="() => OnThemeChanged(true)" /> Dark
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>*@
+
                     <div class="card mb-3">
                         <h5 class="card-header">
                             New Password
@@ -102,12 +122,9 @@
     private ResponseMessage message = new();
     private bool admin;
     private bool disabled = true;
+    private string apptheme = "bg-default";
 
-    private Config config = new ConfigurationBuilder()
-           .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-           .AddJsonFile("settings/appsettings.json")
-           .Build()
-           .Get<Config>();
+    private Config config = GeneralHelper.GetConfigurationData();
 
     protected override async void OnInitialized()
     {
@@ -127,6 +144,11 @@
         if (admin)
         {
             currentapikey = GeneralHelper.DecryptString(config.APIKey, config.SALTKey);
+        }
+        apptheme = config.AppTheme;
+        if(apptheme == "")
+        {
+            apptheme = "bg-default";
         }
         StateHasChanged();
     }
@@ -280,4 +302,20 @@
     }
 
     async Task Close() => await ModalInstance.CancelAsync();
+
+    private void OnThemeClick()
+    {
+        GeneralHelper.SetAppSetting("AppTheme", "112");
+    }
+
+    private async void OnThemeChanged(bool dark)
+    {
+        string value = "bg-default";
+        if(dark)
+        {
+            value = "bg-dark";
+        }
+        GeneralHelper.SetAppSetting("AppTheme", value);        
+        StateHasChanged();
+    }
 }

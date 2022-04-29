@@ -1,5 +1,6 @@
 ﻿using AzNamingTool.Helpers;
 using AzNamingTool.Models;
+using Microsoft.AspNetCore.SignalR;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -52,12 +53,7 @@ namespace AzNamingTool.Services
                 configdata.ResourceUnitDepts = serviceResponse.ResponseObject;
 
                 // Get the security settings
-                var config = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("settings/appsettings.json")
-                    .Build()
-                    .Get<Config>();
-
+                var config = GeneralHelper.GetConfigurationData();
                 configdata.SALTKey = config.SALTKey;
                 configdata.AdminPassword = config.AdminPassword;
                 configdata.APIKey = config.APIKey;
@@ -90,11 +86,7 @@ namespace AzNamingTool.Services
                 await ResourceUnitDeptService.PostConfig(configdata.ResourceUnitDepts);
 
                 // Set the security settings
-                var config = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("settings/appsettings.json")
-                    .Build()
-                    .Get<Config>();
+                var config = GeneralHelper.GetConfigurationData();
 
                 config.SALTKey = configdata.SALTKey;
                 config.AdminPassword = configdata.AdminPassword;

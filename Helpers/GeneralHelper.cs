@@ -12,6 +12,46 @@ namespace AzNamingTool.Helpers
 {
     public class GeneralHelper
     {
+        public static Config GetConfigurationData()
+        {
+            var config = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("settings/appsettings.json")
+                    .Build()
+                    .Get<Config>();
+            return config;
+        }
+
+        public static string GetAppSetting(string key)
+        {
+            string value = null;
+            try
+            {
+                var config = GetConfigurationData();
+                value = config.GetType().GetProperty(key).GetValue(config, null).ToString();
+            }
+            catch (Exception ex)
+            {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
+            }
+            return value;
+        }
+
+        public static void SetAppSetting(string key, string value)
+        {
+            try
+            {
+                var config = GetConfigurationData();
+                Type type = config.GetType();
+                System.Reflection.PropertyInfo propertyInfo = type.GetProperty(key);
+                propertyInfo.SetValue(config, value, null);
+            }
+            catch (Exception ex)
+            {
+                GeneralHelper.LogAdminMessage("ERROR", ex.Message);
+            }
+        }
+
         //Function to get the Property Value
         public static object GetPropertyValue(object SourceData, string propName)
         {
@@ -208,11 +248,7 @@ namespace AzNamingTool.Helpers
             {
                 if (!state.Verified)
                 {
-                    var config = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("settings/appsettings.json")
-                    .Build()
-                    .Get<Config>();
+                    var config = GetConfigurationData();
 
                     if (config.SALTKey == "")
                     {
