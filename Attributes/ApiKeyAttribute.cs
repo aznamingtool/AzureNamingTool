@@ -20,11 +20,7 @@ namespace AzNamingTool.Attributes
                 return;
             }
 
-            var config = new ConfigurationBuilder()
-            .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            .AddJsonFile("settings/appsettings.json")
-            .Build()
-            .Get<Config>();
+            var config = GeneralHelper.GetConfigurationData();
 
             //var appSettings = context.HttpContext.RequestServices.GetRequiredService<IConfiguration>();
 
