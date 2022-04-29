@@ -6,6 +6,8 @@ namespace AzNamingTool.Models
     public class ConfigurationData
     {
         public List<ResourceComponent> ResourceComponents { get; set; }
+
+        public List<ResourceDelimiter> ResourceDelimiters { get; set; }
         public List<ResourceEnvironment> ResourceEnvironments { get; set; }
         public List<ResourceLocation> ResourceLocations { get; set; }
         public List<ResourceOrg> ResourceOrgs { get; set; }
