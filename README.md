@@ -75,7 +75,7 @@ The Generator Page provides a dropdown menu to select an Azure resource. Once a 
 
 # How To Install
 
-This project contains a .NET Core application, with Docker support. To use, complete the following:
+This project contains a .NET 6 application, with Docker support. To use, complete the following:
 
 **NOTE**
 
