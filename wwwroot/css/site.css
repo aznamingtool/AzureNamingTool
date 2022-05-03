@@ -91,3 +91,7 @@ a, .btn-link {
 .bg-navcolor {
     background-color: #004494;
 }
+
+.bg-dark{
+    background: #000000 !important;
+}
