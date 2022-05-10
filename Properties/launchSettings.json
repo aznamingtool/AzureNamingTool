@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "AzNamingTool": {
+    "AzureNamingTool": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

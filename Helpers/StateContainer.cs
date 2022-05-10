@@ -1,6 +1,6 @@
-﻿using AzNamingTool.Models;
+﻿using AzureNamingTool.Models;
 
-namespace AzNamingTool.Helpers
+namespace AzureNamingTool.Helpers
 {
     public class StateContainer
     {

@@ -1,7 +1,7 @@
-﻿using AzNamingTool.Helpers;
+﻿using AzureNamingTool.Helpers;
 using System.ComponentModel;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class ResponseMessage
     {

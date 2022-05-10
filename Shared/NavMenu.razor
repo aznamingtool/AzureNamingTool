@@ -1,5 +1,5 @@
-﻿@using AzNamingTool.Helpers
-@using AzNamingTool.Models
+﻿@using AzureNamingTool.Helpers
+@using AzureNamingTool.Models
 @inject StateContainer state
 @inject ProtectedSessionStorage session
 @inject IJSRuntime JsRuntime
@@ -44,7 +44,7 @@
 
         @if (PageType != null)
         {
-            @if ((PageType.ToString() == "AzNamingTool.Pages.Generate") || (PageType.ToString() == "AzNamingTool.Pages.GeneratedNamesLog"))
+            @if ((PageType.ToString() == "AzureNamingTool.Pages.Generate") || (PageType.ToString() == "AzureNamingTool.Pages.GeneratedNamesLog"))
             {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="generatednameslog">
@@ -53,7 +53,7 @@
                 </div>
             }
 
-            @if (PageType.ToString() == "AzNamingTool.Pages.Configuration")
+            @if (PageType.ToString() == "AzureNamingTool.Pages.Configuration")
             {
                 <div class="card bg-transparent">
                     <div class="card card-header bg-default text-white" style="font-weight:bold;">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             }
-            @if (PageType.ToString() == "AzNamingTool.Pages.Instructions")
+            @if (PageType.ToString() == "AzureNamingTool.Pages.Instructions")
             {
                 <div class="card bg-transparent">
                     <div class="card card-header bg-default text-white" style="font-weight:bold;">

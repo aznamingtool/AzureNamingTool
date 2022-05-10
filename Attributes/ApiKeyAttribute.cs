@@ -1,8 +1,8 @@
-﻿using AzNamingTool.Helpers;
+﻿using AzureNamingTool.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace AzNamingTool.Attributes
+namespace AzureNamingTool.Attributes
 {
     [AttributeUsage(validOn: AttributeTargets.Class)]
     public class ApiKeyAttribute : Attribute, IAsyncActionFilter

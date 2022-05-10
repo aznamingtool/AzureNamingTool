@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class PolicyRule
     {

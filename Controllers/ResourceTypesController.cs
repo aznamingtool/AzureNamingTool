@@ -1,5 +1,5 @@
-﻿using AzNamingTool.Models;
-using AzNamingTool.Helpers;
+﻿using AzureNamingTool.Models;
+using AzureNamingTool.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
-using AzNamingTool.Services;
-using AzNamingTool.Attributes;
+using AzureNamingTool.Services;
+using AzureNamingTool.Attributes;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace AzNamingTool.Controllers
+namespace AzureNamingTool.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

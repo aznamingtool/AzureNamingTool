@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class ResourceType
     {

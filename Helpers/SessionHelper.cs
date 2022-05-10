@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
-namespace AzNamingTool.Helpers
+namespace AzureNamingTool.Helpers
 {
     public class SessionHelper
     {

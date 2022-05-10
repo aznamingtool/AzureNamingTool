@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class ResourceComponent
     {

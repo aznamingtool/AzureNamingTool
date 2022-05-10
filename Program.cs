@@ -1,5 +1,5 @@
-using AzNamingTool.Attributes;
-using AzNamingTool.Helpers;
+using AzureNamingTool.Attributes;
+using AzureNamingTool.Helpers;
 using BlazorDownloadFile;
 using Blazored.Toast;
 using Microsoft.OpenApi.Models;
@@ -60,7 +60,7 @@ else
 }
 
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AzNamingToolAPI"));
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AzureNamingToolAPI"));
 
 app.UseHttpsRedirection();
 

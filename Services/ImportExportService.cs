@@ -1,10 +1,10 @@
-﻿using AzNamingTool.Helpers;
-using AzNamingTool.Models;
+﻿using AzureNamingTool.Helpers;
+using AzureNamingTool.Models;
 using Microsoft.AspNetCore.SignalR;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AzNamingTool.Services
+namespace AzureNamingTool.Services
 {
     public class ImportExportService
     {

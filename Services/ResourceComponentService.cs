@@ -1,7 +1,7 @@
-﻿using AzNamingTool.Helpers;
-using AzNamingTool.Models;
+﻿using AzureNamingTool.Helpers;
+using AzureNamingTool.Models;
 
-namespace AzNamingTool.Services
+namespace AzureNamingTool.Services
 {
     public class ResourceComponentService
     {

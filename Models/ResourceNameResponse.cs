@@ -1,4 +1,4 @@
-﻿namespace AzNamingTool.Models
+﻿namespace AzureNamingTool.Models
 {
     public class ResourceNameResponse
     {
