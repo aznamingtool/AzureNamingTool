@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class PolicyProperty
     {

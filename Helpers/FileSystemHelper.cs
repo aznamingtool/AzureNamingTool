@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AzNamingTool.Helpers
+namespace AzureNamingTool.Helpers
 {
     public class FileSystemHelper
     {

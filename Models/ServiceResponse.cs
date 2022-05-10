@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class ServiceResponse
     {

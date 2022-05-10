@@ -1,4 +1,4 @@
-﻿namespace AzNamingTool.Helpers
+﻿namespace AzureNamingTool.Helpers
 {
     public enum MessageTypesEnum
     {

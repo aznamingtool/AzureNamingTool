@@ -1,12 +1,12 @@
-﻿using AzNamingTool.Helpers;
-using AzNamingTool.Models;
+﻿using AzureNamingTool.Helpers;
+using AzureNamingTool.Models;
 using Microsoft.AspNetCore.Components;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace AzNamingTool.Services
+namespace AzureNamingTool.Services
 {
     public class ResourceNamingRequestService
     {

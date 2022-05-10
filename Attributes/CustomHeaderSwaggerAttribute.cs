@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace AzNamingTool.Attributes
+namespace AzureNamingTool.Attributes
 {
     public class CustomHeaderSwaggerAttribute : IOperationFilter
     {

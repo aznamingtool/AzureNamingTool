@@ -1,8 +1,8 @@
-﻿using AzNamingTool.Helpers;
-using AzNamingTool.Models;
+﻿using AzureNamingTool.Helpers;
+using AzureNamingTool.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AzNamingTool.Services
+namespace AzureNamingTool.Services
 {
     public class PolicyService
     {

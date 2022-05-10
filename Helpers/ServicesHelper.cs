@@ -1,7 +1,7 @@
-﻿using AzNamingTool.Models;
-using AzNamingTool.Services;
+﻿using AzureNamingTool.Models;
+using AzureNamingTool.Services;
 
-namespace AzNamingTool.Helpers
+namespace AzureNamingTool.Helpers
 {
     public class ServicesHelper
     {

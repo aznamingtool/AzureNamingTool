@@ -1,7 +1,7 @@
-﻿using AzNamingTool.Models;
+﻿using AzureNamingTool.Models;
 using System.Collections.Generic;
 
-namespace AzNamingTool.Models
+namespace AzureNamingTool.Models
 {
     public class ConfigurationData
     {

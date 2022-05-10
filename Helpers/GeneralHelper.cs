@@ -1,4 +1,4 @@
-﻿using AzNamingTool.Models;
+﻿using AzureNamingTool.Models;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AzNamingTool.Helpers
+namespace AzureNamingTool.Helpers
 {
     public class GeneralHelper
     {
