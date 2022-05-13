@@ -1349,6 +1349,24 @@
                                     </p>
                                 </div>
                             </div>
+                                                    <div class="card  w-auto mb-3">
+                                                        <div class="card card-header bg-default text-black" style="font-weight:bold;">
+                                                            Reset the Global Configuration
+                                                        </div>
+                                                        <div class="card card-body @state.AppTheme">
+                                                            <p>
+                                                                Click <strong>Reset</strong> to reset the Global Configuration back to the default values at the time of installation. This will apply to all component configurations.
+                                                            </p>
+                                                            <p>
+                                                                <strong>NOTE: This will reset your current configuration and cannot be undone!</strong>
+                                                            </p>
+                                                            <p>
+                                                                <button type="button" class="btn btn-danger" @onclick=@(e => FormAction("Global",0,"reset")) title="Reset">
+                                                                    <span class="oi oi-loop-circular" aria-hidden="true"></span> Reset
+                                                                </button>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                             <div class="card mb-3">
                                 <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                     Import Global Configuration
@@ -2365,6 +2383,62 @@
                             serviceResponse = await ImportExportService.ExportConfig();
                             var globaljson = serviceResponse.ResponseObject;
                             await BlazorDownloadFileService.DownloadFileFromText("globalconfig.json", JsonSerializer.Serialize(globaljson).ToString(), System.Text.Encoding.UTF8, "application/octet-stream");
+                            break;
+                        case "reset":
+                            confirm = await JsRuntime.InvokeAsync<bool>("confirm", "WARNING!\n\nThis will reset your current configuration for all settings and cannot be undone!\n\nAre you sure?");
+                            if (confirm)
+                            {
+                                if (!FileSystemHelper.ResetConfiguration("resourcecomponents.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourcedelimiters.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourceenvironments.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourcefunctions.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourcelocations.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourceorgs.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourceprojappsvcs.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourcetypes.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourceunitdepts.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+                                if (!FileSystemHelper.ResetConfiguration("resourceunitdepts.json"))
+                                {
+                                    message.Type = MessageTypesEnum.ERROR;
+                                }
+
+                                if(message.Type == MessageTypesEnum.ERROR)
+                                {
+                                    message.Message = "Global configuration reset failed!";
+                                }
+                                else
+                                {
+                                        message.Type = MessageTypesEnum.SUCCESS;
+                                        message.Message = "Global configuration reset!";
+                                }
+                            }
                             break;
                         case "update":
                             if (newGlobalConfig != null)
