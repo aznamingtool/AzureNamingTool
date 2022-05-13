@@ -1,8 +1,9 @@
 ﻿@page "/instructions"
 @using AzureNamingTool.Helpers
+@using AzureNamingTool.Models
 @inject StateContainer state
 
-<div class="card @state.AppTheme">
+<div class="card @theme.ThemeStyle">
     <div class="card-body">
         <h1>Instructions</h1>
         <div class="mb-4">This page provides instructions on how to configure and use the Azure Naming Tool.</div>
@@ -11,7 +12,7 @@
             <h5 class="card-header bg-secondary text-white" id="step1">
                 Step 1 - Setting the Admin password
             </h5>
-            <div class="card card-body @state.AppTheme">
+            <div class="card card-body @theme.ThemeStyle">
                 <p>
                     When the site is first installed, the application will prompt for the <strong>Admin password</strong> to be set. This password allows access to the configuration for the tool.
                 </p>
@@ -25,7 +26,7 @@
             <h5 class="card-header bg-secondary text-white" id="step2">
                 Step 2 - View/Update the Admin configuration
             </h5>
-            <div class="card card-body @state.AppTheme">
+            <div class="card card-body @theme.ThemeStyle">
                 <p>
                     Click the <strong>Admin</strong> button in the top navigation to view the current configuration.
                 </p>
@@ -49,7 +50,7 @@
             <h5 class="card-header bg-secondary text-white" id="step3">
                 Step 3 - Configure the tool
             </h5>
-            <div class="card card-body @state.AppTheme">
+            <div class="card card-body @theme.ThemeStyle">
                 <p>
                     Click the <strong>Admin </strong> link in the top navigation to login. Once logged in, navigate to the <strong>Configuration</strong> page to set the configuration for the tool.
                     The Configuration page is separated into multiple sections. Each section allows the management of the component, exporting of the configuration, and restore capability to the default state.
@@ -61,7 +62,7 @@
                     <h5 class="card-header bg-default text-black">
                         Base Configuration
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             This section provides the ability to configure the base components required for resource name generation.
                         </p>
@@ -86,7 +87,7 @@
                     <h5 class="card-header bg-default text-black">
                         Component Configuration
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             This section provides the ability to configure the individual components used in name generation. Each component provides the ability to add/edit/delete items, as well as set the desired sort order.
                             Note: The Resource Type and Location components allow limited configuration for consistency.
@@ -111,7 +112,7 @@
                     <h5 class="card-header bg-default text-black">
                         General Configuration
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             This section provides functionality to modify the master configuration for the tool. Administrators can export the current configuration (combining all component configuration files into a JSON file), or import a new configuration. This feature is used for backup/restore of the installation configuration.
                         </p>
@@ -136,7 +137,7 @@
             <h5 class="card-header bg-secondary text-white" id="step4">
                 Step 4 - Generate names
             </h5>
-            <div class="card card-body  @state.AppTheme">
+            <div class="card card-body  @theme.ThemeStyle">
                 <p>
                     The <strong>Generate</strong> page allows users to generate names with the selected options.
                 </p>
@@ -150,7 +151,7 @@
                     <h5 class="card-header bg-default text-black">
                         Delimiter
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             This section displays the delimiter configured for the application.
                         </p>
@@ -161,7 +162,7 @@
                     <h5 class="card-header bg-default text-black">
                         Resource Type
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             This section allows the user to selected the desired resource type name to generate. Use the <strong>Category</strong> selector to filter the list of resource types.
                         </p>
@@ -172,7 +173,7 @@
                     <h5 class="card-header bg-default text-black">
                         Components
                     </h5>
-                    <div class="card card-body @state.AppTheme">
+                    <div class="card card-body @theme.ThemeStyle">
                         <p>
                             Select the desired values for the required components. Optional components may be omitted.
                         </p>
@@ -183,3 +184,7 @@
     </div>
 </div>
 <AnchorNavigation />
+@code {    
+    [CascadingParameter]
+    protected ThemeInfo? theme { get; set; }
+}
