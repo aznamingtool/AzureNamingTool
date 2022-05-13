@@ -18,7 +18,7 @@
 @inject NavigationManager NavigationManager
 
 <PageTitle>Azure Naming Tool - Configuration</PageTitle>
-<div class="card @state.AppTheme">
+<div class="card @theme.ThemeStyle">
     <div class="card-body">
         <h1>Configuration</h1>
         <div class="mb-3">This page contains the inputs to customize the Azure Naming Tool configuration.</div>
@@ -47,14 +47,14 @@
                                 Components
                             </a>
                         </h5>
-                        <div class="collapse card card-body @state.AppTheme" id="components">
+                        <div class="collapse card card-body @theme.ThemeStyle" id="components">
                             <div class="card mb-3">
                                 <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                     Current Components
                                 </div>
-                                <div class="card card-body @state.AppTheme">
+                                <div class="card card-body @theme.ThemeStyle">
                                     <p>The current Components.</p>
-                                    <table class="table @state.AppTheme">
+                                    <table class="table @theme.ThemeStyle">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -108,12 +108,12 @@
                                             <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                         </a>
                                     </div>
-                                    <div class="collapse card card-body @state.AppTheme" id="componentsconfig">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="componentsconfig">
                                         <div class="card  w-auto mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Export the current Components Configuration
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>
                                                     Click <strong>Export</strong> to export the current Components Configuration.
                                                 </p>
@@ -128,7 +128,7 @@
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Reset the Components Configuration
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>
                                                     Click <strong>Reset</strong> to reset the Components Configuration back to the default values at the time of installation.
                                                 </p>
@@ -177,14 +177,14 @@
                                 Delimiters
                             </a>
                         </h5>
-                        <div class="collapse card card-body @state.AppTheme" id="delimiters">
+                        <div class="collapse card card-body @theme.ThemeStyle" id="delimiters">
                             <div class="card mb-3">
                                 <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                     Delimiter
                                 </div>
-                                <div class="card card-body @state.AppTheme">
+                                <div class="card card-body @theme.ThemeStyle">
                                     <p>The current delimiter.</p>
-                                    <table class="table @state.AppTheme">
+                                    <table class="table @theme.ThemeStyle">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
@@ -232,12 +232,12 @@
                                             <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                         </a>
                                     </div>
-                                    <div class="collapse card card-body @state.AppTheme" id="delimitersconfig">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="delimitersconfig">
                                         <div class="card w-auto mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Export the current Delimiters Configuration
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>
                                                     Click <strong>Export</strong> to export the current Delimiters Configuration.
                                                 </p>
@@ -252,7 +252,7 @@
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Reset the Delimiters Configuration
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>
                                                     Click <strong>Reset</strong> to reset the Delimiters Configuration back to the default values at the time of installation.
                                                 </p>
@@ -270,12 +270,12 @@
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Import Delimiters Configuration
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>
                                                     Enter the new Delimiters Configuration JSON below and click <strong>Import</strong> to import the Delimiters Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Delimiters Configuration.
                                                 </p>
                                                 <p>
-                                                    <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
+                                                    <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newDelimiterConfig",(string)ui.Value);})">@newDelimiterConfig</textarea>
                                                 </p>
                                                 <p>
                                                     <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceDelimiter",0,"update"))" title="Import">
@@ -307,12 +307,12 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="environments">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="environments">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Environments
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Environments.</p>
                                                 @if (admin)
                                                 {
@@ -322,7 +322,7 @@
                                                         </button>
                                                     </p>
                                                 }
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -376,12 +376,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="environmentsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="environmentsconfig">
                                                     <div class="card w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export the current Environments Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Environments Configuration.
                                                             </p>
@@ -396,7 +396,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Environments Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Environments Configuration back to the default values at the time of installation.
                                                             </p>
@@ -414,12 +414,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Environments Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Environments Configuration JSON below and click <strong>Import</strong> to import the Environments Configuration. <strong>NOTE:</strong> This will overwrite the existing Environments Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newEnvironmentConfig",(string)ui.Value);})">@newEnvironmentConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceEnvironment",0,"update"))" title="Import">
@@ -444,12 +444,12 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="functions">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="functions">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Functions
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Functions.</p>
                                                 @if (admin)
                                                 {
@@ -459,7 +459,7 @@
                                                         </button>
                                                     </p>
                                                 }
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -514,12 +514,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="functionsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="functionsconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export Function Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Function Configuration.
                                                             </p>
@@ -534,7 +534,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Functions Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Functions Configuration back to the default values at the time of installation.
                                                             </p>
@@ -552,12 +552,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Function Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Functions Configuration JSON below and click <strong>Import</strong> to import the Functions Configuration. <strong>NOTE:</strong> This will overwrite the existing Functions Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="New Function Config" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newFunctionConfig",(string)ui.Value);})">@newFunctionConfig</textarea>
+                                                                <textarea title="New Function Config" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newFunctionConfig",(string)ui.Value);})">@newFunctionConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceFunction",0,"update"))" title="Import">
@@ -582,14 +582,14 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="locations">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="locations">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Locations
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Locations.</p>
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -666,12 +666,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="locationsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="locationsconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export the current Locations Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Locations Configuration.
                                                             </p>
@@ -686,7 +686,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Locations Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Locations Configuration back to the default values at the time of installation.
                                                             </p>
@@ -704,12 +704,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Locations Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Locations Configuration JSON below and click <strong>Import</strong> to import the Locations Configuration. <strong>NOTE:</strong> This will overwrite the existing Locations Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newLocationConfig",(string)ui.Value);})">@newLocationConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceLocation",0,"update"))" title="Import">
@@ -734,12 +734,12 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="orgs">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="orgs">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Orgs
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Orgs.</p>
                                                 @if (admin)
                                                 {
@@ -749,7 +749,7 @@
                                                         </button>
                                                     </p>
                                                 }
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -803,12 +803,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="orgsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="orgsconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export the current Orgs Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Orgs Configuration.
                                                             </p>
@@ -823,7 +823,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Orgs Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Orgs Configuration back to the default values at the time of installation.
                                                             </p>
@@ -841,7 +841,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Orgs Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Orgs Configuration JSON below and click <strong>Import</strong> to import the Orgs Configuration.
                                                             </p>
@@ -849,7 +849,7 @@
                                                                 <strong>NOTE: This will overwrite the existing Orgs Configuration and cannot be undone!</strong>
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newOrgConfig",(string)ui.Value);})">@newOrgConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceOrg",0,"update"))" title="Import">
@@ -874,12 +874,12 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="projsappssvcs">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="projsappssvcs">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Projects/Apps/Services
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Projects/Apps/Services.</p>
                                                 @if (admin)
                                                 {
@@ -889,7 +889,7 @@
                                                         </button>
                                                     </p>
                                                 }
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -943,12 +943,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="projappsvcsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="projappsvcsconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export the current Projects/Apps/Services Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Projects/Apps/Services Configuration.
                                                             </p>
@@ -963,7 +963,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Projects/Apps/Services Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Project/App/Services Configuration back to the default values at the time of installation.
                                                             </p>
@@ -981,12 +981,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Projects/Apps/Services Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Projects/Apps/Services Configuration JSON below and click <strong>Import</strong> to import the Projects/Apps/Services Configuration. <strong>NOTE:</strong> This will overwrite the existing Projects/Apps/Services Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newProjAppSvcConfig",(string)ui.Value);})">@newProjAppSvcConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceProjAppSvc",0,"update"))" title="Import">
@@ -1011,18 +1011,18 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="types">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="types">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Resource Types
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Resource Types.</p>
                                                 <p>
                                                     Use the filters below to jump to a specifc resource type.
                                                 </p>
                                                 <p>
-                                                    <select @onchange="OnCategoryChanged" class="form-control @state.AppTheme">
+                                                    <select @onchange="OnCategoryChanged" class="form-control @theme.ThemeStyle">
                                                         <option value="">Select a resource type provider (OPTIONAL)</option>
                                                         @foreach (var category in @categories)
                                                         {
@@ -1030,7 +1030,7 @@
                                                         }
                                                     </select>
 
-                                                    <select @onchange="OnTypeChanged" class="form-control @state.AppTheme">
+                                                    <select @onchange="OnTypeChanged" class="form-control @theme.ThemeStyle">
                                                         <option value="">Select a resource type</option>
                                                         @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                                                         {
@@ -1045,7 +1045,7 @@
                                                         }
                                                     </select>
                                                 </p>
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -1123,12 +1123,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="typesconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="typesconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export the current Resource Types Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Resource Types Configuration.
                                                             </p>
@@ -1143,7 +1143,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Resource Types Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Resource Types Configuration back to the default values at the time of installation.
                                                             </p>
@@ -1161,12 +1161,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Resource Types Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Resource Types Configuration JSON below and click <strong>Import</strong> to import the Resource Types Configuration. <strong>NOTE:</strong> This will overwrite the existing Resource Types Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newTypeConfig",(string)ui.Value);})">@newTypeConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceType",0,"update"))" title="Import">
@@ -1191,12 +1191,12 @@
                                             @resourceComponent.DisplayName
                                         </a>
                                     </h5>
-                                    <div class="collapse card card-body @state.AppTheme" id="unitsdepts">
+                                    <div class="collapse card card-body @theme.ThemeStyle" id="unitsdepts">
                                         <div class="card mb-3">
                                             <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                 Current Units/Depts
                                             </div>
-                                            <div class="card card-body @state.AppTheme">
+                                            <div class="card card-body @theme.ThemeStyle">
                                                 <p>The current Units/Depts.</p>
                                                 @if (admin)
                                                 {
@@ -1206,7 +1206,7 @@
                                                         </button>
                                                     </p>
                                                 }
-                                                <table class="table @state.AppTheme">
+                                                <table class="table @theme.ThemeStyle">
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
@@ -1261,12 +1261,12 @@
                                                         <span class="oi oi-chevron-bottom" aria-hidden="true"></span> Configuration
                                                     </a>
                                                 </div>
-                                                <div class="collapse card card-body @state.AppTheme" id="unitdeptsconfig">
+                                                <div class="collapse card card-body @theme.ThemeStyle" id="unitdeptsconfig">
                                                     <div class="card  w-auto mb-3">
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Export Units/Depts Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Export</strong> to export the current Units/Depts Configuration.
                                                             </p>
@@ -1281,7 +1281,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Units/Depts Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the UnitsDepts Configuration back to the default values at the time of installation.
                                                             </p>
@@ -1299,12 +1299,12 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Import Units/Depts Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Enter the new Units/Depts Configuration JSON below and click <strong>Import</strong> to import the Units/Depts Configuration. <strong>NOTE:</strong> This will overwrite the existing Units/Depts Configuration.
                                                             </p>
                                                             <p>
-                                                                <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
+                                                                <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newUnitDeptConfig",(string)ui.Value);})">@newUnitDeptConfig</textarea>
                                                             </p>
                                                             <p>
                                                                 <button type="button" class="btn btn-success" @onclick="@(e => FormAction("ResourceUnitDept",0,"update"))" title="Import">
@@ -1333,12 +1333,12 @@
                                 Global Configuration
                             </a>
                         </h5>
-                        <div class="collapse card card-body @state.AppTheme" id="global">
+                        <div class="collapse card card-body @theme.ThemeStyle" id="global">
                             <div class="card w-auto mb-3">
                                 <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                     Export the current Global Configuration
                                 </div>
-                                <div class="card card-body @state.AppTheme">
+                                <div class="card card-body @theme.ThemeStyle">
                                     <p>
                                         Click <strong>Export</strong> to export the current Global Configuration. This includes all component, settings, and admin passwords/API keys.
                                     </p>
@@ -1353,7 +1353,7 @@
                                                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                                             Reset the Global Configuration
                                                         </div>
-                                                        <div class="card card-body @state.AppTheme">
+                                                        <div class="card card-body @theme.ThemeStyle">
                                                             <p>
                                                                 Click <strong>Reset</strong> to reset the Global Configuration back to the default values at the time of installation. This will apply to all component configurations.
                                                             </p>
@@ -1371,12 +1371,12 @@
                                 <div class="card card-header bg-default text-black" style="font-weight:bold;">
                                     Import Global Configuration
                                 </div>
-                                <div class="card card-body @state.AppTheme">
+                                <div class="card card-body @theme.ThemeStyle">
                                     <p>
                                         Enter the new Global Configuration JSON below and click <strong>Import</strong> to import the Global Configuration. <strong>NOTE:</strong> This will overwrite all existing configurations.
                                     </p>
                                     <p>
-                                        <textarea title="Configuration" class="form-control @state.AppTheme" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newGlobalConfig",(string)ui.Value);})" />
+                                        <textarea title="Configuration" class="form-control @theme.ThemeStyle" rows="8" type="text" @onchange="@((ui) => { SetFormValue("newGlobalConfig",(string)ui.Value);})" />
                                     </p>
                                     <p>
                                         <button type="button" class="btn btn-success" @onclick="@(e => FormAction("Global",0,"update"))" title="Import">
@@ -1395,12 +1395,12 @@
                         Policy
                         </a>
                         </h5>
-                        <div class="collapse card card-body @state.AppTheme" id="policy">
+                        <div class="collapse card card-body @theme.ThemeStyle" id="policy">
                         <div class="card">
                         <div class="card card-header bg-default text-black" style="font-weight:bold;">
                         Export Azure Policy Definition
                         </div>
-                        <div class="card card-body @state.AppTheme">
+                        <div class="card card-body @theme.ThemeStyle">
                         <p>
                         Click <strong>Export Azure Policy Definition</strong> to export an Azure Policy definition to use within your subscription.
                         </p>
@@ -1418,19 +1418,14 @@
         }
     </div>
 </div>
-<div class="toast">
-    <div class="toast-header">
-        Toast Header
-    </div>
-    <div class="toast-body">
-        Some text inside the toast body
-    </div>
-</div>
-
 
 @code {
-    [Inject] public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [Inject]
+    public IBlazorDownloadFileService BlazorDownloadFileService { get; set; }
+    [CascadingParameter]
+    public IModalService Modal { get; set; }        
+    [CascadingParameter]
+    protected ThemeInfo? theme { get; set; }
 
     private ServicesData servicesData = new();
     private bool dataLoaded = false;
@@ -2605,10 +2600,7 @@
 
         var modal = Modal.Show<AddModal>(title, parameters, options);
         var result = await modal.Result;
-        if (result.Cancelled)
-        {
-        }
-        else
+        if (!result.Cancelled)
         {
             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
             StateHasChanged();
@@ -2633,10 +2625,7 @@
 
         var modal = Modal.Show<EditModal>(title, parameters, options);
         var result = await modal.Result;
-        if (result.Cancelled)
-        {
-        }
-        else
+        if (!result.Cancelled)
         {
             servicesData = await ServicesHelper.LoadServicesData(servicesData, admin);
             StateHasChanged();
