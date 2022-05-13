@@ -313,7 +313,7 @@ namespace AzureNamingTool.Helpers
             state.SetVerified(false);
             state.SetAdmin(false);
             state.SetPassword(false);
-            state.SetAppTheme("bg-default");
+            state.SetAppTheme("bg-default text-black");
         }
 
         public static bool ValidateShortName(string value, string type)
