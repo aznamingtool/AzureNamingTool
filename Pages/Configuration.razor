@@ -2591,6 +2591,7 @@
         parameters.Add(nameof(AddModal.type), type);
         parameters.Add(nameof(AddModal.message), message);
         parameters.Add(nameof(AddModal.title), title);
+        parameters.Add("theme", theme);
 
         var options = new ModalOptions()
             {
@@ -2616,6 +2617,7 @@
         parameters.Add(nameof(EditModal.message), message);
         parameters.Add(nameof(EditModal.title), title);
         parameters.Add(nameof(EditModal.protectedName), protectedname);
+        parameters.Add("theme", theme);
 
         var options = new ModalOptions()
             {
