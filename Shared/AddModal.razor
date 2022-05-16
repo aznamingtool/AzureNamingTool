@@ -10,7 +10,7 @@
     <div class="modal-backdrop fade show" @onclick="Cancel"></div>
     <div class="modal-dialog" style="z-index: 1050">
         <!-- Pop it above the backdrop -->
-        <div class="modal-content @state.AppTheme">
+        <div class="modal-content @theme.ThemeStyle">
             <div class="modal-header bg-navcolor text-white">
                 <h3 class="modal-title">@title</h3>
             </div>
@@ -18,12 +18,12 @@
                 @((MarkupString)message)
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input title="Name" value="@itemName" type="text" class="form-control @state.AppTheme" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
+                    <input title="Name" value="@itemName" type="text" class="form-control @theme.ThemeStyle" id="name" @onchange="@((ui) => { itemName = (string)ui.Value;})" />
                 </div>
 
                 <div class="form-group">
                     <label for="shortName">Short Name</label>
-                    <input title="Short Name" value="@itemShortName" type="text" class="form-control @state.AppTheme" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
+                    <input title="Short Name" value="@itemShortName" type="text" class="form-control @theme.ThemeStyle" id="shortname" @onchange="@((ui) => { itemShortName = (string)ui.Value;})" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -39,6 +39,7 @@
 @code {
 
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    [Parameter] public ThemeInfo theme { get; set; }
 
     [Parameter] public int id { get; set; }
     [Parameter] public string title { get; set; }
