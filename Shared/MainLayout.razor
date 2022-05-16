@@ -118,6 +118,7 @@
     async void ShowAdminModal()
     {
         var parameters = new ModalParameters();
+        parameters.Add("theme", theme);
 
         var options = new ModalOptions()
             {
@@ -129,11 +130,11 @@
 
         var result = await modal.Result;
 
-        if (!result.Cancelled)
-        {
+        //if (!result.Cancelled)
+        //{
             // Reload the current page
             NavigationManager.NavigateTo(NavigationManager.Uri, true);
-        }
+        //}        
     }
 
     private async void MagicReset()
