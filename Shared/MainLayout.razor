@@ -20,13 +20,13 @@
     <main>
         <div class="top-row px-4 auth @theme.ThemeStyle">
             <div class="px-3">
-            <label class="switch" title="App Theme">
-                <input type="checkbox" checked="@isdarktheme" @oninput="ThemeChanged">
-                <span class="slider round"></span>
-            </label>
+                <label class="switch" title="App Theme">
+                    <input type="checkbox" checked="@isdarktheme" @oninput="ThemeChanged">
+                    <span class="slider round"></span>
+                </label>
             </div>
             <div>
-            <button type="button" class="btn btn-success" @onclick="@(e => ShowAdminModal())" title="Admin">Admin</button>
+                <button type="button" class="btn btn-success" @onclick="@(e => ShowAdminModal())" title="Admin">Admin</button>
             </div>
         </div>
 
@@ -80,8 +80,15 @@
     {
         if (firstRender)
         {
-            var result = await storage.GetAsync<string>("apptheme");
-            theme.ThemeStyle = result.Success ? result.Value : "bg-default text-black";
+            try
+            {
+                var result = await storage.GetAsync<string>("apptheme");
+                theme.ThemeStyle = result.Success ? result.Value : "bg-default text-black";
+            }
+            catch
+            {
+                theme.ThemeStyle = "bg-default text-black";
+            }
             if (theme.ThemeStyle == "bg-default text-black")
             {
                 theme.ThemeName = "Light";
@@ -131,9 +138,9 @@
 
         //if (!result.Cancelled)
         //{
-            // Reload the current page
-            NavigationManager.NavigateTo(NavigationManager.Uri, true);
-        //}        
+        // Reload the current page
+        NavigationManager.NavigateTo(NavigationManager.Uri, true);
+        //}
     }
 
     private async void MagicReset()
