@@ -11,10 +11,10 @@
     <div class="card-body">
         <h1>Generate</h1>
         <div class="mb-3">This page generates a name for the selected resource type.</div>
-@*        <div class="mb-3">
-            <button class="btn btn-primary" title="Instructions" @onclick="@(e => OnInstructionsClick())">
-                View Instructions
-            </button>
+        @*        <div class="mb-3">
+        <button class="btn btn-primary" title="Instructions" @onclick="@(e => OnInstructionsClick())">
+        View Instructions
+        </button>
         </div>*@
         <p>
             <strong>Instructions</strong>
@@ -64,39 +64,35 @@
                             <p>
                                 Use the filters below to jump to a specifc resource type.
                             </p>
-                            <InputSelect title="Resource Category" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceTypeCategory)"
-                                     Value="@selectedResourceTypeCategory"
-                                     ValueChanged="@((string value) => OnCategoryChanged(value))" aria-label="Select category">
+                            <select @onchange="OnCategoryChanged" class="form-control @theme.ThemeStyle" aria-label="Select category">
                                 <option value="">Select a resource type provider (OPTIONAL)</option>
                                 @foreach (var category in @categories)
-                            {
-                                <option value="@category">@category</option>
-                            }
-                        </InputSelect>
-
-                        <InputSelect title="Resource Type" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceType)"
-                                     Value="@selectedResourceType"
-                                     ValueChanged="@((string value) => OnTypeChanged(value))" aria-label="Select type">
-                            <option value="">Select a resource type</option>
-                            @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
-                            {
-                                @if (type.Property != "")
                                 {
-                                    <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
+                                    <option value="@category">@category</option>
                                 }
-                                else
-                                {
-                                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
-                                }
-                            }
-                        </InputSelect>
+                            </select>
 
-                        @((MarkupString)namingGuidelines)
+                            <select @onchange="OnTypeChanged" class="form-control @theme.ThemeStyle" aria-label="Select type">
+                                <option value="">Select a resource type</option>
+                                @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
+                                {
+                                    @if (type.Property != "")
+                                    {
+                                        <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                    }
+                                }
+                            </select>
+
+                            @((MarkupString)namingGuidelines)
+                        </div>
                     </div>
-                </div>
 
 
-                @if (selectedResourceType != "")
+                    @if (selectedResourceType != "")
                     {
                         @if (componentsVisible == "collapse")
                         {
@@ -128,9 +124,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("re",value))">
                                                         <option value="">Select an environment</option>
                                                         @foreach (var item in @servicesData.ResourceEnvironments)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -150,9 +146,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
                                                         <option value="">Select a Function</option>
                                                         @foreach (var item in @servicesData.ResourceFunctions)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -188,9 +184,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("rl",value))">
                                                         <option value="">Select a location</option>
                                                         @foreach (var item in @servicesData.ResourceLocations)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -210,9 +206,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("ro",value))">
                                                         <option value="">Select an org</option>
                                                         @foreach (var item in @servicesData.ResourceOrgs)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -232,9 +228,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
                                                         <option value="">Select a project/app/service</option>
                                                         @foreach (var item in @servicesData.ResourceProjAppSvcs)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -254,9 +250,9 @@
                                          ValueChanged="@((string value) => OnComponentChanged("rud",value))">
                                                         <option value="">Select a unit/dept</option>
                                                         @foreach (var item in @servicesData.ResourceUnitDepts)
-                                {
+                                                        {
                                     <option value="@item.ShortName">@item.Name (@item.ShortName)</option>
-                                }
+                                                        }
                             </InputSelect>
                         </div>
                     </div>
@@ -401,19 +397,19 @@
         }
     }
 
-    private void OnCategoryChanged(string value)
+    private void OnCategoryChanged(ChangeEventArgs e)
     {
-        selectedResourceTypeCategory = value;
+        selectedResourceTypeCategory = e.Value.ToString();
         selectedResourceType = "";
         namingGuidelines = "";
         componentsVisible = "collapse show";
     }
 
-    private Task OnTypeChanged(string value)
+    private Task OnTypeChanged(ChangeEventArgs e)
     {
         resourceNameRequestResponse = null;
         // Assign the selected value to the Model
-        selectedResourceType = value;
+        selectedResourceType = e.Value.ToString();
 
         namingGuidelines = "";
         componentsVisible = "collapse show";
@@ -434,7 +430,7 @@
             namingGuidelines += "Naming Guidelines";
             namingGuidelines += "</a>";
             namingGuidelines += "</div>";
-            namingGuidelines += "<div class=\"collapse card card-body " +  theme.ThemeStyle + "\"  id=\"namingguidelines\">";
+            namingGuidelines += "<div class=\"collapse card card-body " + theme.ThemeStyle + "\"  id=\"namingguidelines\">";
             if (currentResourceType.LengthMin != "")
             {
                 namingGuidelines += "<div><strong>Minimum Length:</strong> " + currentResourceType.LengthMin + "</div>";
