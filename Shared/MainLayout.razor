@@ -20,13 +20,13 @@
     <main>
         <div class="top-row px-4 auth @theme.ThemeStyle">
             <div class="px-3">
-            <label class="switch" title="App Theme">
-                <input type="checkbox" checked="@isdarktheme" @oninput="ThemeChanged">
-                <span class="slider round"></span>
-            </label>
+                <label class="switch" title="App Theme">
+                    <input type="checkbox" checked="@isdarktheme" @oninput="ThemeChanged">
+                    <span class="slider round"></span>
+                </label>
             </div>
             <div>
-            <button type="button" class="btn btn-success" @onclick="@(e => ShowAdminModal())" title="Admin">Admin</button>
+                <button type="button" class="btn btn-success" @onclick="@(e => ShowAdminModal())" title="Admin">Admin</button>
             </div>
         </div>
 
@@ -80,8 +80,15 @@
     {
         if (firstRender)
         {
-            var result = await storage.GetAsync<string>("apptheme");
-            theme.ThemeStyle = result.Success ? result.Value : "bg-default text-black";
+            try
+            {
+                var result = await storage.GetAsync<string>("apptheme");
+                theme.ThemeStyle = result.Success ? result.Value : "bg-default text-black";
+            }
+            catch ()
+            {
+                theme.ThemeStyle = "bg-default text-black";
+            }
             if (theme.ThemeStyle == "bg-default text-black")
             {
                 theme.ThemeName = "Light";
@@ -92,9 +99,10 @@
                 theme.ThemeName = "Dark";
                 isdarktheme = true;
             }
-            state.AppTheme = theme.ThemeStyle;
-            StateHasChanged();
         }
+        state.AppTheme = theme.ThemeStyle;
+        StateHasChanged();
+    }
     }
 
     public void Dispose()
@@ -125,55 +133,57 @@
                 UseCustomLayout = true
             };
 
-        var modal = Modal.Show<AdminModal>("Admin", parameters, options);
+        var modal = Modal.Show<AdminModal>
+    ("Admin", parameters, options);
 
-        var result = await modal.Result;
+    var result = await modal.Result;
 
-        //if (!result.Cancelled)
-        //{
-            // Reload the current page
-            NavigationManager.NavigateTo(NavigationManager.Uri, true);
-        //}        
+    //if (!result.Cancelled)
+    //{
+    // Reload the current page
+    NavigationManager.NavigateTo(NavigationManager.Uri, true);
+    //}
     }
 
     private async void MagicReset()
     {
-        bool confrimAPIKeyGenerate = await JsRuntime.InvokeAsync<bool>("confirm", "This will reset the site settings. Are you sure?");
+    bool confrimAPIKeyGenerate = await JsRuntime.InvokeAsync<bool>
+        ("confirm", "This will reset the site settings. Are you sure?");
         if (confrimAPIKeyGenerate)
         {
 
-            var config = GeneralHelper.GetConfigurationData();
-            config.SALTKey = "";
-            config.AdminPassword = "";
-            config.APIKey = "";
+        var config = GeneralHelper.GetConfigurationData();
+        config.SALTKey = "";
+        config.AdminPassword = "";
+        config.APIKey = "";
 
-            GeneralHelper.UpdateSettings(config);
-            GeneralHelper.ResetState(state);
-            GeneralHelper.VerifySecurity(state);
+        GeneralHelper.UpdateSettings(config);
+        GeneralHelper.ResetState(state);
+        GeneralHelper.VerifySecurity(state);
 
-            toastService.ShowSuccess("The site has been reset.", "MAGIC RESET ENABLED!");
+        toastService.ShowSuccess("The site has been reset.", "MAGIC RESET ENABLED!");
 
-            OpenPasswordModal();
+        OpenPasswordModal();
 
-            StateHasChanged();
+        StateHasChanged();
         }
-    }
+        }
 
-    private async void ThemeChanged(ChangeEventArgs e)
-    {
+        private async void ThemeChanged(ChangeEventArgs e)
+        {
         isdarktheme = (bool)e.Value;
         if (!isdarktheme)
         {
-            theme.ThemeName = "Dark";
-            theme.ThemeStyle = "bg-default text-black";
+        theme.ThemeName = "Dark";
+        theme.ThemeStyle = "bg-default text-black";
         }
         else
         {
-            theme.ThemeName = "Light";
-            theme.ThemeStyle = "bg-dark text-white";
+        theme.ThemeName = "Light";
+        theme.ThemeStyle = "bg-dark text-white";
         }
         await storage.SetAsync("apptheme", theme.ThemeStyle);
         state.AppTheme = theme.ThemeStyle;
         StateHasChanged();
-    }
-}
+        }
+        }
