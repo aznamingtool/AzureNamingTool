@@ -64,35 +64,39 @@
                             <p>
                                 Use the filters below to jump to a specifc resource type.
                             </p>
-                            <select @onchange="OnCategoryChanged" class="form-control @theme.ThemeStyle" aria-label="Select category">
+                            <InputSelect title="Resource Category" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceTypeCategory)"
+                                     Value="@selectedResourceTypeCategory"
+                                     ValueChanged="@((string value) => OnCategoryChanged(value))" aria-label="Select category">
                                 <option value="">Select a resource type provider (OPTIONAL)</option>
                                 @foreach (var category in @categories)
                                 {
-                                    <option value="@category">@category</option>
+                                <option value="@category">@category</option>
                                 }
-                            </select>
+                        </InputSelect>
 
-                            <select @onchange="OnTypeChanged" class="form-control @theme.ThemeStyle" aria-label="Select type">
-                                <option value="">Select a resource type</option>
-                                @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
+                        <InputSelect title="Resource Type" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceType)"
+                                     Value="@selectedResourceType"
+                                     ValueChanged="@((string value) => OnTypeChanged(value))" aria-label="Select type">
+                            <option value="">Select a resource type</option>
+                            @foreach (var type in @ResourceTypeService.GetFilteredResourceTypes(servicesData.ResourceTypes, selectedResourceTypeCategory))
                                 {
-                                    @if (type.Property != "")
+                                @if (type.Property != "")
                                     {
-                                        <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
+                                    <option value="@type.Id">@type.Resource - @type.Property (@type.ShortName)</option>
                                     }
                                     else
                                     {
-                                        <option value="@type.Id">@type.Resource (@type.ShortName)</option>
+                                    <option value="@type.Id">@type.Resource (@type.ShortName)</option>
                                     }
                                 }
-                            </select>
+                        </InputSelect>
 
-                            @((MarkupString)namingGuidelines)
-                        </div>
+                        @((MarkupString)namingGuidelines)
                     </div>
+                </div>
 
 
-                    @if (selectedResourceType != "")
+                @if (selectedResourceType != "")
                     {
                         @if (componentsVisible == "collapse")
                         {
@@ -119,7 +123,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceEnvironment)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceEnvironment)"
                                          Value="@selectedResourceEnvironment"
                                          ValueChanged="@((string value) => OnComponentChanged("re",value))">
                                                         <option value="">Select an environment</option>
@@ -141,7 +145,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceFunction)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceFunction)"
                                          Value="@selectedResourceFunction"
                                          ValueChanged="@((string value) => OnComponentChanged("rvmr",value))">
                                                         <option value="">Select a Function</option>
@@ -163,7 +167,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputText title="@resourceComponent.DisplayName" class="@formcontrolstyle" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
+                                                    <InputText title="@resourceComponent.DisplayName" class="@GetControlStyle()" id="ri" ValueExpression="@(()=>selectedResourceInstance)"
                                        Value="@selectedResourceInstance" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                        ValueChanged="@((string value) => OnComponentChanged("ri",value))" />
                                                 </div>
@@ -179,7 +183,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceLocation)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceLocation)"
                                          Value="@selectedResourceLocation"
                                          ValueChanged="@((string value) => OnComponentChanged("rl",value))">
                                                         <option value="">Select a location</option>
@@ -201,7 +205,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceOrg)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceOrg)"
                                          Value="@selectedResourceOrg"
                                          ValueChanged="@((string value) => OnComponentChanged("ro",value))">
                                                         <option value="">Select an org</option>
@@ -223,7 +227,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceProjAppSvc)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceProjAppSvc)"
                                          Value="@selectedResourceProjAppSvc"
                                          ValueChanged="@((string value) => OnComponentChanged("rpas",value))">
                                                         <option value="">Select a project/app/service</option>
@@ -245,7 +249,7 @@
                                                     }
                                                 </h5>
                                                 <div class="card card-body @theme.ThemeStyle">
-                                                    <InputSelect title="@resourceComponent.DisplayName" class="@formcontrolstyle" ValueExpression="@(()=>selectedResourceUnitDept)"
+                                                    <InputSelect title="@resourceComponent.DisplayName" class="@GetControlStyle()" ValueExpression="@(()=>selectedResourceUnitDept)"
                                          Value="@selectedResourceUnitDept"
                                          ValueChanged="@((string value) => OnComponentChanged("rud",value))">
                                                         <option value="">Select a unit/dept</option>
@@ -335,7 +339,6 @@
     private string[] filteredscopes = new string[] { "resource group", "resource group & region", "region", "global", "subscription", "tenant" };
     private ResourceNameRequest resourceNameRequest = new();
     private ResourceNameResponse resourceNameRequestResponse;
-    private string formcontrolstyle = "form-control";
 
     protected override async Task OnInitializedAsync()
     {
@@ -356,10 +359,7 @@
 
         resourceDelimiter = (ResourceDelimiter)servicesData.ResourceDelimiters[0];
         componentsVisible = "collapse show";
-
-        formcontrolstyle += " " + theme.ThemeStyle;
     }
-
 
     private async Task HandleValidSubmit()
     {
@@ -397,19 +397,19 @@
         }
     }
 
-    private void OnCategoryChanged(ChangeEventArgs e)
+    private void OnCategoryChanged(string value)
     {
-        selectedResourceTypeCategory = e.Value.ToString();
+        selectedResourceTypeCategory = value;
         selectedResourceType = "";
         namingGuidelines = "";
         componentsVisible = "collapse show";
     }
 
-    private Task OnTypeChanged(ChangeEventArgs e)
+    private Task OnTypeChanged(string value)
     {
         resourceNameRequestResponse = null;
         // Assign the selected value to the Model
-        selectedResourceType = e.Value.ToString();
+        selectedResourceType = value;
 
         namingGuidelines = "";
         componentsVisible = "collapse show";
@@ -583,5 +583,10 @@
     private async Task OnInstructionsClick()
     {
         NavigationManager.NavigateTo("/instructions");
+    }
+
+    private string GetControlStyle()
+    {
+        return "form-control " + theme.ThemeStyle;
     }
 }
