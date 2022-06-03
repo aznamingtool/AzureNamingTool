@@ -1,6 +1,6 @@
 # Azure Naming Tool
 
-<img src="https://github.com/aznamingtool/AzureNamingTool/blob/master/wwwroot/images/AzureNamingToolLogo.png?raw=true" alt="Azure Naming Tool" title="Azure Naming Tool" height="150"/>
+<img src="https://github.com/aznamingtool/AzureNamingTool/blob/main/wwwroot/images/AzureNamingToolLogo.png?raw=true" alt="Azure Naming Tool" title="Azure Naming Tool" height="150"/>
 
 [Overview](#overview)
 
@@ -22,7 +22,7 @@ https://user-images.githubusercontent.com/106343797/171671289-15fde526-30ab-443c
 
 The Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined by an administrator, users can use the tool to geernated name for the desired Azure resource.
 
-Further documentation on the script can be found on [Microsoft's Cloud Adoption Framework GitHub repo](https://github.com/microsoft/CloudAdoptionFramework/tree/master/ready/azurenamingtool).
+Further documentation on the script can be found on [Microsoft's Cloud Adoption Framework GitHub repo](https://github.com/microsoft/CloudAdoptionFramework/tree/main/ready/azurenamingtool).
 
 
 # Project Structure
@@ -50,7 +50,7 @@ The following are important notes/aspects of the Azure Naming Tool:
 - The API requires an API Key for all executions. A default APIK Key (guid) will be generated on first launch. This value can be updated in the Admin section. 
 - On first launch, the application will prompt for the Admin password to be set. 
 
-  ![Admin Password Prompt](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/AdminPasswordPrompt.png)
+  ![Admin Password Prompt](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/AdminPasswordPrompt.png)
 
 
 # Pages
@@ -58,22 +58,22 @@ The following are important notes/aspects of the Azure Naming Tool:
 ### Home Page
 The Home Page provides an overview of the tool and the components.
 
-![Home Page](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/HomePage.png)
+![Home Page](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/HomePage.png)
 
 ### Configuration
 The Configuration Page shows the current Name Generation configuration. This page also provides an Admin section for updating the configuration. 
 
-![Configuration Page](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/ConfigurationPage.png)
+![Configuration Page](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/ConfigurationPage.png)
 
 ### Reference
 The References Page provides examples for each type of Azure resource. The example values do not include any excluded naming components. Optional components are always displayed and are identified below the example. Since unique names are only required at specific scopes, the examples provided are only generated for the scopes above the resource scope: resource group, resource group & region, region, global, subscription, and tenant.
 
-![Reference Page](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/ReferencePage.png)
+![Reference Page](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/ReferencePage.png)
 
 ### Generate
 The Generator Page provides a dropdown menu to select an Azure resource. Once a resource is selected, naming component options are provided. Read-only components cannot be changed, like the value for a resource type or organization. Optional components, if left blank, will be null and not shown in the output. Required components do not allow a null value, and the first value in the array is set as the default.
 
-![Generate Page](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/GeneratePage.png)
+![Generate Page](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/GeneratePage.png)
 
 
 # How To Install
@@ -158,7 +158,7 @@ For many of the steps, a sample process is provided, however, there are many way
 - Create an Azure Storage Fileshare for the persistent storage  
   [Create an Azure file share](https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-create-file-share?tabs=azure-portal)
   
-  ![FileShare](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/FileShare.png)
+  ![FileShare](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/FileShare.png)
 
 - Create an Azure App Service - Web App  
   [Run a custom container in Azure](https://docs.microsoft.com/en-us/azure/app-service/quickstart-custom-container?tabs=dotnet&pivots=container-linux) 
@@ -166,7 +166,7 @@ For many of the steps, a sample process is provided, however, there are many way
 - Mount the fileshare as local storage for the Azure App Service  
   [Mount Azure Storage as a local share in a custom container in App Service](https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux)
   
-  ![MountStorage](https://github.com/aznamingtool/azurenamingtool/blob/master/wwwroot/Screenshots/MountStorage.png)
+  ![MountStorage](https://github.com/aznamingtool/azurenamingtool/blob/main/wwwroot/Screenshots/MountStorage.png)
 
 - Deploy the image from the Azure Container Registry to the Azure App Service  
   [Continuous deployment with custom containers in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container?tabs=acr&pivots=container-linux)
