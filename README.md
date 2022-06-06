@@ -20,9 +20,9 @@ https://user-images.githubusercontent.com/106343797/171671289-15fde526-30ab-443c
 
 ## Overview
 
-The Naming Tool was developed using a naming pattern based on [Microsoft's best practices ](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). Once the organizational components have been defined by an administrator, users can use the tool to geernated name for the desired Azure resource.
+The Naming Tool was developed using a naming pattern based on <a href="https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging" target="_blank">Microsoft's best practices</a> . Once the organizational components have been defined by an administrator, users can use the tool to geernated name for the desired Azure resource.
 
-Further documentation on the script can be found on [Microsoft's Cloud Adoption Framework GitHub repo](https://github.com/microsoft/CloudAdoptionFramework/tree/main/ready/azurenamingtool).
+Further documentation on the script can be found on <a href="https://github.com/microsoft/CloudAdoptionFramework/tree/main/ready/azurenamingtool" taregt+"_blank">Microsoft's Cloud Adoption Framework GitHub repo.
 
 
 # Project Structure
@@ -116,7 +116,7 @@ This process will allow you to deploy the Azure Naming Tool using Docker to your
 
 - Access the site using the following URL  
 
-  *http://localhost:8081*
+	*<a href="http://localhost:8081" tager="_blank">http://localhost:8081</a>*
   
   **NOTE**  
   - Substitute 8081 for the port you used in the docker run command
