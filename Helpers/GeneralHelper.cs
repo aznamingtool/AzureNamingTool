@@ -350,7 +350,7 @@ namespace AzureNamingTool.Helpers
                     }
                     break;
                 case "ResourceFunction":
-                    if (value.Length < 10)
+                    if (value.Length < 11)
                     {
                         valid = true;
                     }
