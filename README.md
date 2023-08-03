@@ -1,5 +1,6 @@
-# Azure Naming Tool v2
+The Azure Naming Tool has been moved to a new GitHub repo in the Microsoft Patterns & Practices Organization. 
+This change will allow us more frequent updates, enhanced features, and the ability to request new features and report bugs.
 
-The Azure Naming Tool is now part of the Azure Cloud Adoption Framework. Please use the following link for the tool/repository.
+[**Go to the new Azure Naming Tool Repo**](https://github.com/mspnp/AzureNamingTool)
 
-[Azure Naming Tool](http://aka.ms/AzureNamingTool)
+[View the Azure Naming Tool V3 Migration Guide](https://github.com/mspnp/AzureNamingTool/wiki/v3.0.0-Repository-Migration-Instructions)
